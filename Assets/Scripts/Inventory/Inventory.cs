@@ -129,7 +129,6 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        
         OnMoneyAmountChanged?.Invoke(_isPlayer, Wallet);
     }
 }
