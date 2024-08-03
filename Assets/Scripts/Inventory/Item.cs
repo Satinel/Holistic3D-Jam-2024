@@ -6,13 +6,14 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 {
     [field:SerializeField] public bool PlayerProperty { get; private set; }
 
-    [SerializeField] ItemScriptableObject _itemSO;
+    [field:SerializeField] public ItemScriptableObject ItemSO { get; private set; }
 
     [SerializeField] Image _itemImage, _raycastImage;
     [SerializeField] Color _draggingColor, _defaultColor;
     
     int _baseValue;
 
+    Vector2 _startPosition;
     Vector2 _endPositon;
     DropBox _currentBox;
 
@@ -21,7 +22,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _endPositon = transform.position;
         _raycastImage.raycastTarget = false;
         _raycastImage.color = _draggingColor;
-        _currentBox.RemoveValue(_baseValue);
+        _currentBox.RemoveItem(gameObject);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -38,20 +39,32 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void SetUp(ItemScriptableObject itemSO, bool playerProperty)
     {
-        _itemSO = itemSO;
-        _baseValue = _itemSO.BaseValue;
-        _itemImage.sprite = _itemSO.ItemSprite;
+        ItemSO = itemSO;
+        _baseValue = ItemSO.BaseValue;
+        _itemImage.sprite = ItemSO.ItemSprite;
         SetPlayerProperty(playerProperty);
+        SetStartPosition();
+    }
+    
+    public void SetStartPosition()
+    {
+        _startPosition = transform.position;
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = _startPosition;
     }
 
     public void SetEndPosition(DropBox newBox, Vector2 newPosition)
     {
         _endPositon = newPosition;
+        if(_currentBox != newBox)
         _currentBox = newBox;
-        _currentBox.AddValue(_baseValue);
+        _currentBox.AddItem(gameObject);
     }
 
-    private void SetPlayerProperty(bool playerProperty)
+    public void SetPlayerProperty(bool playerProperty)
     {
         PlayerProperty = playerProperty;
     }
