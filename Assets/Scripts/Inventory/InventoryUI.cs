@@ -4,19 +4,21 @@ using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI _copperText, _silverText, _goldText, _platinumText;
-    [SerializeField] TextMeshProUGUI _compCopperText, _compSilverText, _compGoldText, _compPlatinumText;
+    [SerializeField] TextMeshProUGUI _copperText, _silverText, _goldText, _platinumText, _tradeBoxText;
+    [SerializeField] TextMeshProUGUI _compCopperText, _compSilverText, _compGoldText, _compPlatinumText, _compTradeBoxText;
 
     void OnEnable()
     {
         Inventory.OnItemAmountChanged += Inventory_OnItemAmountChanged;
         Inventory.OnMoneyAmountChanged += Inventory_OnMoneyAmountChanged;
+        DropBox.OnTradeBoxValueChanged += DropBox_OnTradeBoxValueChanged;
     }
 
     void OnDisable()
     {
         Inventory.OnItemAmountChanged -= Inventory_OnItemAmountChanged;
         Inventory.OnMoneyAmountChanged -= Inventory_OnMoneyAmountChanged;
+        DropBox.OnTradeBoxValueChanged -= DropBox_OnTradeBoxValueChanged;
     }
 
     void Inventory_OnMoneyAmountChanged(bool isPlayer, Dictionary<Currency, int> money)
@@ -80,5 +82,17 @@ public class InventoryUI : MonoBehaviour
     void Inventory_OnItemAmountChanged(bool isPlayer, ItemScriptableObject item, int amount)
     {
         // TODO Add/Remove game objects to/from inventory
+    }
+
+    void DropBox_OnTradeBoxValueChanged(bool isPlayer, int value)
+    {
+        if(isPlayer)
+        {
+            _tradeBoxText.text = $"{value}";
+        }
+        else
+        {
+            _compTradeBoxText.text = $"{value}";
+        }
     }
 }

@@ -60,9 +60,15 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         transform.SetParent(_currentBox.transform, true);
         transform.position = _currentBox.transform.position;
         
-        if(IsMoney && !_inTrade)
+        if(_inTrade) { return; }
+
+        if(IsMoney)
         {
             SendToCoinBox(_currentBox.CoinBox);
+        }
+        else
+        {
+            SendToDropBox(_currentBox.InventoryBox);
         }
     }
 
@@ -77,11 +83,13 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             if(!_inTrade)
             {
+                _currentBox.RemoveItem(gameObject);
                 SendToDropBox(_currentBox.TradeBox);
                 _inTrade = true;
             }
             else
             {
+                _currentBox.RemoveItem(gameObject);
                 SendToCoinBox(_currentBox.CoinBox);
                 _inTrade = false;
             }
@@ -90,11 +98,13 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             if(!_inTrade)
             {
+                _currentBox.RemoveItem(gameObject);
                 SendToDropBox(_currentBox.TradeBox);
                 _inTrade = true;
             }
             else
             {
+                _currentBox.RemoveItem(gameObject);
                 SendToDropBox(_currentBox.InventoryBox);
                 _inTrade = false;
             }

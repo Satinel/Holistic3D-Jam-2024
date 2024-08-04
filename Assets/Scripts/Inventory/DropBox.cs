@@ -55,6 +55,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             }
             _items.Clear();
             _totalValue = 0;
+            OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
     }
 
@@ -77,6 +78,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             }
             _items.Clear();
             _totalValue = 0;
+            OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
     }
 
@@ -93,19 +95,6 @@ public class DropBox : MonoBehaviour, IDropHandler
             droppedItem.SetCurrentBox(this);
             droppedItem.SetInTrade(true);
             return;
-        }
-
-        if(_coinBox)
-        {
-            if(droppedItem.IsMoney)
-            {
-                droppedItem.SendToCoinBox(_coinBox);
-            }
-        }
-
-        if(!droppedItem.IsMoney)
-        {
-            droppedItem.SendToDropBox(_inventoryBox);
         }
     }
 
