@@ -7,10 +7,18 @@ public class DropBox : MonoBehaviour, IDropHandler
 {
     public static Action<bool, int> OnTradeBoxValueChanged;
 
-    [SerializeField] bool _playerProperty, _tradeBox;
-    [SerializeField] DropBox _linkedBox, _partnerBox;
+    [SerializeField] Transform _copperParent, _silverParent, _goldParent, _platinumParent;
 
-    public DropBox LinkedBox => _linkedBox;
+    [SerializeField] bool _playerProperty, _isTradeBox, _isCoinBox;
+    [SerializeField] DropBox _tradeBox, _coinBox, _inventoryBox, _partnerBox, _partnerCoinBox;
+
+    public DropBox TradeBox => _tradeBox;
+    public DropBox CoinBox => _coinBox;
+    public DropBox InventoryBox => _inventoryBox;
+    public Transform CopperParent => _copperParent;
+    public Transform SilverParent => _silverParent;
+    public Transform GoldParent => _goldParent;
+    public Transform PlatinumParent => _platinumParent;
 
     List<GameObject> _items = new();
     int _totalValue;
@@ -29,15 +37,22 @@ public class DropBox : MonoBehaviour, IDropHandler
 
     void TradingSystem_OnTradeCompleted()
     {
-        if(_tradeBox)
+        if(_isTradeBox)
         {
             foreach(var tradedItem in _items)
             {
                 Item item = tradedItem.GetComponent<Item>();
+                item.SetInTrade(false);
                 item.SetPlayerProperty(!_playerProperty);
-                item.SendToDropBox(_partnerBox);
+                if(item.ItemSO.Type == Type.Coin)
+                {
+                    item.SendToCoinBox(_partnerCoinBox);
+                }
+                else
+                {
+                    item.SendToDropBox(_partnerBox);
+                }
             }
-
             _items.Clear();
             _totalValue = 0;
         }
@@ -45,14 +60,21 @@ public class DropBox : MonoBehaviour, IDropHandler
 
     void TradingSystem_OnTradeCancelled()
     {
-        if(_tradeBox)
+        if(_isTradeBox)
         {
             foreach(var cancelledItem in _items)
             {
                 Item item = cancelledItem.GetComponent<Item>();
-                item.ResetPosition(_linkedBox);
+                item.SetInTrade(false);
+                if(item.ItemSO.Type == Type.Coin)
+                {
+                    item.SendToCoinBox(_coinBox);
+                }
+                else
+                {
+                    item.SendToDropBox(_inventoryBox);
+                }
             }
-
             _items.Clear();
             _totalValue = 0;
         }
@@ -66,11 +88,24 @@ public class DropBox : MonoBehaviour, IDropHandler
 
         if(_playerProperty != droppedItem.PlayerProperty) { return; }
 
-        droppedItem.SetEndPosition(this, Input.mousePosition);
-        
-        if(!_tradeBox)
+        if(_isTradeBox)
         {
-            droppedItem.SetStartPosition();
+            droppedItem.SetCurrentBox(this);
+            droppedItem.SetInTrade(true);
+            return;
+        }
+
+        if(_coinBox)
+        {
+            if(droppedItem.IsMoney)
+            {
+                droppedItem.SendToCoinBox(_coinBox);
+            }
+        }
+
+        if(!droppedItem.IsMoney)
+        {
+            droppedItem.SendToDropBox(_inventoryBox);
         }
     }
 
@@ -80,7 +115,7 @@ public class DropBox : MonoBehaviour, IDropHandler
         ItemScriptableObject itemSO = item.GetComponent<Item>().ItemSO;
         _totalValue += itemSO.BaseValue;
 
-        if(_tradeBox)
+        if(_isTradeBox)
         {
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
@@ -95,7 +130,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             _totalValue -= itemSO.BaseValue;
         }
 
-        if(_tradeBox)
+        if(_isTradeBox)
         {
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }

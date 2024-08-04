@@ -8,16 +8,17 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public static Action<Item> OnAnyItemClicked; // TODO Subscribe to this and update some info tab/window/tooltip
 
     [field:SerializeField] public bool PlayerProperty { get; private set; }
-
+    [field:SerializeField] public bool IsMoney { get; private set; }
     [field:SerializeField] public ItemScriptableObject ItemSO { get; private set; }
 
     [SerializeField] Image _itemImage, _raycastImage;
     [SerializeField] Color _selectedColor, _defaultColor;
     [SerializeField] Canvas _parentCanvas;
     
-    Vector2 _startPosition;
-    Vector2 _endPositon;
     DropBox _currentBox;
+    Currency _currencyType;
+    bool _inTrade;
+    Vector2 _startPosition;
 
     void OnEnable()
     {
@@ -31,18 +32,20 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if(!PlayerProperty && IsMoney) { return; }
         if(eventData.button != PointerEventData.InputButton.Left) { return; }
 
         OnAnyItemClicked?.Invoke(this);
 
-        _endPositon = transform.position;
         _raycastImage.raycastTarget = false;
         _currentBox.RemoveItem(gameObject);
         transform.SetParent(_parentCanvas.transform, true);
+        _inTrade = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if(!PlayerProperty && IsMoney) { return; }
         if(eventData.button != PointerEventData.InputButton.Left) { return; }
 
         transform.position = Input.mousePosition;
@@ -50,20 +53,57 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if(!PlayerProperty && IsMoney) { return; }
         if(eventData.button != PointerEventData.InputButton.Left) { return; }
 
-        transform.position = _endPositon;
         _raycastImage.raycastTarget = true;
         transform.SetParent(_currentBox.transform, true);
+        transform.position = _currentBox.transform.position;
+        
+        if(IsMoney && !_inTrade)
+        {
+            SendToCoinBox(_currentBox.CoinBox);
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if(eventData.button != PointerEventData.InputButton.Left) { return; }
+        if(!PlayerProperty && IsMoney) { return; }
 
         OnAnyItemClicked?.Invoke(this);
         
-        SendToDropBox(_currentBox.LinkedBox);
+        if(IsMoney)
+        {
+            if(!_inTrade)
+            {
+                SendToDropBox(_currentBox.TradeBox);
+                _inTrade = true;
+            }
+            else
+            {
+                SendToCoinBox(_currentBox.CoinBox);
+                _inTrade = false;
+            }
+        }
+        else
+        {
+            if(!_inTrade)
+            {
+                SendToDropBox(_currentBox.TradeBox);
+                _inTrade = true;
+            }
+            else
+            {
+                SendToDropBox(_currentBox.InventoryBox);
+                _inTrade = false;
+            }
+        }
+    }
+
+    public void SetInTrade(bool inTrade)
+    {
+        _inTrade = inTrade;
     }
 
     public void SetUp(ItemScriptableObject itemSO, bool playerProperty, DropBox dropBox)
@@ -77,15 +117,51 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _currentBox.AddItem(gameObject);
         _parentCanvas = GetComponentInParent<Canvas>();
     }
-    
+
+    public void SetUpMoney(ItemScriptableObject itemSO, bool playerProperty, DropBox coinBox, Currency coinType)
+    {
+        IsMoney = true;
+        _currencyType = coinType;
+        SetUp(itemSO, playerProperty, coinBox);
+
+        SortCoins(coinBox);
+    }
+
+    void SortCoins(DropBox coinBox)
+    {
+        switch(_currencyType)
+        {
+            case Currency.Copper:
+                transform.SetParent(coinBox.CopperParent, true);
+                transform.position = coinBox.CopperParent.position;
+                SetStartPosition();
+                break;
+            case Currency.Silver:
+                transform.SetParent(coinBox.SilverParent, true);
+                transform.position = coinBox.SilverParent.position;
+                SetStartPosition();
+                break;
+            case Currency.Gold:
+                transform.SetParent(coinBox.GoldParent, true);
+                transform.position = coinBox.GoldParent.position;
+                SetStartPosition();
+                break;
+            case Currency.Platinum:
+                transform.SetParent(coinBox.PlatinumParent, true);
+                transform.position = coinBox.PlatinumParent.position;
+                SetStartPosition();
+                break;
+        }
+        _inTrade = false;
+    }
+
     public void SetStartPosition()
     {
         _startPosition = transform.position;
     }
 
-    public void SetEndPosition(DropBox newBox, Vector2 newPosition)
+    public void SetCurrentBox(DropBox newBox)
     {
-        _endPositon = newPosition;
         _currentBox = newBox;
         _currentBox.AddItem(gameObject);
     }
@@ -97,6 +173,13 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         transform.position = _currentBox.transform.position;
         transform.SetParent(_currentBox.transform, true);
         SetStartPosition();
+    }
+
+    public void SendToCoinBox(DropBox coinBox)
+    {
+        _currentBox = coinBox;
+        _currentBox.AddItem(gameObject);
+        SortCoins(coinBox);
     }
 
     public void ResetPosition(DropBox inventoryBox)

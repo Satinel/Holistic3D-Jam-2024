@@ -12,9 +12,10 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] bool _isPlayer = false;
     [SerializeField] List<int> _startingCoins = new();
+    [SerializeField] List<ItemScriptableObject> _coins = new();
     [SerializeField] List<ItemScriptableObject> _startingItems = new();
 
-    [SerializeField] DropBox _dropBox;
+    [SerializeField] DropBox _dropBox, _coinBox;
     [SerializeField] Item _itemPrefab;
 
     // void OnEnable()
@@ -36,6 +37,12 @@ public class Inventory : MonoBehaviour
             if(_startingCoins.Count < i + 1) { break; }
 
             _wallet.Add((Currency)i, _startingCoins[i]);
+
+            for (int j = 0; j < _startingCoins[i]; j++)
+            {
+                Item newCoin = Instantiate(_itemPrefab, _coinBox.transform.position, Quaternion.identity, _coinBox.transform);
+                newCoin.SetUpMoney(_coins[i], _isPlayer, _coinBox, (Currency)i);
+            }
         }
         OnMoneyAmountChanged?.Invoke(_isPlayer, _wallet);
 
