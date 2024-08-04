@@ -4,25 +4,25 @@ using System.Collections.Generic;
 
 public class TradingSystem : MonoBehaviour
 {
-    public static Action<Dictionary<ItemScriptableObject, int>, Dictionary<Currency, int>> OnTradeCompleted;
+    public static Action OnTradeCompleted;
     public static Action OnTradeCancelled;
 
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            Dictionary<ItemScriptableObject, int> itemT = new();
+    // void Update()
+    // {
+    //     if(Input.GetKeyDown(KeyCode.T))
+    //     {
+    //         Dictionary<ItemScriptableObject, int> itemT = new();
 
-            Dictionary<Currency, int> moneyT = new()
-            {
-                { Currency.Copper, 5 },
-                { Currency.Silver, 1 },
-                { Currency.Platinum, 8 }
-            };
+    //         Dictionary<Currency, int> moneyT = new()
+    //         {
+    //             { Currency.Copper, 5 },
+    //             { Currency.Silver, 1 },
+    //             { Currency.Platinum, 8 }
+    //         };
 
-            OnTradeCompleted?.Invoke(itemT, moneyT);
-        }
-    }
+    //         OnTradeCompleted?.Invoke(itemT, moneyT);
+    //     }
+    // }
 
     void OnEnable()
     {
@@ -37,5 +37,16 @@ public class TradingSystem : MonoBehaviour
     void DropBox_OnTradeBoxValueChanged(bool playerProperty, int value)
     {
         // TODO Balance Scales?
+    }
+
+    public void ConfirmTrade()
+    {
+        // TODO Check if trade is legal/acceptable
+        OnTradeCompleted?.Invoke();
+    }
+
+    public void CancelTrade()
+    {
+        OnTradeCancelled?.Invoke();
     }
 }

@@ -165,10 +165,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <PlayerProperty>k__BackingField: 0
-  _itemSO: {fileID: 0}
+  <ItemSO>k__BackingField: {fileID: 0}
   _itemImage: {fileID: 7980320235752019674}
   _raycastImage: {fileID: 5300052994151575579}
-  _draggingColor: {r: 0, g: 1, b: 0.05725074, a: 1}
+  _selectedColor: {r: 0, g: 1, b: 0.11046505, a: 1}
   _defaultColor: {r: 1, g: 1, b: 1, a: 0}
-  _baseValue: 0
-  _currentBox: {fileID: 0}
+  _parentCanvas: {fileID: 0}

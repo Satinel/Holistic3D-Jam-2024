@@ -12,7 +12,8 @@ public enum Type
     Weapon,
     Armour,
     Relic,
-    Unique
+    Unique,
+    Coin
 }
 
 public enum Currency

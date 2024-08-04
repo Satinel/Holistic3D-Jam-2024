@@ -8,6 +8,9 @@ public class DropBox : MonoBehaviour, IDropHandler
     public static Action<bool, int> OnTradeBoxValueChanged;
 
     [SerializeField] bool _playerProperty, _tradeBox;
+    [SerializeField] DropBox _linkedBox, _partnerBox;
+
+    public DropBox LinkedBox => _linkedBox;
 
     List<GameObject> _items = new();
     int _totalValue;
@@ -24,7 +27,7 @@ public class DropBox : MonoBehaviour, IDropHandler
         TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
     }
 
-    void TradingSystem_OnTradeCompleted(Dictionary<ItemScriptableObject, int> ignore, Dictionary<Currency, int> money)
+    void TradingSystem_OnTradeCompleted()
     {
         if(_tradeBox)
         {
@@ -32,10 +35,11 @@ public class DropBox : MonoBehaviour, IDropHandler
             {
                 Item item = tradedItem.GetComponent<Item>();
                 item.SetPlayerProperty(!_playerProperty);
-                _totalValue -= item.ItemSO.BaseValue;
+                item.SendToDropBox(_partnerBox);
             }
 
             _items.Clear();
+            _totalValue = 0;
         }
     }
 
@@ -46,11 +50,11 @@ public class DropBox : MonoBehaviour, IDropHandler
             foreach(var cancelledItem in _items)
             {
                 Item item = cancelledItem.GetComponent<Item>();
-                item.ResetPosition();
-                _totalValue -= item.ItemSO.BaseValue; // TODO Deal with adding values to (primarily the player's) inventory box
+                item.ResetPosition(_linkedBox);
             }
 
             _items.Clear();
+            _totalValue = 0;
         }
     }
 
@@ -59,6 +63,7 @@ public class DropBox : MonoBehaviour, IDropHandler
         Item droppedItem = eventData.pointerDrag.GetComponent<Item>();
 
         if(!droppedItem) { return; }
+
         if(_playerProperty != droppedItem.PlayerProperty) { return; }
 
         droppedItem.SetEndPosition(this, Input.mousePosition);
@@ -72,10 +77,9 @@ public class DropBox : MonoBehaviour, IDropHandler
     public void AddItem(GameObject item)
     {
         _items.Add(item);
-
         ItemScriptableObject itemSO = item.GetComponent<Item>().ItemSO;
-
         _totalValue += itemSO.BaseValue;
+
         if(_tradeBox)
         {
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
@@ -87,11 +91,10 @@ public class DropBox : MonoBehaviour, IDropHandler
         if(_items.Contains(item))
         {
             _items.Remove(item);
+            ItemScriptableObject itemSO = item.GetComponent<Item>().ItemSO;
+            _totalValue -= itemSO.BaseValue;
         }
 
-        ItemScriptableObject itemSO = item.GetComponent<Item>().ItemSO;
-
-        _totalValue -= itemSO.BaseValue;
         if(_tradeBox)
         {
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);

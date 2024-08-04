@@ -7,21 +7,25 @@ public class Inventory : MonoBehaviour
     public static Action<bool, ItemScriptableObject, int> OnItemAmountChanged;
     public static Action<bool, Dictionary<Currency, int>> OnMoneyAmountChanged;
 
-    public Dictionary<ItemScriptableObject, int> ItemDictionary { get; private set; } = new Dictionary<ItemScriptableObject, int>();
-    public Dictionary<Currency, int> Wallet { get; private set; } = new Dictionary<Currency, int>();
+    Dictionary<ItemScriptableObject, int> _itemDictionary = new();
+    Dictionary<Currency, int> _wallet = new();
 
     [SerializeField] bool _isPlayer = false;
-    [SerializeField] List<int> _startingCoins = new List<int>();
+    [SerializeField] List<int> _startingCoins = new();
+    [SerializeField] List<ItemScriptableObject> _startingItems = new();
 
-    void OnEnable()
-    {
-        TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
-    }
+    [SerializeField] DropBox _dropBox;
+    [SerializeField] Item _itemPrefab;
 
-    void OnDisable()
-    {
-        TradingSystem.OnTradeCompleted -= TradingSystem_OnTradeCompleted;
-    }
+    // void OnEnable()
+    // {
+    //     TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
+    // }
+
+    // void OnDisable()
+    // {
+    //     TradingSystem.OnTradeCompleted -= TradingSystem_OnTradeCompleted;
+    // }
 
     void Start()
     {
@@ -31,73 +35,80 @@ public class Inventory : MonoBehaviour
         {
             if(_startingCoins.Count < i + 1) { break; }
 
-            Wallet.Add((Currency)i, _startingCoins[i]);
+            _wallet.Add((Currency)i, _startingCoins[i]);
         }
-        OnMoneyAmountChanged?.Invoke(_isPlayer, Wallet);
+        OnMoneyAmountChanged?.Invoke(_isPlayer, _wallet);
+
+        foreach(ItemScriptableObject startingItem in _startingItems)
+        {
+            Item newItem = Instantiate(_itemPrefab, _dropBox.transform.position, Quaternion.identity, _dropBox.transform);
+            newItem.SetUp(startingItem, _isPlayer, _dropBox);
+            AddToItems(startingItem, 1);
+        }
     }
 
-    void TradingSystem_OnTradeCompleted(Dictionary<ItemScriptableObject, int> items, Dictionary<Currency, int> money)
-    {
-        if(money.Count > 0)
-        {
-            ChangeMoneyTotal(money);
-        }
+    // void TradingSystem_OnTradeCompleted(Dictionary<ItemScriptableObject, int> items, Dictionary<Currency, int> money)
+    // {
+    //     if(money.Count > 0)
+    //     {
+    //         ChangeMoneyTotal(money);
+    //     }
 
-        if(items.Count <= 0) { return; } // If there is some sort of deal which only involves money??
+    //     if(items.Count <= 0) { return; } // If there is some sort of deal which only involves money??
 
-        foreach(var item in items) // Even though items and money could be coded the same, I like differentiating them like this
-        {
-            ItemScriptableObject itemKey = item.Key;
-            int itemAmount = item.Value;
-            if(itemAmount > 0)
-            {
-                if(_isPlayer)
-                {
-                    AddToItems(itemKey, itemAmount);
-                }
-                else
-                {
-                    RemoveFromItems(itemKey, -itemAmount);
-                }
-            }
-            else if(itemAmount < 0)
-            {
-                if(_isPlayer)
-                {
-                    RemoveFromItems(itemKey, itemAmount);
-                }
-                else
-                {
-                    AddToItems(itemKey, -itemAmount);
-                }
-            }
-        }
-    }
+    //     foreach(var item in items) // Even though items and money could be coded the same, I like differentiating them like this
+    //     {
+    //         ItemScriptableObject itemKey = item.Key;
+    //         int itemAmount = item.Value;
+    //         if(itemAmount > 0)
+    //         {
+    //             if(_isPlayer)
+    //             {
+    //                 AddToItems(itemKey, itemAmount);
+    //             }
+    //             else
+    //             {
+    //                 RemoveFromItems(itemKey, -itemAmount);
+    //             }
+    //         }
+    //         else if(itemAmount < 0)
+    //         {
+    //             if(_isPlayer)
+    //             {
+    //                 RemoveFromItems(itemKey, itemAmount);
+    //             }
+    //             else
+    //             {
+    //                 AddToItems(itemKey, -itemAmount);
+    //             }
+    //         }
+    //     }
+    // }
 
     void AddToItems(ItemScriptableObject item, int amount)
     {
-        if(ItemDictionary.ContainsKey(item))
+        if(_itemDictionary.ContainsKey(item))
         {
-            ItemDictionary[item] += amount;
+            _itemDictionary[item] += amount;
         }
         else
         {
-            ItemDictionary.Add(item, amount);
+            _itemDictionary.Add(item, amount);
         }
-        OnItemAmountChanged?.Invoke(_isPlayer, item, ItemDictionary[item]);
+        OnItemAmountChanged?.Invoke(_isPlayer, item, _itemDictionary[item]);
     }
 
     void RemoveFromItems(ItemScriptableObject item, int amount)
     {
-        if(!ItemDictionary.ContainsKey(item)) { return; } // Ideally it should be impossible for this to happen
+        if(!_itemDictionary.ContainsKey(item)) { return; } // Ideally it should be impossible for this to happen
 
-        ItemDictionary[item] += amount; // Note: This is a negative number so += is the correct way to handle it
+        _itemDictionary[item] += amount; // Note: This is a negative number so += is the correct way to handle it
         
-        if(ItemDictionary[item] >= 0)
+        if(_itemDictionary[item] >= 0)
         {
-            ItemDictionary.Remove(item);
+            _itemDictionary.Remove(item);
         }
-        OnItemAmountChanged?.Invoke(_isPlayer, item, ItemDictionary[item]);
+        OnItemAmountChanged?.Invoke(_isPlayer, item, _itemDictionary[item]);
     }
 
     void ChangeMoneyTotal(Dictionary<Currency, int> money)
@@ -112,23 +123,23 @@ public class Inventory : MonoBehaviour
             }
             if(coinType.Value > 0)
             {
-                if(!Wallet.ContainsKey(key))
+                if(!_wallet.ContainsKey(key))
                 {
-                    Wallet.Add(key, 0);
+                    _wallet.Add(key, 0);
                 }
-                Wallet[key] += amount;
+                _wallet[key] += amount;
             }
             else if(amount < 0)
             {
-                if(!Wallet.ContainsKey(key)) { return; } // Ideally it should ALSO be impossible for THIS to happen
+                if(!_wallet.ContainsKey(key)) { return; } // Ideally it should ALSO be impossible for THIS to happen
 
-                Wallet[key] += amount; // += with a negative amount
-                if(Wallet[key] < 0)
+                _wallet[key] += amount; // += with a negative amount
+                if(_wallet[key] < 0)
                 {
-                    Wallet[key] = 0;
+                    _wallet[key] = 0;
                 }
             }
         }
-        OnMoneyAmountChanged?.Invoke(_isPlayer, Wallet);
+        OnMoneyAmountChanged?.Invoke(_isPlayer, _wallet);
     }
 }
