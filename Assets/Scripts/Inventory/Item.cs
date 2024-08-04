@@ -10,13 +10,14 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     [field:SerializeField] public bool PlayerProperty { get; private set; }
     [field:SerializeField] public bool IsMoney { get; private set; }
     [field:SerializeField] public ItemScriptableObject ItemSO { get; private set; }
+    
+    public Currency CurrencyType { get;  private set; }
 
     [SerializeField] Image _itemImage, _raycastImage;
     [SerializeField] Color _selectedColor, _defaultColor;
     [SerializeField] Canvas _parentCanvas;
     
     DropBox _currentBox;
-    Currency _currencyType;
     bool _inTrade;
     Vector2 _startPosition;
 
@@ -131,7 +132,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void SetUpMoney(ItemScriptableObject itemSO, bool playerProperty, DropBox coinBox, Currency coinType)
     {
         IsMoney = true;
-        _currencyType = coinType;
+        CurrencyType = coinType;
         SetUp(itemSO, playerProperty, coinBox);
 
         SortCoins(coinBox);
@@ -139,7 +140,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     void SortCoins(DropBox coinBox)
     {
-        switch(_currencyType)
+        switch(CurrencyType)
         {
             case Currency.Copper:
                 transform.SetParent(coinBox.CopperParent, true);

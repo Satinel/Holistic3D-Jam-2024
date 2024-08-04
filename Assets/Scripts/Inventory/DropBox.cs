@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 public class DropBox : MonoBehaviour, IDropHandler
 {
     public static Action<bool, int> OnTradeBoxValueChanged;
+    public static Action<bool, Currency> OnCoinAdded;
+    public static Action<bool, Currency> OnCoinRemoved;
 
     [SerializeField] Transform _copperParent, _silverParent, _goldParent, _platinumParent;
 
@@ -98,30 +100,40 @@ public class DropBox : MonoBehaviour, IDropHandler
         }
     }
 
-    public void AddItem(GameObject item)
+    public void AddItem(GameObject itemPrefab)
     {
-        _items.Add(item);
-        ItemScriptableObject itemSO = item.GetComponent<Item>().ItemSO;
+        _items.Add(itemPrefab);
+        ItemScriptableObject itemSO = itemPrefab.GetComponent<Item>().ItemSO;
         _totalValue += itemSO.BaseValue;
 
         if(_isTradeBox)
         {
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
+        if(_isCoinBox)
+        {
+            Item item = itemPrefab.GetComponent<Item>();
+            OnCoinAdded(_playerProperty, item.CurrencyType);
+        }
     }
 
-    public void RemoveItem(GameObject item)
+    public void RemoveItem(GameObject itemPrefab)
     {
-        if(_items.Contains(item))
+        if(_items.Contains(itemPrefab))
         {
-            _items.Remove(item);
-            ItemScriptableObject itemSO = item.GetComponent<Item>().ItemSO;
+            _items.Remove(itemPrefab);
+            ItemScriptableObject itemSO = itemPrefab.GetComponent<Item>().ItemSO;
             _totalValue -= itemSO.BaseValue;
         }
 
         if(_isTradeBox)
         {
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
+        }
+        if(_isCoinBox)
+        {
+            Item item = itemPrefab.GetComponent<Item>();
+            OnCoinRemoved(_playerProperty, item.CurrencyType);
         }
     }
 }
