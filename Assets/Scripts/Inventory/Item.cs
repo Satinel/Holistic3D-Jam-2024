@@ -20,21 +20,69 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     DropBox _currentBox;
     bool _inTrade;
     Vector2 _startPosition;
+    Customer.Type _customerType;
 
     void OnEnable()
     {
         OnAnyItemClicked += Item_OnAnyItemClicked;
+        TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
     }
 
     void OnDisable()
     {
         OnAnyItemClicked += Item_OnAnyItemClicked;
+        TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
+    }
+
+    void TradingSystem_OnNewCustomer(Customer.Type type)
+    {
+        _customerType = type;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(!PlayerProperty && IsMoney) { return; }
-        if(eventData.button != PointerEventData.InputButton.Left) { return; }
+        if(eventData.button != PointerEventData.InputButton.Left)
+        {
+            eventData.pointerDrag = null;
+            return;
+        }
+
+        switch(_customerType)
+        {
+            case Customer.Type.Buy:
+                if(PlayerProperty)
+                {
+                    eventData.pointerDrag = null;
+                    return;
+                }
+                if(!IsMoney)
+                {
+                    eventData.pointerDrag = null;
+                    return;
+                }
+                break;
+            case Customer.Type.Sell:
+                if(!PlayerProperty)
+                {
+                    eventData.pointerDrag = null;
+                    return;
+                }
+                if(!IsMoney)
+                {
+                    eventData.pointerDrag = null;
+                    return;
+                }
+                break;
+            case Customer.Type.Barter:
+                break;
+            default:
+                if(!PlayerProperty)
+                {
+                    eventData.pointerDrag = null;
+                    return;
+                }
+                break;
+        }
 
         OnAnyItemClicked?.Invoke(this);
 
@@ -46,7 +94,6 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(!PlayerProperty && IsMoney) { return; }
         if(eventData.button != PointerEventData.InputButton.Left) { return; }
 
         transform.position = Input.mousePosition;
@@ -54,7 +101,6 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(!PlayerProperty && IsMoney) { return; }
         if(eventData.button != PointerEventData.InputButton.Left) { return; }
 
         _raycastImage.raycastTarget = true;
@@ -76,7 +122,23 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void OnPointerClick(PointerEventData eventData)
     {
         if(eventData.button != PointerEventData.InputButton.Left) { return; }
-        if(!PlayerProperty && IsMoney) { return; }
+
+        switch(_customerType)
+        {
+            case Customer.Type.Buy:
+                if(PlayerProperty) { return; }
+                if(!IsMoney) { return; }
+                break;
+            case Customer.Type.Sell:
+                if(!PlayerProperty) { return; }
+                if(!IsMoney) { return; }
+                break;
+            case Customer.Type.Barter:
+                break;
+            default:
+                if(!PlayerProperty) { return; }
+                break;
+        }
 
         OnAnyItemClicked?.Invoke(this);
         

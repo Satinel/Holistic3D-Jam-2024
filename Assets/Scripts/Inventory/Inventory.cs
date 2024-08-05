@@ -7,8 +7,10 @@ public class Inventory : MonoBehaviour
     public static Action<bool, ItemScriptableObject, int> OnItemAmountChanged;
     public static Action<bool, Dictionary<Currency, int>> OnMoneyAmountChanged;
 
-    Dictionary<ItemScriptableObject, int> _itemDictionary = new();
-    Dictionary<Currency, int> _wallet = new();
+    public Dictionary<ItemScriptableObject, int> Items { get; private set; } = new();
+    public Dictionary<Currency, int> Wallet { get; private set; } = new();
+
+    public int TotalFunds => GetTotalMoney();
 
     [SerializeField] bool _isPlayer = false;
     [SerializeField] List<int> _startingCoins = new();
@@ -36,7 +38,7 @@ public class Inventory : MonoBehaviour
         {
             if(_startingCoins.Count < i + 1) { break; }
 
-            _wallet.Add((Currency)i, _startingCoins[i]);
+            Wallet.Add((Currency)i, _startingCoins[i]);
 
             for (int j = 0; j < _startingCoins[i]; j++)
             {
@@ -44,7 +46,7 @@ public class Inventory : MonoBehaviour
                 newCoin.SetUpMoney(_coins[i], _isPlayer, _coinBox, (Currency)i);
             }
         }
-        OnMoneyAmountChanged?.Invoke(_isPlayer, _wallet);
+        OnMoneyAmountChanged?.Invoke(_isPlayer, Wallet);
 
         foreach(ItemScriptableObject startingItem in _startingItems)
         {
@@ -52,6 +54,32 @@ public class Inventory : MonoBehaviour
             newItem.SetUp(startingItem, _isPlayer, _dropBox);
             AddToItems(startingItem, 1);
         }
+    }
+
+    public int GetTotalMoney()
+    {
+        int total = 0;
+
+        foreach(var currency in Wallet)
+        {
+            switch(currency.Key)
+            {
+                case Currency.Copper:
+                    total += currency.Value * TradingSystem.CopperValue;
+                    break;
+                case Currency.Silver:
+                    total += currency.Value * TradingSystem.SilverValue;
+                    break;
+                case Currency.Gold:
+                    total += currency.Value * TradingSystem.GoldValue;
+                    break;
+                case Currency.Platinum:
+                    total += currency.Value * TradingSystem.PlatinumValue;
+                    break;
+            }
+        }
+
+        return total;
     }
 
     // void TradingSystem_OnTradeCompleted(Dictionary<ItemScriptableObject, int> items, Dictionary<Currency, int> money)
@@ -94,28 +122,28 @@ public class Inventory : MonoBehaviour
 
     void AddToItems(ItemScriptableObject item, int amount)
     {
-        if(_itemDictionary.ContainsKey(item))
+        if(Items.ContainsKey(item))
         {
-            _itemDictionary[item] += amount;
+            Items[item] += amount;
         }
         else
         {
-            _itemDictionary.Add(item, amount);
+            Items.Add(item, amount);
         }
-        OnItemAmountChanged?.Invoke(_isPlayer, item, _itemDictionary[item]);
+        OnItemAmountChanged?.Invoke(_isPlayer, item, Items[item]);
     }
 
     void RemoveFromItems(ItemScriptableObject item, int amount)
     {
-        if(!_itemDictionary.ContainsKey(item)) { return; } // Ideally it should be impossible for this to happen
+        if(!Items.ContainsKey(item)) { return; } // Ideally it should be impossible for this to happen
 
-        _itemDictionary[item] += amount; // Note: This is a negative number so += is the correct way to handle it
+        Items[item] += amount; // Note: This is a negative number so += is the correct way to handle it
         
-        if(_itemDictionary[item] >= 0)
+        if(Items[item] >= 0)
         {
-            _itemDictionary.Remove(item);
+            Items.Remove(item);
         }
-        OnItemAmountChanged?.Invoke(_isPlayer, item, _itemDictionary[item]);
+        OnItemAmountChanged?.Invoke(_isPlayer, item, Items[item]);
     }
 
     void ChangeMoneyTotal(Dictionary<Currency, int> money)
@@ -130,23 +158,23 @@ public class Inventory : MonoBehaviour
             }
             if(coinType.Value > 0)
             {
-                if(!_wallet.ContainsKey(key))
+                if(!Wallet.ContainsKey(key))
                 {
-                    _wallet.Add(key, 0);
+                    Wallet.Add(key, 0);
                 }
-                _wallet[key] += amount;
+                Wallet[key] += amount;
             }
             else if(amount < 0)
             {
-                if(!_wallet.ContainsKey(key)) { return; } // Ideally it should ALSO be impossible for THIS to happen
+                if(!Wallet.ContainsKey(key)) { return; } // Ideally it should ALSO be impossible for THIS to happen
 
-                _wallet[key] += amount; // += with a negative amount
-                if(_wallet[key] < 0)
+                Wallet[key] += amount; // += with a negative amount
+                if(Wallet[key] < 0)
                 {
-                    _wallet[key] = 0;
+                    Wallet[key] = 0;
                 }
             }
         }
-        OnMoneyAmountChanged?.Invoke(_isPlayer, _wallet);
+        OnMoneyAmountChanged?.Invoke(_isPlayer, Wallet);
     }
 }
