@@ -29,12 +29,16 @@ public class DropBox : MonoBehaviour, IDropHandler
     {
         TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
         TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
+        TradingSystem.OnBuyCustomer += TradingSystem_OnBuyCustomer;
+        TradingSystem.OnSellCustomer += TradingSystem_OnSellCustomer;
     }
 
     void OnDisable()
     {
         TradingSystem.OnTradeCompleted -= TradingSystem_OnTradeCompleted;
         TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
+        TradingSystem.OnBuyCustomer -= TradingSystem_OnBuyCustomer;
+        TradingSystem.OnSellCustomer -= TradingSystem_OnSellCustomer;
     }
 
     void TradingSystem_OnTradeCompleted()
@@ -92,6 +96,32 @@ public class DropBox : MonoBehaviour, IDropHandler
             _totalValue = 0;
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
+    }
+
+    void TradingSystem_OnBuyCustomer()
+    {
+        if (_isCoinBox || _isTradeBox) { return; }
+
+        if (!_playerProperty) { return; }
+
+        PickRandomItem();
+    }
+
+    void TradingSystem_OnSellCustomer()
+    {
+        if(_isCoinBox || _isTradeBox) { return; }
+
+        if(_playerProperty) { return; }
+
+        PickRandomItem();
+    }
+
+    void PickRandomItem()
+    {
+        Item randomItem = _items[UnityEngine.Random.Range(0, _items.Count)].GetComponent<Item>();
+
+        _items.Remove(randomItem.gameObject);
+        randomItem.SendToDropBox(_tradeBox);
     }
 
     public void OnDrop(PointerEventData eventData)

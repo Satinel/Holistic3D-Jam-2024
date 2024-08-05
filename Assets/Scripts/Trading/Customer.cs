@@ -6,7 +6,7 @@ public class Customer : MonoBehaviour
 
     [field:SerializeField] public Type CustomerType { get; private set; }
     [field:SerializeField] public Sprite Sprite { get; private set; }
-    [field:SerializeField] public int Tolerance { get; private set; }
+    [field:SerializeField][field:Range(0, 1f)] public float Tolerance { get; private set; }
     [field:SerializeField] public int Strikes { get; private set; }
 
     public int TotalFunds => _inventory.TotalFunds;

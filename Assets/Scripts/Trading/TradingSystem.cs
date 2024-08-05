@@ -7,6 +7,8 @@ public class TradingSystem : MonoBehaviour
     public static Action OnTradeCancelled;
     public static Action<Customer> OnNewCustomer;
     public static Action OnOpenToPublic;
+    public static Action OnBuyCustomer;
+    public static Action OnSellCustomer;
     
     int _playerValue, _compValue;
 
@@ -23,7 +25,7 @@ public class TradingSystem : MonoBehaviour
     // {
     //     if(Input.GetKeyDown(KeyCode.T))
     //     {
-    //         NewCustomer(_testCustomer);
+
     //     }
     //     if(Input.GetKeyDown(KeyCode.X))
     //     {
@@ -72,15 +74,14 @@ public class TradingSystem : MonoBehaviour
     {
         _currentCustomer = customer;
         OnNewCustomer?.Invoke(customer);
-        Debug.Log(_currentCustomer.name); // TODO DELETE
 
         switch(_currentCustomer.CustomerType)
         {
             case Customer.Type.Buy:
-                // TODO Pick a random item customer wants to buy from player inventory and put into player tradebox
+                BuyingCustomer();
                 break;
             case Customer.Type.Sell:
-                // TODO Pick a random item customer wants to sell from customer inventory and put into customer tradebox
+                SellingCustomer();
                 break;
             case Customer.Type.Barter:
                 // TODO Nothing?
@@ -93,6 +94,18 @@ public class TradingSystem : MonoBehaviour
         }
     }
 
+    void BuyingCustomer()
+    {
+        OnBuyCustomer?.Invoke();
+        // TODO Prompt for player to set a price
+    }
+
+    void SellingCustomer()
+    {
+        OnSellCustomer?.Invoke();
+        // TODO Prompt for player to set a price
+    }
+
     void NoCustomer()
     {
         _currentCustomer = null;
@@ -101,11 +114,16 @@ public class TradingSystem : MonoBehaviour
 
     public bool MakeOffer()
     {
+        if(_playerValue <= 0) { return false; } // TODO(?) Invoke a snide message from customer that player should offer something
+        if(_compValue <= 0) { return true; } // TODO(?) Invoke message thanking player for free gift
+
         int offer = _compValue - _playerValue;
 
-        if(offer < 0) { return true; }
+        if(offer <= 0) { return true; } // TODO(?) Invoke a smug message from customer that they got a great deal
 
-        return offer <= _currentCustomer.Tolerance;
+        float rake = 1 - ((float)_playerValue / _compValue);
+
+        return rake <= _currentCustomer.Tolerance;
     }
 
     public void AttemptTrade() // Used for UI Button
@@ -146,6 +164,7 @@ public class TradingSystem : MonoBehaviour
 
     public void OpenToPublic() // Used for UI Button
     {
+        OnTradeCancelled?.Invoke(); // Currently needed so player can't toss things in before trading starts
         _isOpen = true;
         _openButton.SetActive(false);
         OnOpenToPublic?.Invoke();

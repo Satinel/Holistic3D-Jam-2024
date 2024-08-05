@@ -3554,10 +3554,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8333649778445846049}
-  - component: {fileID: 255633268378616115}
   - component: {fileID: 1143175699462310482}
+  - component: {fileID: 350603147462098946}
   m_Layer: 0
-  m_Name: InventoryUI
+  m_Name: TradingyUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3579,29 +3579,6 @@ Transform:
   - {fileID: 2110611139577863269}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &255633268378616115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5189753596902037303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebdecb98951549e428c7877a2f79cb9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _copperText: {fileID: 925622780462208175}
-  _silverText: {fileID: 8885170507618358277}
-  _goldText: {fileID: 3281721297956788160}
-  _platinumText: {fileID: 2097406387685436715}
-  _tradeBoxText: {fileID: 8499241776696033490}
-  _compCopperText: {fileID: 4878837717569160232}
-  _compSilverText: {fileID: 338883624985012167}
-  _compGoldText: {fileID: 6073133756781090050}
-  _compPlatinumText: {fileID: 8883632834032038738}
-  _compTradeBoxText: {fileID: 6770587572352278000}
-  _customerImage: {fileID: 7993422094809301883}
 --- !u!114 &1143175699462310482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3615,6 +3592,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _openButton: {fileID: 5519005665945874857}
+--- !u!114 &350603147462098946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5189753596902037303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af1eb81488555b46b85a6390e5598f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _copperText: {fileID: 925622780462208175}
+  _silverText: {fileID: 8885170507618358277}
+  _goldText: {fileID: 3281721297956788160}
+  _platinumText: {fileID: 2097406387685436715}
+  _tradeBoxText: {fileID: 8499241776696033490}
+  _compCopperText: {fileID: 4878837717569160232}
+  _compSilverText: {fileID: 338883624985012167}
+  _compGoldText: {fileID: 6073133756781090050}
+  _compPlatinumText: {fileID: 8883632834032038738}
+  _compTradeBoxText: {fileID: 6770587572352278000}
+  _customerImage: {fileID: 7993422094809301883}
 --- !u!1 &5356355073847001464
 GameObject:
   m_ObjectHideFlags: 0

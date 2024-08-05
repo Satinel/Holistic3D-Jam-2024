@@ -58,7 +58,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         switch(_customerType)
         {
             case Customer.Type.Buy:
-                if(PlayerProperty)
+                if(PlayerProperty && !IsMoney)
                 {
                     eventData.pointerDrag = null;
                     return;
@@ -134,7 +134,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         switch(_customerType)
         {
             case Customer.Type.Buy:
-                if(PlayerProperty) { return; }
+                if(PlayerProperty && !IsMoney) { return; }
                 if(!IsMoney) { return; }
                 break;
             case Customer.Type.Sell:
