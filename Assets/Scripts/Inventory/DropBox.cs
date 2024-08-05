@@ -59,6 +59,16 @@ public class DropBox : MonoBehaviour, IDropHandler
             _totalValue = 0;
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
+
+        if(!_playerProperty)
+        {
+            foreach(GameObject customerItem in _items)
+            {
+                customerItem.SetActive(false);
+            }
+            _items.Clear();
+            _totalValue = 0;
+        }
     }
 
     void TradingSystem_OnTradeCancelled()

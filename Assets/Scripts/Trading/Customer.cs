@@ -19,6 +19,24 @@ public class Customer : MonoBehaviour
         Barter
     }
 
+    void OnEnable()
+    {
+        Town.OnNextCustomer += Town_OnNextCustomer;
+    }
+
+    void OnDisable()
+    {
+        Town.OnNextCustomer -= Town_OnNextCustomer;
+    }
+
+    void Town_OnNextCustomer(Customer customer)
+    {
+        if(customer == this)
+        {
+            _inventory.ShowInventory(customer.CustomerType);
+        }
+    }
+
     public void ReduceStrikes(int amount)
     {
         Strikes -= amount;

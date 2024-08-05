@@ -14,7 +14,7 @@ public class InventoryUI : MonoBehaviour
 
     void OnEnable()
     {
-        Inventory.OnItemAmountChanged += Inventory_OnItemAmountChanged;
+        // Inventory.OnItemAmountChanged += Inventory_OnItemAmountChanged;
         Inventory.OnMoneyAmountChanged += Inventory_OnMoneyAmountChanged;
         DropBox.OnTradeBoxValueChanged += DropBox_OnTradeBoxValueChanged;
         DropBox.OnCoinAdded += DropBox_OnCoinAdded;
@@ -24,7 +24,7 @@ public class InventoryUI : MonoBehaviour
 
     void OnDisable()
     {
-        Inventory.OnItemAmountChanged -= Inventory_OnItemAmountChanged;
+        // Inventory.OnItemAmountChanged -= Inventory_OnItemAmountChanged;
         Inventory.OnMoneyAmountChanged -= Inventory_OnMoneyAmountChanged;
         DropBox.OnTradeBoxValueChanged -= DropBox_OnTradeBoxValueChanged;
         DropBox.OnCoinAdded -= DropBox_OnCoinAdded;
@@ -98,10 +98,10 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    void Inventory_OnItemAmountChanged(bool isPlayer, ItemScriptableObject item, int amount)
-    {
-        // TODO Add/Remove game objects to/from inventory
-    }
+    // void Inventory_OnItemAmountChanged(bool isPlayer, ItemScriptableObject item, int amount)
+    // {
+        
+    // }
 
     void DropBox_OnTradeBoxValueChanged(bool isPlayer, int value)
     {

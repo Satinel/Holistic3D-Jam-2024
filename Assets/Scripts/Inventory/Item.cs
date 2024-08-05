@@ -36,12 +36,14 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     void TradingSystem_OnNewCustomer(Customer customer)
     {
+        if(!PlayerProperty) { return; }
+
         if(!customer)
         {
             _customerType = Customer.Type.None;
             return;
         }
-        
+
         _customerType = customer.CustomerType;
     }
 
@@ -185,7 +187,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _inTrade = inTrade;
     }
 
-    public void SetUp(ItemScriptableObject itemSO, bool playerProperty, DropBox dropBox)
+    public void SetUp(ItemScriptableObject itemSO, bool playerProperty, DropBox dropBox, Customer.Type customerType)
     {
         ItemSO = itemSO;
         gameObject.name = ItemSO.ItemName;
@@ -195,13 +197,14 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _currentBox = dropBox;
         _currentBox.AddItem(gameObject);
         _parentCanvas = GetComponentInParent<Canvas>();
+        _customerType = customerType;
     }
 
-    public void SetUpMoney(ItemScriptableObject itemSO, bool playerProperty, DropBox coinBox, Currency coinType)
+    public void SetUpMoney(ItemScriptableObject itemSO, bool playerProperty, DropBox coinBox, Currency coinType, Customer.Type customerType)
     {
         IsMoney = true;
         CurrencyType = coinType;
-        SetUp(itemSO, playerProperty, coinBox);
+        SetUp(itemSO, playerProperty, coinBox, customerType);
 
         SortCoins(coinBox);
     }
