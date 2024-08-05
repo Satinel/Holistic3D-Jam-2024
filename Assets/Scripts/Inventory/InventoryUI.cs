@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _copperText, _silverText, _goldText, _platinumText, _tradeBoxText;
     [SerializeField] TextMeshProUGUI _compCopperText, _compSilverText, _compGoldText, _compPlatinumText, _compTradeBoxText;
+    [SerializeField] Image _customerImage;
 
     int _copperTotal, _silverTotal, _goldTotal, _platinumTotal;
     int _compCopperTotal, _compSilverTotal, _compGoldTotal, _compPlatinumTotal;
@@ -17,6 +19,7 @@ public class InventoryUI : MonoBehaviour
         DropBox.OnTradeBoxValueChanged += DropBox_OnTradeBoxValueChanged;
         DropBox.OnCoinAdded += DropBox_OnCoinAdded;
         DropBox.OnCoinRemoved += DropBox_OnCoinRemoved;
+        TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
     }
 
     void OnDisable()
@@ -26,6 +29,7 @@ public class InventoryUI : MonoBehaviour
         DropBox.OnTradeBoxValueChanged -= DropBox_OnTradeBoxValueChanged;
         DropBox.OnCoinAdded -= DropBox_OnCoinAdded;
         DropBox.OnCoinRemoved -= DropBox_OnCoinRemoved;
+        TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
     }
 
     void Inventory_OnMoneyAmountChanged(bool isPlayer, Dictionary<Currency, int> money)
@@ -219,5 +223,17 @@ public class InventoryUI : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    void TradingSystem_OnNewCustomer(Customer customer)
+    {
+        if(!customer)
+        {
+            _customerImage.enabled = false;
+            return;
+        }
+
+        _customerImage.sprite = customer.Sprite;
+        _customerImage.enabled = true;
     }
 }

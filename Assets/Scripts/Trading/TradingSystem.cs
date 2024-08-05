@@ -5,7 +5,7 @@ public class TradingSystem : MonoBehaviour
 {
     public static Action OnTradeCompleted;
     public static Action OnTradeCancelled;
-    public static Action<Customer.Type> OnNewCustomer;
+    public static Action<Customer> OnNewCustomer;
     
     int _playerValue, _compValue;
 
@@ -22,6 +22,11 @@ public class TradingSystem : MonoBehaviour
         {
             NewCustomer(_testCustomer);
         }
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            NoCustomer();
+        }
+        
     }
 
     void OnEnable()
@@ -49,14 +54,14 @@ public class TradingSystem : MonoBehaviour
     void NewCustomer(Customer customer) // TODO Use this to start a transaction with a customer!
     {
         _currentCustomer = customer;
-        OnNewCustomer?.Invoke(customer.CustomerType);
+        OnNewCustomer?.Invoke(customer);
         Debug.Log(_currentCustomer.name); // TODO DELETE
     }
 
     void NoCustomer() // TODO Use this once all trading with a customer is complete!
     {
         _currentCustomer = null;
-        OnNewCustomer?.Invoke(Customer.Type.None);
+        OnNewCustomer?.Invoke(null);
     }
 
     public bool MakeOffer()

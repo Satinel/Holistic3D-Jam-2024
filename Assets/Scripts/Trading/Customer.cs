@@ -5,6 +5,7 @@ public class Customer : MonoBehaviour
     [SerializeField] Inventory _inventory;
 
     [field:SerializeField] public Type CustomerType { get; private set; }
+    [field:SerializeField] public Sprite Sprite { get; private set; }
     [field:SerializeField] public int Tolerance { get; private set; }
     [field:SerializeField] public int Strikes { get; private set; }
 

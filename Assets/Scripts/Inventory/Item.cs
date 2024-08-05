@@ -34,9 +34,15 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
     }
 
-    void TradingSystem_OnNewCustomer(Customer.Type type)
+    void TradingSystem_OnNewCustomer(Customer customer)
     {
-        _customerType = type;
+        if(!customer)
+        {
+            _customerType = Customer.Type.None;
+            return;
+        }
+        
+        _customerType = customer.CustomerType;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
