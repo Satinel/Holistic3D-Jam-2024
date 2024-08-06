@@ -7,29 +7,39 @@ public class TradingUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _copperText, _silverText, _goldText, _platinumText, _tradeBoxText;
     [SerializeField] TextMeshProUGUI _compCopperText, _compSilverText, _compGoldText, _compPlatinumText, _compTradeBoxText;
+    [SerializeField] TextMeshProUGUI _profitText;
     [SerializeField] Image _customerImage;
+    [SerializeField] GameObject _resultWindow, _rejectionWindow, _noItemsWindow;
 
     int _copperTotal, _silverTotal, _goldTotal, _platinumTotal;
     int _compCopperTotal, _compSilverTotal, _compGoldTotal, _compPlatinumTotal;
 
+    int _playerValue, _compValue;
+
     void OnEnable()
     {
-        // Inventory.OnItemAmountChanged += Inventory_OnItemAmountChanged;
         Inventory.OnMoneyAmountChanged += Inventory_OnMoneyAmountChanged;
         DropBox.OnTradeBoxValueChanged += DropBox_OnTradeBoxValueChanged;
         DropBox.OnCoinAdded += DropBox_OnCoinAdded;
         DropBox.OnCoinRemoved += DropBox_OnCoinRemoved;
+        DropBox.OnNoItems += DropBox_OnNoItems;
+        TradingSystem.OnOfferRejected += TradingSystem_OnOfferRejected;
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
+        TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
+        DropBox.OnTradeResults += DropBox_OnTradeResults;
     }
 
     void OnDisable()
     {
-        // Inventory.OnItemAmountChanged -= Inventory_OnItemAmountChanged;
         Inventory.OnMoneyAmountChanged -= Inventory_OnMoneyAmountChanged;
         DropBox.OnTradeBoxValueChanged -= DropBox_OnTradeBoxValueChanged;
         DropBox.OnCoinAdded -= DropBox_OnCoinAdded;
         DropBox.OnCoinRemoved -= DropBox_OnCoinRemoved;
+        DropBox.OnNoItems -= DropBox_OnNoItems;
+        TradingSystem.OnOfferRejected -= TradingSystem_OnOfferRejected;
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
+        TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
+        DropBox.OnTradeResults -= DropBox_OnTradeResults;
     }
 
     void Inventory_OnMoneyAmountChanged(bool isPlayer, Dictionary<Currency, int> money)
@@ -97,11 +107,6 @@ public class TradingUI : MonoBehaviour
             }
         }
     }
-
-    // void Inventory_OnItemAmountChanged(bool isPlayer, ItemScriptableObject item, int amount)
-    // {
-        
-    // }
 
     void DropBox_OnTradeBoxValueChanged(bool isPlayer, int value)
     {
@@ -225,6 +230,16 @@ public class TradingUI : MonoBehaviour
         }
     }
 
+    void DropBox_OnNoItems()
+    {
+        _noItemsWindow.SetActive(true);
+    }
+
+    void TradingSystem_OnOfferRejected()
+    {
+        _rejectionWindow.SetActive(true);
+    }
+
     void TradingSystem_OnNewCustomer(Customer customer)
     {
         if(!customer)
@@ -236,5 +251,42 @@ public class TradingUI : MonoBehaviour
         _customerImage.sprite = customer.Sprite;
         _customerImage.enabled = true;
         // TODO Set a text field based on a string supplied by customer
+    }
+
+    void TradingSystem_OnTradeCancelled()
+    {
+        CloseRejection();
+        CloseResults();
+        CloseNoItems();
+    }
+
+    void DropBox_OnTradeResults(bool isPlayer, int value)
+    {
+        if(isPlayer)
+        {
+            _playerValue = value;
+        }
+        else
+        {
+            _compValue = value;
+        }
+
+        _resultWindow.SetActive(true);
+        _profitText.text = $"Profit: {(_compValue - _playerValue).ToString("N0")}";
+    }
+
+    public void CloseResults() // UI Button
+    {
+        _resultWindow.SetActive(false);
+    }
+
+    public void CloseRejection() // UI Button
+    {
+        _rejectionWindow.SetActive(false);
+    }
+
+    public void CloseNoItems() // UI Button
+    {
+        _noItemsWindow.SetActive(false);
     }
 }

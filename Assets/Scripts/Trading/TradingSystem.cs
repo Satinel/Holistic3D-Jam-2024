@@ -3,7 +3,8 @@ using System;
 
 public class TradingSystem : MonoBehaviour
 {
-    public static Action OnTradeCompleted;
+    public static Action OnOfferAccepted;
+    public static Action OnOfferRejected;
     public static Action OnTradeCancelled;
     public static Action<Customer> OnNewCustomer;
     public static Action OnOpenToPublic;
@@ -12,10 +13,8 @@ public class TradingSystem : MonoBehaviour
     
     int _playerValue, _compValue;
 
-
     [SerializeField] GameObject _openButton;
     Customer _currentCustomer;
-    bool _isOpen;
     
     public const int CopperValue = 1, SilverValue = 10, GoldValue = 100, PlatinumValue = 1000;
 
@@ -38,6 +37,7 @@ public class TradingSystem : MonoBehaviour
         DropBox.OnTradeBoxValueChanged += DropBox_OnTradeBoxValueChanged;
         Town.OnNextCustomer += Town_OnNextCustomer;
         Town.OnNoCustomers += Town_OnNoCustomers;
+        Inventory.OnInventoryLoaded += Inventory_OnInventoryLoaded;
     }
 
     void OnDisable()
@@ -45,6 +45,7 @@ public class TradingSystem : MonoBehaviour
         DropBox.OnTradeBoxValueChanged -= DropBox_OnTradeBoxValueChanged;
         Town.OnNextCustomer -= Town_OnNextCustomer;
         Town.OnNoCustomers -= Town_OnNoCustomers;
+        Inventory.OnInventoryLoaded -= Inventory_OnInventoryLoaded;
     }
 
     void DropBox_OnTradeBoxValueChanged(bool playerProperty, int value)
@@ -74,7 +75,17 @@ public class TradingSystem : MonoBehaviour
     {
         _currentCustomer = customer;
         OnNewCustomer?.Invoke(customer);
+    }
 
+    void Inventory_OnInventoryLoaded(bool isPlayer)
+    {
+        if(isPlayer) { return; }
+
+        HandleCustomerType();
+    }
+
+    void HandleCustomerType()
+    {
         switch(_currentCustomer.CustomerType)
         {
             case Customer.Type.Buy:
@@ -112,7 +123,7 @@ public class TradingSystem : MonoBehaviour
         OnNewCustomer?.Invoke(null);
     }
 
-    public bool MakeOffer()
+    bool MakeOffer()
     {
         if(_playerValue <= 0) { return false; } // TODO(?) Invoke a snide message from customer that player should offer something
         if(_compValue <= 0) { return true; } // TODO(?) Invoke message thanking player for free gift
@@ -124,6 +135,25 @@ public class TradingSystem : MonoBehaviour
         float rake = 1 - ((float)_playerValue / _compValue);
 
         return rake <= _currentCustomer.Tolerance;
+    }
+
+    void ProcessTrade()
+    {
+        // TODO UI/VFX/SFX (include profit/loss and if correct change)
+        OnOfferAccepted?.Invoke();
+    }
+
+    void ProcessRejection()
+    {
+        _currentCustomer.ReduceStrikes(1); // TODO? Some formula to change this amount based on variables
+        OnOfferRejected?.Invoke();
+        // TODO? alter customer Tolerance and/or alter player Reputation
+
+        if(_currentCustomer.Strikes <= 0)
+        {
+            // TODO alter player reputation and display angry customer message (plus SFX maybe)
+            CancelTrade();
+        }
     }
 
     public void AttemptTrade() // Used for UI Button
@@ -140,32 +170,22 @@ public class TradingSystem : MonoBehaviour
         }
     }
 
-    void ProcessTrade()
+    public void RepeatCustomer() // Used for UI Button
     {
-        // TODO UI/VFX/SFX (include profit/loss and if correct change)
-        OnTradeCompleted?.Invoke();
-
-        if(_isOpen)
-        {
-            OnOpenToPublic?.Invoke();
-        }
+        HandleCustomerType();
     }
 
-    void ProcessRejection()
-    {
-        _currentCustomer.ReduceStrikes(1); // TODO? Some formula to change this amount based on variables (or not do it at all)
-        // TODO Failure Message/Trade Rejected (possibly alter customer Tolerance) (possibly alter player Reputation)
-    }
 
     public void CancelTrade() // Used for UI Button
     {
         OnTradeCancelled?.Invoke();
+        _openButton.SetActive(true);
+        NoCustomer();
     }
 
     public void OpenToPublic() // Used for UI Button
     {
-        OnTradeCancelled?.Invoke(); // Currently needed so player can't toss things in before trading starts
-        _isOpen = true;
+        OnTradeCancelled?.Invoke();
         _openButton.SetActive(false);
         OnOpenToPublic?.Invoke();
     }

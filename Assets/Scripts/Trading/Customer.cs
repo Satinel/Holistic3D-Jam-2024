@@ -42,10 +42,5 @@ public class Customer : MonoBehaviour
         Strikes -= amount;
 
         // TODO VFX (probably adding pieces of an anger emoji)
-
-        if(Strikes <= 0)
-        {
-            // TODO Customer stops trading
-        }
     }
 }

@@ -102,5 +102,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inventory: {fileID: 7736448808147108982}
   <CustomerType>k__BackingField: 3
+  <Sprite>k__BackingField: {fileID: 0}
   <Tolerance>k__BackingField: 0
-  <Strikes>k__BackingField: 0
+  <Strikes>k__BackingField: 3

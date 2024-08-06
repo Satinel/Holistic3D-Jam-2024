@@ -6,6 +6,7 @@ public class Inventory : MonoBehaviour
 {
     // public static Action<bool, ItemScriptableObject, int> OnItemAmountChanged;
     public static Action<bool, Dictionary<Currency, int>> OnMoneyAmountChanged;
+    public static Action<bool> OnInventoryLoaded;
 
     // public Dictionary<ItemScriptableObject, int> Items { get; private set; } = new();
     public Dictionary<Currency, int> Wallet { get; private set; } = new();
@@ -62,6 +63,8 @@ public class Inventory : MonoBehaviour
             newItem.SetUp(startingItem, _isPlayer, _dropBox, customerType);
             // AddToItems(startingItem, 1);
         }
+
+        OnInventoryLoaded?.Invoke(_isPlayer);
     }
 
     public int GetTotalMoney()

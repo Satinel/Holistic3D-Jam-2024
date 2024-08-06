@@ -30,7 +30,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     void OnDisable()
     {
-        OnAnyItemClicked += Item_OnAnyItemClicked;
+        OnAnyItemClicked -= Item_OnAnyItemClicked;
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
     }
 
