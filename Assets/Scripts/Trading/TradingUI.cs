@@ -7,14 +7,17 @@ public class TradingUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _copperText, _silverText, _goldText, _platinumText, _tradeBoxText;
     [SerializeField] TextMeshProUGUI _compCopperText, _compSilverText, _compGoldText, _compPlatinumText, _compTradeBoxText;
-    [SerializeField] TextMeshProUGUI _profitText;
-    [SerializeField] Image _customerImage;
-    [SerializeField] GameObject _resultWindow, _rejectionWindow, _noItemsWindow;
+    [SerializeField] TextMeshProUGUI _profitText, _offerText;
+    [SerializeField] Image _customerImage, _itemImage;
+    [SerializeField] GameObject _resultWindow, _rejectionWindow, _noItemsWindow, _setPriceWindow, _incorrectChangeWindow;
 
     int _copperTotal, _silverTotal, _goldTotal, _platinumTotal;
     int _compCopperTotal, _compSilverTotal, _compGoldTotal, _compPlatinumTotal;
 
     int _playerValue, _compValue;
+
+    int _offerValue;
+    Customer.Type _currentCustomerType;
 
     void OnEnable()
     {
@@ -23,9 +26,12 @@ public class TradingUI : MonoBehaviour
         DropBox.OnCoinAdded += DropBox_OnCoinAdded;
         DropBox.OnCoinRemoved += DropBox_OnCoinRemoved;
         DropBox.OnNoItems += DropBox_OnNoItems;
+        TradingSystem.OnIncorrectChange += TradingSystem_OnIncorrectChange;
         TradingSystem.OnOfferRejected += TradingSystem_OnOfferRejected;
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
+        TradingSystem.OnOfferValueChanged += TradingSystem_OnOfferValueChanged;
         TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
+        DropBox.OnItemPicked += DropBox_OnItemPicked;
         DropBox.OnTradeResults += DropBox_OnTradeResults;
     }
 
@@ -36,9 +42,12 @@ public class TradingUI : MonoBehaviour
         DropBox.OnCoinAdded -= DropBox_OnCoinAdded;
         DropBox.OnCoinRemoved -= DropBox_OnCoinRemoved;
         DropBox.OnNoItems -= DropBox_OnNoItems;
+        TradingSystem.OnIncorrectChange -= TradingSystem_OnIncorrectChange;
         TradingSystem.OnOfferRejected -= TradingSystem_OnOfferRejected;
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
+        TradingSystem.OnOfferValueChanged -= TradingSystem_OnOfferValueChanged;
         TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
+        DropBox.OnItemPicked -= DropBox_OnItemPicked;
         DropBox.OnTradeResults -= DropBox_OnTradeResults;
     }
 
@@ -235,6 +244,11 @@ public class TradingUI : MonoBehaviour
         _noItemsWindow.SetActive(true);
     }
 
+    void TradingSystem_OnIncorrectChange()
+    {
+        _incorrectChangeWindow.SetActive(true);
+    }
+
     void TradingSystem_OnOfferRejected()
     {
         _rejectionWindow.SetActive(true);
@@ -245,12 +259,20 @@ public class TradingUI : MonoBehaviour
         if(!customer)
         {
             _customerImage.enabled = false;
+            _currentCustomerType = Customer.Type.None;
             return;
         }
 
         _customerImage.sprite = customer.Sprite;
         _customerImage.enabled = true;
-        // TODO Set a text field based on a string supplied by customer
+        _currentCustomerType = customer.CustomerType; // TODO Use this info to show the player whether they're buying or selling
+        // TODO Set a text field based on a string supplied by customer as a greeting
+        // TODO Set a text field for the customer's name
+    }
+
+    void TradingSystem_OnOfferValueChanged(int value)
+    {
+        _offerText.text = value.ToString("D4");
     }
 
     void TradingSystem_OnTradeCancelled()
@@ -258,6 +280,15 @@ public class TradingUI : MonoBehaviour
         CloseRejection();
         CloseResults();
         CloseNoItems();
+        CloseSetPrice();
+        CloseChange();
+    }
+
+    void DropBox_OnItemPicked(Item item)
+    {
+        _setPriceWindow.SetActive(true);
+        _itemImage.enabled = true;
+        _itemImage.sprite = item.ItemSO.ItemSprite;
     }
 
     void DropBox_OnTradeResults(bool isPlayer, int value)
@@ -288,5 +319,22 @@ public class TradingUI : MonoBehaviour
     public void CloseNoItems() // UI Button
     {
         _noItemsWindow.SetActive(false);
+    }
+
+    public void CloseSetPrice() // UI Button
+    {
+        _itemImage.enabled = false;
+        _setPriceWindow.SetActive(false);
+    }
+
+    public void CloseChange() // UI Button
+    {
+        _incorrectChangeWindow.SetActive(false);
+    }
+
+    public void OpenSetPrice() // UI Button
+    {
+        _itemImage.enabled = true;
+        _setPriceWindow.SetActive(true);
     }
 }

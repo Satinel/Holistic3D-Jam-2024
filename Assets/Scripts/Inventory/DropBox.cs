@@ -10,6 +10,8 @@ public class DropBox : MonoBehaviour, IDropHandler
     public static Action<bool, Currency> OnCoinRemoved;
     public static Action<bool, int> OnTradeResults;
     public static Action OnNoItems;
+    public static Action<Item> OnItemPicked;
+    public static Action<int> OnBuyPriceSet;
 
     [SerializeField] Transform _copperParent, _silverParent, _goldParent, _platinumParent;
 
@@ -30,7 +32,7 @@ public class DropBox : MonoBehaviour, IDropHandler
     void OnEnable()
     {
         TradingSystem.OnOfferAccepted += TradingSystem_OnOfferAccepted;
-        // TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
+        TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
         TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
         TradingSystem.OnBuyCustomer += TradingSystem_OnBuyCustomer;
         TradingSystem.OnSellCustomer += TradingSystem_OnSellCustomer;
@@ -39,17 +41,46 @@ public class DropBox : MonoBehaviour, IDropHandler
     void OnDisable()
     {
         TradingSystem.OnOfferAccepted -= TradingSystem_OnOfferAccepted;
-        // TradingSystem.OnTradeCompleted -= TradingSystem_OnTradeCompleted;
+        TradingSystem.OnTradeCompleted -= TradingSystem_OnTradeCompleted;
         TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
         TradingSystem.OnBuyCustomer -= TradingSystem_OnBuyCustomer;
         TradingSystem.OnSellCustomer -= TradingSystem_OnSellCustomer;
     }
 
-    void TradingSystem_OnOfferAccepted()
+    void TradingSystem_OnOfferAccepted(bool isBuying, int value)
+    {
+        if(!_isTradeBox) { return; }
+        
+        if(isBuying)
+        {
+            if(_playerProperty)
+            {
+                _totalValue += value;
+                OnBuyPriceSet?.Invoke(_totalValue);
+            }
+        }
+        else
+        {
+            if(!_playerProperty)
+            {
+                _totalValue -= value;
+            }
+        }
+        OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
+    }
+
+    void TradingSystem_OnTradeCompleted()
     {
         if(_isTradeBox)
         {
-            OnTradeResults?.Invoke(_playerProperty, _totalValue);
+            int trueValue = 0;
+
+            foreach(GameObject item in _items)
+            {
+                trueValue += item.GetComponent<Item>().ItemSO.BaseValue;
+            }
+
+            OnTradeResults?.Invoke(_playerProperty, trueValue);
 
             foreach(var tradedItem in _items)
             {
@@ -132,6 +163,7 @@ public class DropBox : MonoBehaviour, IDropHandler
 
         Item randomItem = _items[UnityEngine.Random.Range(0, _items.Count)].GetComponent<Item>();
 
+        OnItemPicked?.Invoke(randomItem);
         _items.Remove(randomItem.gameObject);
         randomItem.SendToDropBox(_tradeBox);
     }
@@ -187,5 +219,47 @@ public class DropBox : MonoBehaviour, IDropHandler
             Item item = itemPrefab.GetComponent<Item>();
             OnCoinRemoved(_playerProperty, item.CurrencyType);
         }
+    }
+
+    public void Pay(int price)
+    {
+        int cost = price;
+
+        while(cost > 0 && _platinumParent.childCount > 0)
+        {
+            Item platCoin = _platinumParent.GetChild(0).GetComponent<Item>();
+            _items.Remove(platCoin.gameObject);
+            platCoin.SendToDropBox(_tradeBox);
+
+            cost -= TradingSystem.PlatinumValue;
+        }
+
+        while(cost > 0 && _goldParent.childCount > 0)
+        {
+            Item goldCoin = _goldParent.GetChild(0).GetComponent<Item>();
+            _items.Remove(goldCoin.gameObject);
+            goldCoin.SendToDropBox(_tradeBox);
+
+            cost -= TradingSystem.GoldValue;
+        }
+
+        while(cost > 0 && _silverParent.childCount > 0)
+        {
+            Item silverCoin = _silverParent.GetChild(0).GetComponent<Item>();
+            _items.Remove(silverCoin.gameObject);
+            silverCoin.SendToDropBox(_tradeBox);
+
+            cost -= TradingSystem.SilverValue;
+        }
+
+        while(cost > 0 && _copperParent.childCount > 0)
+        {
+            Item copperCoin = _copperParent.GetChild(0).GetComponent<Item>();
+            _items.Remove(copperCoin.gameObject);
+            copperCoin.SendToDropBox(_tradeBox);
+
+            cost -= TradingSystem.CopperValue;
+        }
+        
     }
 }

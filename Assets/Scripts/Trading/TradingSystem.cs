@@ -3,22 +3,26 @@ using System;
 
 public class TradingSystem : MonoBehaviour
 {
-    public static Action OnOfferAccepted;
+    public static Action OnIncorrectChange;
+    public static Action<bool, int> OnOfferAccepted;
     public static Action OnOfferRejected;
+    public static Action OnTradeCompleted;
     public static Action OnTradeCancelled;
     public static Action<Customer> OnNewCustomer;
     public static Action OnOpenToPublic;
     public static Action OnBuyCustomer;
     public static Action OnSellCustomer;
+    public static Action<int> OnOfferValueChanged;
     
-    int _playerValue, _compValue;
+    int _playerValue, _compValue, _offerValue;
+
+    int _offer;
+    int _basePrice;
 
     [SerializeField] GameObject _openButton;
     Customer _currentCustomer;
     
     public const int CopperValue = 1, SilverValue = 10, GoldValue = 100, PlatinumValue = 1000;
-
-    public Customer.Type TradeType => _currentCustomer.CustomerType; // This MIGHT be useful?
 
     // void Update()
     // {
@@ -35,6 +39,7 @@ public class TradingSystem : MonoBehaviour
     void OnEnable()
     {
         DropBox.OnTradeBoxValueChanged += DropBox_OnTradeBoxValueChanged;
+        DropBox.OnItemPicked += DropBox_OnItemPicked;
         Town.OnNextCustomer += Town_OnNextCustomer;
         Town.OnNoCustomers += Town_OnNoCustomers;
         Inventory.OnInventoryLoaded += Inventory_OnInventoryLoaded;
@@ -43,6 +48,7 @@ public class TradingSystem : MonoBehaviour
     void OnDisable()
     {
         DropBox.OnTradeBoxValueChanged -= DropBox_OnTradeBoxValueChanged;
+        DropBox.OnItemPicked -= DropBox_OnItemPicked;
         Town.OnNextCustomer -= Town_OnNextCustomer;
         Town.OnNoCustomers -= Town_OnNoCustomers;
         Inventory.OnInventoryLoaded -= Inventory_OnInventoryLoaded;
@@ -58,6 +64,11 @@ public class TradingSystem : MonoBehaviour
         {
             _compValue = value;
         }
+    }
+
+    void DropBox_OnItemPicked(Item item)
+    {
+        _basePrice = item.ItemSO.BaseValue;
     }
 
     void Town_OnNextCustomer(Customer customer)
@@ -125,12 +136,38 @@ public class TradingSystem : MonoBehaviour
 
     bool MakeOffer()
     {
-        if(_playerValue <= 0) { return false; } // TODO(?) Invoke a snide message from customer that player should offer something
-        if(_compValue <= 0) { return true; } // TODO(?) Invoke message thanking player for free gift
+        float rake = 0;
 
+        if(_currentCustomer.CustomerType == Customer.Type.Buy)
+        {
+            _offer = _offerValue - _basePrice;
+
+            if(_offer <= 0) { return true; } // TODO(?) Invoke a pleased message from customer that they got a good deal
+
+            rake = 1 - ((float)_basePrice / _offerValue);
+        }
+
+        if(_currentCustomer.CustomerType == Customer.Type.Sell)
+        {
+            if(_offerValue <= 0) { return false; } // TODO(?) Invoke a snide message from customer that player should offer something
+
+            _offer = _basePrice - _offerValue;
+
+            if(_offer <= 0) { return true; } // TODO(?) Invoke a pleased message from customer that they got a good deal
+
+            rake = 1 - ((float)_offerValue / _basePrice);
+        }
+
+        return rake <= _currentCustomer.Tolerance;
+    }
+
+    bool CorrectChange() // TODO Go over this thoroughly at some point
+    {
         int offer = _compValue - _playerValue;
 
         if(offer <= 0) { return true; } // TODO(?) Invoke a smug message from customer that they got a great deal
+        if(_playerValue <= 0) { return false; } // TODO(?) Invoke a snide message from customer that player should offer something
+        if(_compValue <= 0) { return true; } // TODO(?) Invoke message thanking player for free gift
 
         float rake = 1 - ((float)_playerValue / _compValue);
 
@@ -140,13 +177,12 @@ public class TradingSystem : MonoBehaviour
     void ProcessTrade()
     {
         // TODO UI/VFX/SFX (include profit/loss and if correct change)
-        OnOfferAccepted?.Invoke();
+        OnTradeCompleted?.Invoke(); // TODO(?) Increase player reputation
     }
 
     void ProcessRejection()
     {
         _currentCustomer.ReduceStrikes(1); // TODO? Some formula to change this amount based on variables
-        OnOfferRejected?.Invoke();
         // TODO? alter customer Tolerance and/or alter player Reputation
 
         if(_currentCustomer.Strikes <= 0)
@@ -156,16 +192,33 @@ public class TradingSystem : MonoBehaviour
         }
     }
 
-    public void AttemptTrade() // Used for UI Button
+    public void Haggle()
     {
         if(!_currentCustomer) { return; }
 
         if(MakeOffer())
         {
+            bool buying = _currentCustomer.CustomerType == Customer.Type.Buy;
+            OnOfferAccepted?.Invoke(buying, _offer);
+        }
+        else
+        {
+            OnOfferRejected?.Invoke();
+            ProcessRejection();
+        }
+    }
+
+    public void AttemptTrade() // Used for UI Button
+    {
+        if(!_currentCustomer) { return; }
+
+        if(CorrectChange())
+        {
             ProcessTrade();
         }
         else
         {
+            OnIncorrectChange?.Invoke();
             ProcessRejection();
         }
     }
@@ -178,6 +231,9 @@ public class TradingSystem : MonoBehaviour
 
     public void CancelTrade() // Used for UI Button
     {
+        _basePrice = 0;
+        _offerValue = 0;
+        OnOfferValueChanged?.Invoke(_offerValue);
         OnTradeCancelled?.Invoke();
         _openButton.SetActive(true);
         NoCustomer();
@@ -185,8 +241,103 @@ public class TradingSystem : MonoBehaviour
 
     public void OpenToPublic() // Used for UI Button
     {
+        _basePrice = 0;
+        _offerValue = 0;
+        OnOfferValueChanged?.Invoke(_offerValue);
         OnTradeCancelled?.Invoke();
         _openButton.SetActive(false);
         OnOpenToPublic?.Invoke();
+    }
+
+    public void ChangeCopper(bool increase) // UI Button
+    {
+        if(increase)
+        {
+            _offerValue += CopperValue;
+        }
+        else
+        {
+            _offerValue -= CopperValue;
+        }
+
+        if(_offerValue < 0)
+        {
+            _offerValue = 0;
+        }
+        if(_offerValue > 9999)
+        {
+            _offerValue = 9999;
+        }
+
+        OnOfferValueChanged?.Invoke(_offerValue);
+    }
+
+    public void ChangeSilver(bool increase) // UI Button
+    {
+        if(increase)
+        {
+            _offerValue += SilverValue;
+        }
+        else
+        {
+            _offerValue -= SilverValue;
+        }
+
+        if(_offerValue < 0)
+        {
+            _offerValue = 0;
+        }
+        if(_offerValue > 9999)
+        {
+            _offerValue = 9999;
+        }
+
+        OnOfferValueChanged?.Invoke(_offerValue);
+    }
+
+    public void ChangeGold(bool increase) // UI Button
+    {
+        if(increase)
+        {
+            _offerValue += GoldValue;
+        }
+        else
+        {
+            _offerValue -= GoldValue;
+        }
+
+        if(_offerValue < 0)
+        {
+            _offerValue = 0;
+        }
+        if(_offerValue > 9999)
+        {
+            _offerValue = 9999;
+        }
+
+        OnOfferValueChanged?.Invoke(_offerValue);
+    }
+
+    public void ChangePlatinum(bool increase) // UI Button
+    {
+        if(increase)
+        {
+            _offerValue += PlatinumValue;
+        }
+        else
+        {
+            _offerValue -= PlatinumValue;
+        }
+
+        if(_offerValue < 0)
+        {
+            _offerValue = 0;
+        }
+        if(_offerValue > 9999)
+        {
+            _offerValue = 9999;
+        }
+
+        OnOfferValueChanged?.Invoke(_offerValue);
     }
 }

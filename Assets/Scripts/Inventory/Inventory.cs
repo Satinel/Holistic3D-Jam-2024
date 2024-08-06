@@ -21,6 +21,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] DropBox _dropBox, _coinBox;
     [SerializeField] Item _itemPrefab;
 
+    public DropBox CoinBox => _coinBox;
+
     // void OnEnable()
     // {
     //     TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
