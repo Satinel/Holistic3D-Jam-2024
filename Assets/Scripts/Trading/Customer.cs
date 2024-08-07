@@ -4,12 +4,11 @@ public class Customer : MonoBehaviour
 {
     [SerializeField] Inventory _inventory;
 
+    [field:SerializeField] public string Name { get; private set; } = string.Empty;
     [field:SerializeField] public Type CustomerType { get; private set; }
     [field:SerializeField] public Sprite Sprite { get; private set; }
     [field:SerializeField][field:Range(0, 1f)] public float Tolerance { get; private set; }
     [field:SerializeField] public int Strikes { get; private set; }
-
-    public int TotalFunds => _inventory.TotalFunds;
     
     bool _isActiveCustomer;
 
@@ -50,14 +49,12 @@ public class Customer : MonoBehaviour
     {
         if(!_isActiveCustomer) { return; }
         
-        if(cost > TotalFunds)
-        {
-            // TODO Handle customer not being able to afford item
-        }
-        else
-        {
-            _inventory.CoinBox.Pay(cost);
-        }
+        _inventory.CoinBox.Pay(cost); // Note: It SHOULD NOT be possible for the price to be higher than the customer's funds due to check in TradingSystem
+    }
+
+    public int GetTotalFunds()
+    {
+        return _inventory.CoinBox.GetTrueValue();
     }
 
     public void ReduceStrikes(int amount)

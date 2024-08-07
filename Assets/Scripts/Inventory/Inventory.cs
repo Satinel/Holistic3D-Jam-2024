@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public class Inventory : MonoBehaviour
 {
     // public static Action<bool, ItemScriptableObject, int> OnItemAmountChanged;
-    public static Action<bool, Dictionary<Currency, int>> OnMoneyAmountChanged;
+    // public static Action<bool, Dictionary<Currency, int>> OnMoneyAmountChanged;
     public static Action<bool> OnInventoryLoaded;
 
     // public Dictionary<ItemScriptableObject, int> Items { get; private set; } = new();
     public Dictionary<Currency, int> Wallet { get; private set; } = new();
 
-    public int TotalFunds => GetTotalMoney();
+    // public int TotalFunds => GetTotalMoney();
 
     [SerializeField] bool _isPlayer = false;
     [SerializeField] List<int> _startingCoins = new();
@@ -57,7 +57,7 @@ public class Inventory : MonoBehaviour
                 newCoin.SetUpMoney(_coins[i], _isPlayer, _coinBox, (Currency)i, customerType);
             }
         }
-        OnMoneyAmountChanged?.Invoke(_isPlayer, Wallet);
+        // OnMoneyAmountChanged?.Invoke(_isPlayer, Wallet);
 
         foreach(ItemScriptableObject startingItem in _startingItems)
         {
@@ -69,31 +69,31 @@ public class Inventory : MonoBehaviour
         OnInventoryLoaded?.Invoke(_isPlayer);
     }
 
-    public int GetTotalMoney()
-    {
-        int total = 0;
+    // public int GetTotalMoney()
+    // {
+    //     int total = 0;
 
-        foreach(var currency in Wallet)
-        {
-            switch(currency.Key)
-            {
-                case Currency.Copper:
-                    total += currency.Value * TradingSystem.CopperValue;
-                    break;
-                case Currency.Silver:
-                    total += currency.Value * TradingSystem.SilverValue;
-                    break;
-                case Currency.Gold:
-                    total += currency.Value * TradingSystem.GoldValue;
-                    break;
-                case Currency.Platinum:
-                    total += currency.Value * TradingSystem.PlatinumValue;
-                    break;
-            }
-        }
+    //     foreach(var currency in Wallet)
+    //     {
+    //         switch(currency.Key)
+    //         {
+    //             case Currency.Copper:
+    //                 total += currency.Value * TradingSystem.CopperValue;
+    //                 break;
+    //             case Currency.Silver:
+    //                 total += currency.Value * TradingSystem.SilverValue;
+    //                 break;
+    //             case Currency.Gold:
+    //                 total += currency.Value * TradingSystem.GoldValue;
+    //                 break;
+    //             case Currency.Platinum:
+    //                 total += currency.Value * TradingSystem.PlatinumValue;
+    //                 break;
+    //         }
+    //     }
 
-        return total;
-    }
+    //     return total;
+    // }
 
     // void TradingSystem_OnTradeCompleted(Dictionary<ItemScriptableObject, int> items, Dictionary<Currency, int> money)
     // {

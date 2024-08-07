@@ -13,6 +13,7 @@ public class TradingSystem : MonoBehaviour
     public static Action OnBuyCustomer;
     public static Action OnSellCustomer;
     public static Action<int> OnOfferValueChanged;
+    public static Action<Customer.Type, int> OnChangeGiven;
     
     int _playerValue, _compValue, _offerValue;
 
@@ -140,6 +141,11 @@ public class TradingSystem : MonoBehaviour
 
         if(_currentCustomer.CustomerType == Customer.Type.Buy)
         {
+            if(_offerValue > _currentCustomer.GetTotalFunds())
+            {
+                return false; // TODO(?) Invoke a sad message from customer that they can't afford this
+            }
+
             _offer = _offerValue - _basePrice;
 
             if(_offer <= 0) { return true; } // TODO(?) Invoke a pleased message from customer that they got a good deal
@@ -161,13 +167,14 @@ public class TradingSystem : MonoBehaviour
         return rake <= _currentCustomer.Tolerance;
     }
 
-    bool CorrectChange() // TODO Go over this thoroughly at some point
+    bool OfferChange(out int offer) // TODO Go over this thoroughly at some point
     {
-        int offer = _compValue - _playerValue;
-
-        if(offer <= 0) { return true; } // TODO(?) Invoke a smug message from customer that they got a great deal
-        if(_playerValue <= 0) { return false; } // TODO(?) Invoke a snide message from customer that player should offer something
-        if(_compValue <= 0) { return true; } // TODO(?) Invoke message thanking player for free gift
+        offer = _compValue - _playerValue;
+        
+        if(offer < 0) { return true; } // Player gave too much change (TODO: mention this in OnChangeGiven<int> action)
+        if(offer == 0) { return true; } // Player gave exact change (TODO: mention this in OnChangeGiven<int> action and +player rep)
+        if(_playerValue <= 0) { return false; } // Should not happen
+        if(_compValue <= 0) { return true; } // Also should not happen but we don't want to divide by zero
 
         float rake = 1 - ((float)_playerValue / _compValue);
 
@@ -212,8 +219,9 @@ public class TradingSystem : MonoBehaviour
     {
         if(!_currentCustomer) { return; }
 
-        if(CorrectChange())
+        if(OfferChange(out int offer))
         {
+            OnChangeGiven?.Invoke(_currentCustomer.CustomerType, offer);
             ProcessTrade();
         }
         else

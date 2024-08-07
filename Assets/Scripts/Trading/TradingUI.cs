@@ -7,21 +7,17 @@ public class TradingUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _copperText, _silverText, _goldText, _platinumText, _tradeBoxText;
     [SerializeField] TextMeshProUGUI _compCopperText, _compSilverText, _compGoldText, _compPlatinumText, _compTradeBoxText;
-    [SerializeField] TextMeshProUGUI _profitText, _offerText;
+    [SerializeField] TextMeshProUGUI _profitText, _changeText, _offerText, _tradeTypeText, _customerNameText;
     [SerializeField] Image _customerImage, _itemImage;
-    [SerializeField] GameObject _resultWindow, _rejectionWindow, _noItemsWindow, _setPriceWindow, _incorrectChangeWindow;
+    [SerializeField] GameObject _resultWindow, _rejectionWindow, _noItemsWindow, _setPriceWindow, _incorrectChangeWindow, _customerName;
 
     int _copperTotal, _silverTotal, _goldTotal, _platinumTotal;
     int _compCopperTotal, _compSilverTotal, _compGoldTotal, _compPlatinumTotal;
 
     int _playerValue, _compValue;
 
-    int _offerValue;
-    Customer.Type _currentCustomerType;
-
     void OnEnable()
     {
-        Inventory.OnMoneyAmountChanged += Inventory_OnMoneyAmountChanged;
         DropBox.OnTradeBoxValueChanged += DropBox_OnTradeBoxValueChanged;
         DropBox.OnCoinAdded += DropBox_OnCoinAdded;
         DropBox.OnCoinRemoved += DropBox_OnCoinRemoved;
@@ -31,13 +27,13 @@ public class TradingUI : MonoBehaviour
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
         TradingSystem.OnOfferValueChanged += TradingSystem_OnOfferValueChanged;
         TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
+        TradingSystem.OnChangeGiven += TradingSystem_OnChangeGiven;
         DropBox.OnItemPicked += DropBox_OnItemPicked;
         DropBox.OnTradeResults += DropBox_OnTradeResults;
     }
 
     void OnDisable()
     {
-        Inventory.OnMoneyAmountChanged -= Inventory_OnMoneyAmountChanged;
         DropBox.OnTradeBoxValueChanged -= DropBox_OnTradeBoxValueChanged;
         DropBox.OnCoinAdded -= DropBox_OnCoinAdded;
         DropBox.OnCoinRemoved -= DropBox_OnCoinRemoved;
@@ -47,74 +43,9 @@ public class TradingUI : MonoBehaviour
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
         TradingSystem.OnOfferValueChanged -= TradingSystem_OnOfferValueChanged;
         TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
+        TradingSystem.OnChangeGiven -= TradingSystem_OnChangeGiven;
         DropBox.OnItemPicked -= DropBox_OnItemPicked;
         DropBox.OnTradeResults -= DropBox_OnTradeResults;
-    }
-
-    void Inventory_OnMoneyAmountChanged(bool isPlayer, Dictionary<Currency, int> money)
-    {
-        if(isPlayer)
-        {
-            if(money.ContainsKey(Currency.Copper))
-            {
-                _copperTotal = money[Currency.Copper];
-                _copperText.text = _copperTotal.ToString("N0");
-            }
-            if(money.ContainsKey(Currency.Silver))
-            {
-                _silverTotal = money[Currency.Silver];
-                _silverText.text = _silverTotal.ToString("N0");
-            }
-            if(money.ContainsKey(Currency.Gold))
-            {
-                _goldTotal = money[Currency.Gold];
-                _goldText.text = _goldTotal.ToString("N0");
-            }
-            if(money.ContainsKey(Currency.Platinum))
-            {
-                _platinumTotal = money[Currency.Platinum];
-                _platinumText.text = _platinumTotal.ToString("N0");
-            }
-        }
-        else
-        {
-            if(money.ContainsKey(Currency.Copper))
-            {
-                _compCopperTotal = money[Currency.Copper];
-                _compCopperText.text = money[Currency.Copper].ToString("N0");
-            }
-            else
-            {
-                _compCopperText.text = "0";
-            }
-            if(money.ContainsKey(Currency.Silver))
-            {
-                _compSilverTotal = money[Currency.Silver];
-                _compSilverText.text = money[Currency.Silver].ToString("N0");
-            }
-            else
-            {
-                _compSilverText.text = "0";
-            }
-            if(money.ContainsKey(Currency.Gold))
-            {
-                _compGoldTotal = money[Currency.Gold];
-                _compGoldText.text = money[Currency.Gold].ToString("N0");
-            }
-            else
-            {
-                _compGoldText.text = "0";
-            }
-            if(money.ContainsKey(Currency.Platinum))
-            {
-                _compPlatinumTotal = money[Currency.Platinum];
-                _compPlatinumText.text = money[Currency.Platinum].ToString("N0");
-            }
-            else
-            {
-                _compPlatinumText.text = "0";
-            }
-        }
     }
 
     void DropBox_OnTradeBoxValueChanged(bool isPlayer, int value)
@@ -259,15 +190,25 @@ public class TradingUI : MonoBehaviour
         if(!customer)
         {
             _customerImage.enabled = false;
-            _currentCustomerType = Customer.Type.None;
+            _customerName.SetActive(false);
+            _tradeTypeText.text = string.Empty;
             return;
         }
 
         _customerImage.sprite = customer.Sprite;
         _customerImage.enabled = true;
-        _currentCustomerType = customer.CustomerType; // TODO Use this info to show the player whether they're buying or selling
+        _customerName.SetActive(true);
+        _customerNameText.text = customer.Name;
+        _changeText.text = string.Empty;
+        if(customer.CustomerType == Customer.Type.Buy)
+        {
+            _tradeTypeText.text = "Sell Offer";
+        }
+        if(customer.CustomerType == Customer.Type.Sell)
+        {
+            _tradeTypeText.text = "Buy Offer";
+        }
         // TODO Set a text field based on a string supplied by customer as a greeting
-        // TODO Set a text field for the customer's name
     }
 
     void TradingSystem_OnOfferValueChanged(int value)
@@ -282,6 +223,57 @@ public class TradingUI : MonoBehaviour
         CloseNoItems();
         CloseSetPrice();
         CloseChange();
+        ResetCustomerCoins();
+    }
+
+    void ResetCustomerCoins()
+    {
+        _compCopperTotal = 0; _compSilverTotal = 0; _compGoldTotal = 0; _compPlatinumTotal = 0;
+        _compCopperText.text = _compCopperTotal.ToString("N0");
+        _compSilverText.text = _compSilverTotal.ToString("N0");
+        _compGoldText.text = _compGoldTotal.ToString("N0");
+        _compPlatinumText.text = _compPlatinumTotal.ToString("N0");
+    }
+
+    void TradingSystem_OnChangeGiven(Customer.Type customerType, int change)
+    {
+        if(customerType == Customer.Type.Buy)
+        {
+            if(change < 0)
+            {
+                _changeText.text = $"Gave {-change:N0} Extra Change!";
+                // TODO Player Rep+
+            }
+            else if(change == 0)
+            {
+                _changeText.text = $"Gave Exact Change!";
+                // TODO Player Rep++
+            }
+            else
+            {
+                _changeText.text = $"Stole {change:N0} Change!";
+                // TODO Player Rep--
+            }
+        }
+        if(customerType == Customer.Type.Sell)
+        {
+            if(change < 0)
+            {
+                _changeText.text = $"Overpaid by {-change:N0}!";
+                // TODO Player Rep+
+            }
+            else if(change == 0)
+            {
+                _changeText.text = $"Perfect Payment!";
+                // TODO Player Rep++
+            }
+            else
+            {
+                _changeText.text = $"Underpaid by {change:N0}!";
+                // TODO Player Rep--
+            }
+        }
+        
     }
 
     void DropBox_OnItemPicked(Item item)
@@ -303,7 +295,7 @@ public class TradingUI : MonoBehaviour
         }
 
         _resultWindow.SetActive(true);
-        _profitText.text = $"Profit: {(_compValue - _playerValue).ToString("N0")}";
+        _profitText.text = $"Profit: {_compValue - _playerValue:N0}";
     }
 
     public void CloseResults() // UI Button

@@ -73,12 +73,7 @@ public class DropBox : MonoBehaviour, IDropHandler
     {
         if(_isTradeBox)
         {
-            int trueValue = 0;
-
-            foreach(GameObject item in _items)
-            {
-                trueValue += item.GetComponent<Item>().ItemSO.BaseValue;
-            }
+            int trueValue = GetTrueValue();
 
             OnTradeResults?.Invoke(_playerProperty, trueValue);
 
@@ -220,6 +215,18 @@ public class DropBox : MonoBehaviour, IDropHandler
             OnCoinRemoved(_playerProperty, item.CurrencyType);
         }
     }
+    
+    public int GetTrueValue()
+    {
+        int tValue = 0;
+
+        foreach(GameObject item in _items)
+        {
+            tValue += item.GetComponent<Item>().ItemSO.BaseValue;
+        }
+
+        return tValue;
+    }
 
     public void Pay(int price)
     {
@@ -228,7 +235,7 @@ public class DropBox : MonoBehaviour, IDropHandler
         while(cost > 0 && _platinumParent.childCount > 0)
         {
             Item platCoin = _platinumParent.GetChild(0).GetComponent<Item>();
-            _items.Remove(platCoin.gameObject);
+            RemoveItem(platCoin.gameObject);
             platCoin.SendToDropBox(_tradeBox);
 
             cost -= TradingSystem.PlatinumValue;
@@ -237,7 +244,7 @@ public class DropBox : MonoBehaviour, IDropHandler
         while(cost > 0 && _goldParent.childCount > 0)
         {
             Item goldCoin = _goldParent.GetChild(0).GetComponent<Item>();
-            _items.Remove(goldCoin.gameObject);
+            RemoveItem(goldCoin.gameObject);
             goldCoin.SendToDropBox(_tradeBox);
 
             cost -= TradingSystem.GoldValue;
@@ -246,7 +253,7 @@ public class DropBox : MonoBehaviour, IDropHandler
         while(cost > 0 && _silverParent.childCount > 0)
         {
             Item silverCoin = _silverParent.GetChild(0).GetComponent<Item>();
-            _items.Remove(silverCoin.gameObject);
+            RemoveItem(silverCoin.gameObject);
             silverCoin.SendToDropBox(_tradeBox);
 
             cost -= TradingSystem.SilverValue;
@@ -255,11 +262,10 @@ public class DropBox : MonoBehaviour, IDropHandler
         while(cost > 0 && _copperParent.childCount > 0)
         {
             Item copperCoin = _copperParent.GetChild(0).GetComponent<Item>();
-            _items.Remove(copperCoin.gameObject);
+            RemoveItem(copperCoin.gameObject);
             copperCoin.SendToDropBox(_tradeBox);
 
             cost -= TradingSystem.CopperValue;
         }
-        
     }
 }

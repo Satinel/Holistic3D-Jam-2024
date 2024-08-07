@@ -81,6 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventory: {fileID: 6585210717312023298}
+  <Name>k__BackingField: Sell Customer
   <CustomerType>k__BackingField: 2
   <Sprite>k__BackingField: {fileID: 0}
   <Tolerance>k__BackingField: 0.2
