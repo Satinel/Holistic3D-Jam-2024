@@ -39,6 +39,8 @@ public class DropBox : MonoBehaviour, IDropHandler
         TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
         TradingSystem.OnBuyCustomer += TradingSystem_OnBuyCustomer;
         TradingSystem.OnSellCustomer += TradingSystem_OnSellCustomer;
+        TradingSystem.OnResetTrade += TradingSystem_OnResetTrade;
+        TradingSystem.OnResetBarter += TradingSystem_OnResetBarter;
     }
 
     void OnDisable()
@@ -48,6 +50,8 @@ public class DropBox : MonoBehaviour, IDropHandler
         TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
         TradingSystem.OnBuyCustomer -= TradingSystem_OnBuyCustomer;
         TradingSystem.OnSellCustomer -= TradingSystem_OnSellCustomer;
+        TradingSystem.OnResetTrade -= TradingSystem_OnResetTrade;
+        TradingSystem.OnResetBarter -= TradingSystem_OnResetBarter;
     }
 
     void TradingSystem_OnOfferAccepted(bool isBuying, int value)
@@ -151,6 +155,66 @@ public class DropBox : MonoBehaviour, IDropHandler
         if(_playerProperty) { return; }
 
         PickRandomItem();
+    }
+
+    void TradingSystem_OnResetTrade()
+    {
+        if(_isTradeBox)
+        {
+            if(_playerProperty)
+            {
+                List<GameObject> tempList = new();
+
+                foreach(var coin in _items)
+                {
+                    Item item = coin.GetComponent<Item>();
+                    {
+                        if(item.ItemSO.Type == Type.Coin)
+                        {
+                            item.SendToCoinBox(_coinBox);
+                            _coinBox.RemoveFromSentItems(item);
+                            tempList.Add(coin);
+                        }
+                    }
+                }
+
+                foreach(var removedCoin in tempList)
+                {
+                    RemoveItem(removedCoin);
+                }
+            }
+        }
+    }
+
+    void TradingSystem_OnResetBarter()
+    {
+        if(_isTradeBox)
+        {
+            List<GameObject> tempList = new();
+
+            foreach(var itemGO in _items)
+            {
+                Item item = itemGO.GetComponent<Item>();
+                item.SetInTrade(false);
+                if(item.ItemSO.Type == Type.Coin)
+                {
+                    item.SendToCoinBox(_coinBox);
+                }
+                else
+                {
+                    item.SendToDropBox(_inventoryBox);
+                }
+                tempList.Add(itemGO);
+            }
+
+            foreach(var removedItem in tempList)
+            {
+                RemoveItem(removedItem);
+            }
+
+            OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
+        }
+        _sentItems.Clear();
     }
 
     void PickRandomItem()

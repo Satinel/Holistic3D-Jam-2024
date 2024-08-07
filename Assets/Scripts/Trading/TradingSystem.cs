@@ -14,6 +14,8 @@ public class TradingSystem : MonoBehaviour
     public static Action OnSellCustomer;
     public static Action<int> OnOfferValueChanged;
     public static Action<Customer.Type, int> OnChangeGiven;
+    public static Action OnResetTrade;
+    public static Action OnResetBarter;
     
     int _playerValue, _compValue, _offerValue;
 
@@ -24,6 +26,7 @@ public class TradingSystem : MonoBehaviour
     Customer _currentCustomer;
     
     public const int CopperValue = 1, SilverValue = 10, GoldValue = 100, PlatinumValue = 1000;
+
 
     // void Update()
     // {
@@ -255,6 +258,18 @@ public class TradingSystem : MonoBehaviour
         OnTradeCancelled?.Invoke();
         _openButton.SetActive(false);
         OnOpenToPublic?.Invoke();
+    }
+
+    public void ResetTradeBoxes() // Used for UI Button
+    {
+        if(!_currentCustomer || _currentCustomer.CustomerType == Customer.Type.Barter)
+        {
+            OnResetBarter?.Invoke();
+        }
+        else
+        {
+            OnResetTrade?.Invoke();
+        }
     }
 
     public void ChangeCopper(bool increase) // UI Button
