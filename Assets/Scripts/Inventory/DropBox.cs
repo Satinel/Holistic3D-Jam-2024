@@ -27,7 +27,10 @@ public class DropBox : MonoBehaviour, IDropHandler
     public Transform PlatinumParent => _platinumParent;
 
     List<GameObject> _items = new();
+    List<GameObject> _sentItems = new();
     int _totalValue;
+
+    public List<GameObject> Items => _items;
 
     void OnEnable()
     {
@@ -95,6 +98,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             _totalValue = 0;
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
+        _sentItems.Clear();
     }
 
     void TradingSystem_OnTradeCancelled()
@@ -128,6 +132,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             _totalValue = 0;
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
+        _sentItems.Clear();
     }
 
     void TradingSystem_OnBuyCustomer()
@@ -173,6 +178,10 @@ public class DropBox : MonoBehaviour, IDropHandler
 
         if(_isTradeBox)
         {
+            if(droppedItem.PlayerProperty && droppedItem.IsMoney)
+            {
+                droppedItem.CurrentBox.AddToSentItems(droppedItem);
+            }
             droppedItem.SetCurrentBox(this);
             droppedItem.SetInTrade(true);
             return;
@@ -213,6 +222,51 @@ public class DropBox : MonoBehaviour, IDropHandler
         {
             Item item = itemPrefab.GetComponent<Item>();
             OnCoinRemoved(_playerProperty, item.CurrencyType);
+        }
+    }
+
+    public void SendChildItem(Transform parent) // UI Button (Note this only works for currency but could be applied to stackable items with Item.cs and UI reworking)
+    {
+        if(parent.childCount > 0)
+        {
+            Item item = parent.GetChild(0).GetComponent<Item>();
+            RemoveItem(item.gameObject);
+            item.SendToDropBox(_tradeBox);
+            item.SetInTrade(true);
+            AddToSentItems(item);
+        }
+    }
+
+    public void RetrieveItem(Currency currency) // UI Button (Note this only works for currency)
+    {
+        if(_sentItems.Count <= 0) { return; }
+
+        foreach(GameObject itemGO in _sentItems)
+        {
+            Item item = itemGO.GetComponent<Item>();
+            
+            if(item.CurrencyType == currency)
+            {
+                _tradeBox.RemoveItem(itemGO);
+                item.SendToCoinBox(this);
+                item.SetInTrade(false);
+                break;
+            }
+        }
+    }
+
+    public void AddToSentItems(Item item)
+    {
+        if(_sentItems.Contains(item.gameObject)) { return; }
+
+        _sentItems.Add(item.gameObject);
+    }
+
+    public void RemoveFromSentItems(Item item)
+    {
+        if(_sentItems.Contains(item.gameObject))
+        {
+            _sentItems.Remove(item.gameObject);
         }
     }
     

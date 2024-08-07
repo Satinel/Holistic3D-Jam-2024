@@ -1288,6 +1288,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3821549688756780622, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3821549688756780622, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3821549688756780622, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3821549688756780622, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5189753596902037303, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
       propertyPath: m_Name
       value: TradingUI

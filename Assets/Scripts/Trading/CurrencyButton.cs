@@ -4,7 +4,9 @@ using UnityEngine.UI;
 
 public class CurrencyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] DropBox _coinBox;
     [SerializeField] Button _increaseButton, _decreaseButton;
+    [SerializeField] Currency _currency;
 
     bool _isOver;
 
@@ -17,12 +19,22 @@ public class CurrencyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if(_isOver && Input.mouseScrollDelta.y > 0)
         {
+            if(!_increaseButton) { return; }
+
             _increaseButton.onClick.Invoke();
+
         }
 
         if(_isOver && Input.mouseScrollDelta.y < 0)
         {
-            _decreaseButton.onClick.Invoke();
+            if(_decreaseButton && !_coinBox)
+            {
+                _decreaseButton.onClick.Invoke();
+            }
+            else if(_coinBox)
+            {
+                _coinBox.RetrieveItem(_currency);
+            }
         }
     }
 

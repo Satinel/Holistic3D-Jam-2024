@@ -22,6 +22,8 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     Vector2 _startPosition;
     Customer.Type _customerType;
 
+    public DropBox CurrentBox => _currentBox;
+
     void OnEnable()
     {
         OnAnyItemClicked += Item_OnAnyItemClicked;
@@ -154,6 +156,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             if(!_inTrade)
             {
+                _currentBox.AddToSentItems(this);
                 _currentBox.RemoveItem(gameObject);
                 SendToDropBox(_currentBox.TradeBox);
                 _inTrade = true;
@@ -261,6 +264,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         _currentBox = coinBox;
         _currentBox.AddItem(gameObject);
+        _currentBox.RemoveFromSentItems(this);
         SortCoins(coinBox);
     }
 
