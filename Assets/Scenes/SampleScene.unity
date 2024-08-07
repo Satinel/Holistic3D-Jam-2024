@@ -309,6 +309,7 @@ MonoBehaviour:
   <Sprite>k__BackingField: {fileID: 21300000, guid: 5d0f3e574488bd74ebd631104a4b760a, type: 3}
   <Tolerance>k__BackingField: 0
   <Strikes>k__BackingField: 0
+  _isBank: 0
 --- !u!114 &603441557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1083,6 +1084,7 @@ MonoBehaviour:
   <Sprite>k__BackingField: {fileID: 21300000, guid: 5d0f3e574488bd74ebd631104a4b760a, type: 3}
   <Tolerance>k__BackingField: 0
   <Strikes>k__BackingField: 0
+  _isBank: 0
 --- !u!114 &1846485680 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5451787061969376408, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
@@ -1285,22 +1287,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2943132089311940093, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3821549688756780622, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3821549688756780622, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3821549688756780622, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3821549688756780622, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}

@@ -16,13 +16,15 @@ public class TradingSystem : MonoBehaviour
     public static Action<Customer.Type, int> OnChangeGiven;
     public static Action OnResetTrade;
     public static Action OnResetBarter;
+    public static Action<int> OnExchangeCurrency;
     
     int _playerValue, _compValue, _offerValue;
 
     int _offer;
     int _basePrice;
 
-    [SerializeField] GameObject _openButton;
+    [SerializeField] GameObject _openButton, _bankButton, _exchangeButton;
+    [SerializeField] Customer _bank;
     Customer _currentCustomer;
     
     public const int CopperValue = 1, SilverValue = 10, GoldValue = 100, PlatinumValue = 1000;
@@ -136,6 +138,8 @@ public class TradingSystem : MonoBehaviour
     {
         _currentCustomer = null;
         OnNewCustomer?.Invoke(null);
+        _bankButton.SetActive(true);
+        _exchangeButton.SetActive(true);
     }
 
     bool MakeOffer()
@@ -247,6 +251,8 @@ public class TradingSystem : MonoBehaviour
         OnOfferValueChanged?.Invoke(_offerValue);
         OnTradeCancelled?.Invoke();
         _openButton.SetActive(true);
+        _bankButton.SetActive(true);
+        _exchangeButton.SetActive(true);
         NoCustomer();
     }
 
@@ -257,6 +263,8 @@ public class TradingSystem : MonoBehaviour
         OnOfferValueChanged?.Invoke(_offerValue);
         OnTradeCancelled?.Invoke();
         _openButton.SetActive(false);
+        _bankButton.SetActive(false);
+        _exchangeButton.SetActive(false);
         OnOpenToPublic?.Invoke();
     }
 
@@ -270,6 +278,18 @@ public class TradingSystem : MonoBehaviour
         {
             OnResetTrade?.Invoke();
         }
+    }
+
+    public void GoToBank() // Used for UI Button
+    {
+        NewCustomer(_bank);
+        _bankButton.SetActive(false);
+        _exchangeButton.SetActive(true);
+    }
+
+    public void ExchangeCurrency() // Used for UI Button
+    {
+        OnExchangeCurrency?.Invoke(_playerValue);
     }
 
     public void ChangeCopper(bool increase) // UI Button

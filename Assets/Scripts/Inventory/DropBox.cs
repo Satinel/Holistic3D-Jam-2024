@@ -105,11 +105,31 @@ public class DropBox : MonoBehaviour, IDropHandler
         _sentItems.Clear();
     }
 
-    void TradingSystem_OnTradeCancelled()
+    void TradingSystem_OnTradeCancelled() // TODO Rework this (especially the !_playerProperty) to send items to correct Iventory dictionaries
     {
-        if(!_playerProperty)
+        if(_isTradeBox && !_playerProperty)
         {
-            foreach(GameObject customerItem in _items)
+            foreach(var customerItem in _items)
+            {
+                // Item item = customerItem.GetComponent<Item>();
+                // item.SetInTrade(false);
+                // if(item.ItemSO.Type == Type.Coin)
+                // {
+                //     item.SendToCoinBox(_coinBox);
+                // }
+                // else
+                // {
+                //     item.SendToDropBox(_inventoryBox);
+                // }
+                Destroy(customerItem);
+            }
+            _items.Clear();
+            _totalValue = 0;
+        }
+
+        if(!_isTradeBox && !_playerProperty)
+        {
+            foreach(var customerItem in _items)
             {
                 Destroy(customerItem);
             }
@@ -376,6 +396,20 @@ public class DropBox : MonoBehaviour, IDropHandler
 
             cost -= TradingSystem.SilverValue;
         }
+
+        while(cost > 0 && _copperParent.childCount > 0)
+        {
+            Item copperCoin = _copperParent.GetChild(0).GetComponent<Item>();
+            RemoveItem(copperCoin.gameObject);
+            copperCoin.SendToDropBox(_tradeBox);
+
+            cost -= TradingSystem.CopperValue;
+        }
+    }
+
+    public void PayInCopper(int amount)
+    {
+        int cost = amount;
 
         while(cost > 0 && _copperParent.childCount > 0)
         {

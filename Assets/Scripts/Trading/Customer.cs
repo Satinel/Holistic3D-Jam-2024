@@ -10,6 +10,7 @@ public class Customer : MonoBehaviour
     [field:SerializeField][field:Range(0, 1f)] public float Tolerance { get; private set; }
     [field:SerializeField] public int Strikes { get; private set; }
     
+    [SerializeField] bool _isBank;
     bool _isActiveCustomer;
 
     public enum Type
@@ -23,12 +24,14 @@ public class Customer : MonoBehaviour
     void OnEnable()
     {
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
+        TradingSystem.OnExchangeCurrency += TradingSystem_OnExchangeCurrency;
         DropBox.OnBuyPriceSet += DropBox_OnBuyPriceSet;
     }
 
     void OnDisable()
     {
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
+        TradingSystem.OnExchangeCurrency -= TradingSystem_OnExchangeCurrency;
         DropBox.OnBuyPriceSet -= DropBox_OnBuyPriceSet;
     }
 
@@ -37,11 +40,22 @@ public class Customer : MonoBehaviour
         if(customer == this)
         {
             _isActiveCustomer = true;
+            
+            if(_isBank) { return; }
+
             _inventory.ShowInventory(customer.CustomerType);
         }
         else
         {
             _isActiveCustomer = false;
+        }
+    }
+
+    void TradingSystem_OnExchangeCurrency(int amount)
+    {
+        if(_isActiveCustomer && _isBank)
+        {
+            _inventory.GenerateCopper(amount, CustomerType);
         }
     }
 
