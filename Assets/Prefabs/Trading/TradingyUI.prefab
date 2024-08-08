@@ -12757,7 +12757,11 @@ MonoBehaviour:
   <CustomerType>k__BackingField: 4
   <Sprite>k__BackingField: {fileID: 21300000, guid: 5d0f3e574488bd74ebd631104a4b760a, type: 3}
   <Tolerance>k__BackingField: 0
-  <Strikes>k__BackingField: 2147483647
+  <MaxStrikes>k__BackingField: 2147483647
+  <Strikes>k__BackingField: 0
+  <Opinion>k__BackingField: 0
+  _baseOpinionChange: 1
+  _maxTrades: 2147483647
 --- !u!1 &8856306050442507401
 GameObject:
   m_ObjectHideFlags: 0

@@ -101,7 +101,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventory: {fileID: 7736448808147108982}
+  <Name>k__BackingField: 
   <CustomerType>k__BackingField: 3
   <Sprite>k__BackingField: {fileID: 0}
   <Tolerance>k__BackingField: 0
-  <Strikes>k__BackingField: 3
+  <MaxStrikes>k__BackingField: 3
+  <Strikes>k__BackingField: 0
+  <Opinion>k__BackingField: 0
+  _baseOpinionChange: 1
+  _maxTrades: 2147483647

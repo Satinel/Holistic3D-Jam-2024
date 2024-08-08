@@ -86,7 +86,7 @@ public class Inventory : MonoBehaviour
         {
             ItemScriptableObject itemSO = itemPrefab.GetComponent<Item>().ItemSO;
 
-            if(itemSO.Type != Type.Coin)
+            if(itemSO.ItemType != ItemType.Coin)
             {
                 _startingItems.Add(itemSO);
             }
@@ -100,7 +100,7 @@ public class Inventory : MonoBehaviour
         {
             ItemScriptableObject itemSO = itemPrefab.GetComponent<Item>().ItemSO;
 
-            if(itemSO.Type != Type.Coin)
+            if(itemSO.ItemType != ItemType.Coin)
             {
                 if(_startingItems.Contains(itemSO))
                 {

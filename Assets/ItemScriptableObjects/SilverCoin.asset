@@ -16,4 +16,4 @@ MonoBehaviour:
   ItemSprite: {fileID: 21300000, guid: a1991dd620d7c0b4e955af3c1d782786, type: 3}
   BaseValue: 10
   Origin: 0
-  Type: 6
+  ItemType: 6

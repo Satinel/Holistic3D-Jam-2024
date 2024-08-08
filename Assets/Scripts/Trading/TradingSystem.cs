@@ -17,6 +17,7 @@ public class TradingSystem : MonoBehaviour
     public static Action OnResetTrade;
     public static Action OnResetBarter;
     public static Action<int> OnExchangeCurrency;
+    public static Action<Customer> OnStrikeOut;
     
     int _playerValue, _compValue, _offerValue;
 
@@ -191,17 +192,17 @@ public class TradingSystem : MonoBehaviour
     void ProcessTrade()
     {
         // TODO UI/VFX/SFX (include profit/loss and if correct change)
-        OnTradeCompleted?.Invoke(_currentCustomer); // TODO(?) Increase player reputation
+        OnTradeCompleted?.Invoke(_currentCustomer);
     }
 
     void ProcessRejection()
     {
-        _currentCustomer.ReduceStrikes(1); // TODO? Some formula to change this amount based on variables
-        // TODO? alter customer Tolerance and/or alter player Reputation
+        _currentCustomer.IncreaseStrikes(1); // TODO? Some formula to change this amount based on variables
+        // TODO? alter customer Tolerance
 
-        if(_currentCustomer.Strikes <= 0)
+        if(_currentCustomer.Strikes >= _currentCustomer.MaxStrikes)
         {
-            // TODO alter player reputation and display angry customer message (plus SFX maybe)
+            OnStrikeOut?.Invoke(_currentCustomer);
             CancelTrade();
         }
     }
@@ -240,6 +241,12 @@ public class TradingSystem : MonoBehaviour
 
     public void RepeatCustomer() // Used for UI Button
     {
+        if(_currentCustomer.MaxTradesReached)
+        {
+            CancelTrade();
+            return;
+        }
+
         HandleCustomerType();
     }
 

@@ -9,8 +9,16 @@ public class Customer : MonoBehaviour
     [field:SerializeField] public Type CustomerType { get; private set; }
     [field:SerializeField] public Sprite Sprite { get; private set; }
     [field:SerializeField][field:Range(0, 1f)] public float Tolerance { get; private set; }
+    [field:SerializeField] public int MaxStrikes { get; private set; }
     [field:SerializeField] public int Strikes { get; private set; }
+    [field:SerializeField] public int Opinion { get; private set; }
+
+    public bool MaxTradesReached => _currentTrades >= _maxTrades;
+
+    [SerializeField] int _baseOpinionChange = 1;
+    [SerializeField] int _maxTrades = 3;
     
+    int _currentTrades;
     bool _isActiveCustomer;
 
     public enum Type
@@ -26,6 +34,12 @@ public class Customer : MonoBehaviour
     {
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
         TradingSystem.OnExchangeCurrency += TradingSystem_OnExchangeCurrency;
+        TradingSystem.OnOfferAccepted += TradingSystem_OnOfferAccepted;
+        TradingSystem.OnOfferRejected += TradingSystem_OnOfferRejected;
+        TradingSystem.OnIncorrectChange += TradingSystem_OnIncorrectChange;
+        TradingSystem.OnChangeGiven += TradingSystem_OnChangeGiven;
+        TradingSystem.OnStrikeOut += TradingSystem_OnStrikeOut;
+        TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
         DropBox.OnBuyPriceSet += DropBox_OnBuyPriceSet;
     }
 
@@ -33,6 +47,12 @@ public class Customer : MonoBehaviour
     {
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
         TradingSystem.OnExchangeCurrency -= TradingSystem_OnExchangeCurrency;
+        TradingSystem.OnOfferAccepted -= TradingSystem_OnOfferAccepted;
+        TradingSystem.OnOfferRejected -= TradingSystem_OnOfferRejected;
+        TradingSystem.OnIncorrectChange -= TradingSystem_OnIncorrectChange;
+        TradingSystem.OnChangeGiven -= TradingSystem_OnChangeGiven;
+        TradingSystem.OnStrikeOut -= TradingSystem_OnStrikeOut;
+        TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
         DropBox.OnBuyPriceSet -= DropBox_OnBuyPriceSet;
     }
 
@@ -41,6 +61,8 @@ public class Customer : MonoBehaviour
         if(customer == this)
         {
             _isActiveCustomer = true;
+            Strikes = 0;
+            _currentTrades = 0;
 
             _inventory.ShowInventory(customer.CustomerType);
         }
@@ -58,6 +80,63 @@ public class Customer : MonoBehaviour
         }
     }
 
+    void TradingSystem_OnOfferAccepted(bool isBuying, int offer)
+    {
+        if(!_isActiveCustomer) { return; }
+
+        if(offer <= 0)
+        {
+            ChangeOpinion(_baseOpinionChange);
+        }
+    }
+
+    void TradingSystem_OnOfferRejected()
+    {
+        if(!_isActiveCustomer) { return; }
+
+        ChangeOpinion(-_baseOpinionChange);
+    }
+
+    void TradingSystem_OnIncorrectChange()
+    {
+        if(!_isActiveCustomer) { return; }
+
+        ChangeOpinion(-_baseOpinionChange);
+    }
+
+    void TradingSystem_OnChangeGiven(Type type, int change)
+    {
+        if(!_isActiveCustomer) { return; }
+
+        if(change <= 0)
+        {
+            ChangeOpinion(_baseOpinionChange * 2);
+        }
+        else if(change == 0)
+        {
+            ChangeOpinion(_baseOpinionChange);
+        }
+        else
+        {
+            ChangeOpinion(-_baseOpinionChange * 2);
+        }
+    }
+
+    void TradingSystem_OnStrikeOut(Customer customer)
+    {
+        if(!_isActiveCustomer) { return; }
+
+        // TODO display angry customer message (plus SFX maybe)
+    }
+
+    void TradingSystem_OnTradeCompleted(Customer customer)
+    {
+        if(!_isActiveCustomer) { return; }
+
+        // TODO display some customer message
+        _currentTrades++;
+    }
+
     void DropBox_OnBuyPriceSet(int cost)
     {
         if(!_isActiveCustomer) { return; }
@@ -65,14 +144,19 @@ public class Customer : MonoBehaviour
         _inventory.CoinBox.Pay(cost); // Note: It SHOULD NOT be possible for the price to be higher than the customer's funds due to check in TradingSystem
     }
 
+    void ChangeOpinion(int change)
+    {
+        Opinion += change;
+    }
+
     public int GetTotalFunds()
     {
         return _inventory.CoinBox.GetTrueValue();
     }
 
-    public void ReduceStrikes(int amount)
+    public void IncreaseStrikes(int amount)
     {
-        Strikes -= amount;
+        Strikes += amount;
 
         // TODO VFX (probably adding pieces of an anger emoji)
     }
@@ -82,7 +166,7 @@ public class Customer : MonoBehaviour
         _inventory.AddItems(items);
     }
 
-    internal void RemoveFromInventory(List<GameObject> items)
+    public void RemoveFromInventory(List<GameObject> items)
     {
         _inventory.Remove(items);
     }

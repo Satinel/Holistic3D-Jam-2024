@@ -5,7 +5,7 @@ public enum Origin
     Throm
 }
 
-public enum Type
+public enum ItemType
 {
     Food,
     Material,

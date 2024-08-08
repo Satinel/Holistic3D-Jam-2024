@@ -101,7 +101,7 @@ public class DropBox : MonoBehaviour, IDropHandler
                 Item item = tradedItem.GetComponent<Item>();
                 item.SetInTrade(false);
                 item.SetPlayerProperty(!_playerProperty);
-                if(item.ItemSO.Type == Type.Coin)
+                if(item.ItemSO.ItemType == ItemType.Coin)
                 {
                     item.SendToCoinBox(_partnerCoinBox);
                 }
@@ -145,7 +145,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             {
                 Item item = playerItem.GetComponent<Item>();
                 item.SetInTrade(false);
-                if(item.ItemSO.Type == Type.Coin)
+                if(item.ItemSO.ItemType == ItemType.Coin)
                 {
                     item.SendToCoinBox(_coinBox);
                 }
@@ -191,7 +191,7 @@ public class DropBox : MonoBehaviour, IDropHandler
                 {
                     Item item = coin.GetComponent<Item>();
                     {
-                        if(item.ItemSO.Type == Type.Coin)
+                        if(item.ItemSO.ItemType == ItemType.Coin)
                         {
                             item.SendToCoinBox(_coinBox);
                             _coinBox.RemoveFromSentItems(item);
@@ -218,7 +218,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             {
                 Item item = itemGO.GetComponent<Item>();
                 item.SetInTrade(false);
-                if(item.ItemSO.Type == Type.Coin)
+                if(item.ItemSO.ItemType == ItemType.Coin)
                 {
                     item.SendToCoinBox(_coinBox);
                 }

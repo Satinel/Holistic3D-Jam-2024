@@ -7,6 +7,6 @@ public class ItemScriptableObject : ScriptableObject
     public Sprite ItemSprite;
     public int BaseValue;
     public Origin Origin;
-    public Type Type;
+    public ItemType ItemType;
     
 }
