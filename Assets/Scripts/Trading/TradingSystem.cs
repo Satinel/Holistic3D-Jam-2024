@@ -139,7 +139,7 @@ public class TradingSystem : MonoBehaviour
         _currentCustomer = null;
         OnNewCustomer?.Invoke(null);
         _bankButton.SetActive(true);
-        _exchangeButton.SetActive(true);
+        _exchangeButton.SetActive(false);
     }
 
     bool MakeOffer()
@@ -252,7 +252,6 @@ public class TradingSystem : MonoBehaviour
         OnTradeCancelled?.Invoke();
         _openButton.SetActive(true);
         _bankButton.SetActive(true);
-        _exchangeButton.SetActive(true);
         NoCustomer();
     }
 
@@ -270,7 +269,7 @@ public class TradingSystem : MonoBehaviour
 
     public void ResetTradeBoxes() // Used for UI Button
     {
-        if(!_currentCustomer || _currentCustomer.CustomerType == Customer.Type.Barter)
+        if(!_currentCustomer || _currentCustomer.CustomerType == Customer.Type.Barter || _currentCustomer.CustomerType == Customer.Type.Bank)
         {
             OnResetBarter?.Invoke();
         }

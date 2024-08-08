@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
     public static Action<bool> OnInventoryLoaded;
 
     // public Dictionary<ItemScriptableObject, int> Items { get; private set; } = new();
-    public Dictionary<Currency, int> Wallet { get; private set; } = new();
+    // public Dictionary<Currency, int> Wallet { get; private set; } = new();
 
     // public int TotalFunds => GetTotalMoney();
 
@@ -49,7 +49,7 @@ public class Inventory : MonoBehaviour
         {
             if(_startingCoins.Count < i + 1) { break; }
 
-            Wallet.Add((Currency)i, _startingCoins[i]);
+            // Wallet.Add((Currency)i, _startingCoins[i]);
 
             for (int j = 0; j < _startingCoins[i]; j++)
             {

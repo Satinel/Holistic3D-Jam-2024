@@ -12730,7 +12730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isPlayer: 0
-  _startingCoins: 000000000a0000000a0000000a000000
+  _startingCoins: 320000001e000000140000000a000000
   _coins:
   - {fileID: 11400000, guid: 6ae37d4ac19c3ee4097fb6a8de312581, type: 2}
   - {fileID: 11400000, guid: 0be0d67eed6a8664a8447fecb5328647, type: 2}
@@ -12754,11 +12754,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inventory: {fileID: 8627844399269616911}
   <Name>k__BackingField: Bank
-  <CustomerType>k__BackingField: 3
+  <CustomerType>k__BackingField: 4
   <Sprite>k__BackingField: {fileID: 21300000, guid: 5d0f3e574488bd74ebd631104a4b760a, type: 3}
   <Tolerance>k__BackingField: 0
   <Strikes>k__BackingField: 2147483647
-  _isBank: 1
 --- !u!1 &8856306050442507401
 GameObject:
   m_ObjectHideFlags: 0
