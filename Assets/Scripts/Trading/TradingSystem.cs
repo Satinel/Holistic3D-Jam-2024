@@ -6,7 +6,7 @@ public class TradingSystem : MonoBehaviour
     public static Action OnIncorrectChange;
     public static Action<bool, int> OnOfferAccepted;
     public static Action OnOfferRejected;
-    public static Action OnTradeCompleted;
+    public static Action<Customer> OnTradeCompleted;
     public static Action OnTradeCancelled;
     public static Action<Customer> OnNewCustomer;
     public static Action OnOpenToPublic;
@@ -191,7 +191,7 @@ public class TradingSystem : MonoBehaviour
     void ProcessTrade()
     {
         // TODO UI/VFX/SFX (include profit/loss and if correct change)
-        OnTradeCompleted?.Invoke(); // TODO(?) Increase player reputation
+        OnTradeCompleted?.Invoke(_currentCustomer); // TODO(?) Increase player reputation
     }
 
     void ProcessRejection()

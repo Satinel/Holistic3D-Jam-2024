@@ -80,6 +80,37 @@ public class Inventory : MonoBehaviour
         _coinBox.PayInCopper(amount);
     }
 
+    public void AddItems(List<GameObject> items)
+    {
+        foreach(GameObject itemPrefab in items)
+        {
+            ItemScriptableObject itemSO = itemPrefab.GetComponent<Item>().ItemSO;
+
+            if(itemSO.Type != Type.Coin)
+            {
+                _startingItems.Add(itemSO);
+            }
+            // TODO(?) Add Coins to a better starting coins list
+        }
+    }
+
+    public void Remove(List<GameObject> items)
+    {
+        foreach(GameObject itemPrefab in items)
+        {
+            ItemScriptableObject itemSO = itemPrefab.GetComponent<Item>().ItemSO;
+
+            if(itemSO.Type != Type.Coin)
+            {
+                if(_startingItems.Contains(itemSO))
+                {
+                    _startingItems.Remove(itemSO);
+                }
+            }
+            // TODO(?) Remove coins?? Probably not!
+        }
+    }
+
     // public int GetTotalMoney()
     // {
     //     int total = 0;
@@ -162,7 +193,7 @@ public class Inventory : MonoBehaviour
     //     if(!Items.ContainsKey(item)) { return; } // Ideally it should be impossible for this to happen
 
     //     Items[item] += amount; // Note: This is a negative number so += is the correct way to handle it
-        
+
     //     if(Items[item] >= 0)
     //     {
     //         Items.Remove(item);

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Customer : MonoBehaviour
@@ -74,5 +75,15 @@ public class Customer : MonoBehaviour
         Strikes -= amount;
 
         // TODO VFX (probably adding pieces of an anger emoji)
+    }
+
+    public void AddToInventory(List<GameObject> items)
+    {
+        _inventory.AddItems(items);
+    }
+
+    internal void RemoveFromInventory(List<GameObject> items)
+    {
+        _inventory.Remove(items);
     }
 }

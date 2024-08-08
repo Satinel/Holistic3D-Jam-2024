@@ -76,13 +76,25 @@ public class DropBox : MonoBehaviour, IDropHandler
         OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
     }
 
-    void TradingSystem_OnTradeCompleted()
+    void TradingSystem_OnTradeCompleted(Customer currentCustomer)
     {
         if(_isTradeBox)
         {
             int trueValue = GetTrueValue();
 
             OnTradeResults?.Invoke(_playerProperty, trueValue);
+
+            if(_playerProperty)
+            {
+                currentCustomer.AddToInventory(_items); // Items get flipped to belong to currentCustomer in the foreach below
+                // TODO(?) Remove from player's inventory?
+            }
+            else
+            {
+                currentCustomer.RemoveFromInventory(_items); // Items get flipped to belong to player in the foreach blow
+                // TODO(?) Add to player's inventory?
+            }
+            
 
             foreach(var tradedItem in _items)
             {
@@ -105,22 +117,12 @@ public class DropBox : MonoBehaviour, IDropHandler
         _sentItems.Clear();
     }
 
-    void TradingSystem_OnTradeCancelled() // TODO Rework this (especially the !_playerProperty) to send items to correct Iventory dictionaries
+    void TradingSystem_OnTradeCancelled()
     {
         if(_isTradeBox && !_playerProperty)
         {
             foreach(var customerItem in _items)
             {
-                // Item item = customerItem.GetComponent<Item>();
-                // item.SetInTrade(false);
-                // if(item.ItemSO.Type == Type.Coin)
-                // {
-                //     item.SendToCoinBox(_coinBox);
-                // }
-                // else
-                // {
-                //     item.SendToDropBox(_inventoryBox);
-                // }
                 Destroy(customerItem);
             }
             _items.Clear();
