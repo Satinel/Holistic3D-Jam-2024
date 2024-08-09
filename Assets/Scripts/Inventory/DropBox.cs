@@ -80,9 +80,10 @@ public class DropBox : MonoBehaviour, IDropHandler
     {
         if(_isTradeBox)
         {
-            int trueValue = GetTrueValue();
-
-            OnTradeResults?.Invoke(_playerProperty, trueValue);
+            if(currentCustomer.CustomerType != Customer.Type.Bank)
+            {
+                OnTradeResults?.Invoke(_playerProperty, GetTrueValue());
+            }
 
             if(_playerProperty)
             {

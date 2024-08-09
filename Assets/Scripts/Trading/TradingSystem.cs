@@ -13,6 +13,7 @@ public class TradingSystem : MonoBehaviour
     public static Action OnBuyCustomer;
     public static Action OnSellCustomer;
     public static Action<int> OnOfferValueChanged;
+    public static Action<int, Customer.Type> OnBasePriceSet;
     public static Action<Customer.Type, int> OnChangeGiven;
     public static Action OnResetTrade;
     public static Action OnResetBarter;
@@ -76,6 +77,7 @@ public class TradingSystem : MonoBehaviour
     void DropBox_OnItemPicked(Item item)
     {
         _basePrice = item.ItemSO.BaseValue;
+        OnBasePriceSet?.Invoke(_basePrice, _currentCustomer.CustomerType);
     }
 
     void Town_OnNextCustomer(Customer customer)
@@ -254,6 +256,7 @@ public class TradingSystem : MonoBehaviour
     public void CancelTrade() // Used for UI Button
     {
         _basePrice = 0;
+        OnBasePriceSet?.Invoke(_basePrice, Customer.Type.None);
         _offerValue = 0;
         OnOfferValueChanged?.Invoke(_offerValue);
         OnTradeCancelled?.Invoke();
@@ -265,6 +268,7 @@ public class TradingSystem : MonoBehaviour
     public void OpenToPublic() // Used for UI Button
     {
         _basePrice = 0;
+        OnBasePriceSet?.Invoke(_basePrice, Customer.Type.None);
         _offerValue = 0;
         OnOfferValueChanged?.Invoke(_offerValue);
         OnTradeCancelled?.Invoke();

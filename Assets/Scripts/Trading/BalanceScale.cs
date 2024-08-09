@@ -6,10 +6,12 @@ public class BalanceScale : MonoBehaviour
 
     [SerializeField] Transform _compPan, _playerPan, _beam;
 
-    int _compValue, _playerValue;
+    int _basePrice, _offerValue, _compValue, _playerValue;
 
     Vector2 _compStartPosition, _playerStartPosition;
     Quaternion _beamStartRotation;
+
+    Customer.Type _customerType;
 
     void Start()
     {
@@ -20,12 +22,36 @@ public class BalanceScale : MonoBehaviour
 
     void OnEnable()
     {
+        TradingSystem.OnBasePriceSet += TradingSystem_OnBasePriceSet;
+        TradingSystem.OnOfferValueChanged += TradingSystem_OnOfferValueChanged;
         DropBox.OnTradeBoxValueChanged += DropBox_OnTradeBoxValueChanged;
     }
 
     void OnDisable()
     {
+        TradingSystem.OnBasePriceSet -= TradingSystem_OnBasePriceSet;
+        TradingSystem.OnOfferValueChanged -= TradingSystem_OnOfferValueChanged;
         DropBox.OnTradeBoxValueChanged -= DropBox_OnTradeBoxValueChanged;
+    }
+
+    void TradingSystem_OnBasePriceSet(int basePrice, Customer.Type customerType)
+    {
+        _basePrice = basePrice;
+        _customerType = customerType;
+    }
+
+    void TradingSystem_OnOfferValueChanged(int offerValue)
+    {
+        _offerValue = offerValue;
+
+        if(_customerType == Customer.Type.Buy)
+        {
+            CalculateOffer(_offerValue, _basePrice);
+        }
+        else if(_customerType == Customer.Type.Sell)
+        {
+            CalculateOffer(_basePrice, _offerValue);
+        }
     }
 
     void DropBox_OnTradeBoxValueChanged(bool isPlayer, int value)
@@ -42,7 +68,21 @@ public class BalanceScale : MonoBehaviour
         CalculateWeights();
     }
 
-    void CalculateWeights() // SOMEDAY: Figure out why this still works when the if checks return early, also how did I manage to create this?
+    public void OfferWindowOpened() // UI Button
+    {
+        if(_customerType == Customer.Type.Buy)
+        {
+            CalculateOffer(_offerValue, _basePrice);
+            return;
+        }
+        if(_customerType == Customer.Type.Sell)
+        {
+            CalculateOffer(_basePrice, _offerValue);
+            return;
+        }
+    }
+
+    public void CalculateWeights() // UI Button
     {
         int offer = _compValue - _playerValue;
         
@@ -71,6 +111,43 @@ public class BalanceScale : MonoBehaviour
             if(_playerValue == 0) { return; } // No divide by zero
 
             float offerNormalized = 1 - ((float)_compValue / _playerValue);
+            playerHeight = offerNormalized * _minYHeight;
+            compHeight = offerNormalized * _maxYHeight;
+            beamRotation = offerNormalized * _minZRotation;
+        }
+
+        AdjustScales(compHeight, playerHeight, beamRotation);
+    }
+
+    void CalculateOffer(int baseprice, int offerValue) // SOMEDAY: Figure out why this still works when the if checks return early, also how did I manage to create this?
+    {
+        int offer = baseprice - offerValue;
+        
+        if(offer == 0)
+        {
+            RestoreStartValues();
+            return;
+        }
+
+        float compHeight;
+        float playerHeight;
+        float beamRotation;
+        
+        if(offer > 0)
+        {
+            if(baseprice == 0) { return; } // No divide by zero
+
+            float offerNormalized = 1 - ((float)offerValue / baseprice);
+
+            compHeight = offerNormalized * _minYHeight;
+            playerHeight = offerNormalized * _maxYHeight;
+            beamRotation = offerNormalized * _maxZRotation;
+        }
+        else
+        {
+            if(offerValue == 0) { return; } // No divide by zero
+
+            float offerNormalized = 1 - ((float)baseprice / offerValue);
             playerHeight = offerNormalized * _minYHeight;
             compHeight = offerNormalized * _maxYHeight;
             beamRotation = offerNormalized * _minZRotation;
