@@ -127,6 +127,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             }
             _items.Clear();
             _totalValue = 0;
+            OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
 
         if(!_isTradeBox && !_playerProperty)
@@ -137,6 +138,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             }
             _items.Clear();
             _totalValue = 0;
+            
         }
 
         if(_isTradeBox && _playerProperty)
