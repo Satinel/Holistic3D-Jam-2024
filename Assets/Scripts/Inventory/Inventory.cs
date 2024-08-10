@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] List<ItemScriptableObject> _startingItems = new();
 
     [SerializeField] DropBox _dropBox, _coinBox;
-    [SerializeField] Item _itemPrefab;
+    [SerializeField] Item _itemPrefab, _coinPrefab;
 
     public DropBox CoinBox => _coinBox;
 
@@ -53,7 +53,7 @@ public class Inventory : MonoBehaviour
 
             for (int j = 0; j < _startingCoins[i]; j++)
             {
-                Item newCoin = Instantiate(_itemPrefab, _coinBox.transform.position, Quaternion.identity, _coinBox.transform);
+                Item newCoin = Instantiate(_coinPrefab, _coinBox.transform.position, Quaternion.identity, _coinBox.transform);
                 newCoin.SetUpMoney(_coins[i], _isPlayer, _coinBox, (Currency)i, customerType);
             }
         }
@@ -73,7 +73,7 @@ public class Inventory : MonoBehaviour
     {
         for(int i = 0; i < amount; i++)
         {
-            Item newCoin = Instantiate(_itemPrefab, _coinBox.transform.position, Quaternion.identity, _coinBox.transform);
+            Item newCoin = Instantiate(_coinPrefab, _coinBox.transform.position, Quaternion.identity, _coinBox.transform);
             newCoin.SetUpMoney(_coins[0], _isPlayer, _coinBox, Currency.Copper, customerType);
         }
 

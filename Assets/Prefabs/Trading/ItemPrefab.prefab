@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <PlayerProperty>k__BackingField: 0
+  <IsMoney>k__BackingField: 0
   <ItemSO>k__BackingField: {fileID: 0}
   _itemImage: {fileID: 7980320235752019674}
   _raycastImage: {fileID: 5300052994151575579}

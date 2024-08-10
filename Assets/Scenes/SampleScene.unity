@@ -368,6 +368,7 @@ MonoBehaviour:
   _dropBox: {fileID: 283456050}
   _coinBox: {fileID: 1285062583}
   _itemPrefab: {fileID: 2487483893745462122, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
+  _coinPrefab: {fileID: 0}
 --- !u!1001 &793239542
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -629,6 +630,7 @@ MonoBehaviour:
   _dropBox: {fileID: 971672875}
   _coinBox: {fileID: 1846485680}
   _itemPrefab: {fileID: 2487483893745462122, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
+  _coinPrefab: {fileID: 5035327618410807421, guid: 95f689b24e876e74a8f33bbb30a8f13f, type: 3}
 --- !u!4 &1146922452
 Transform:
   m_ObjectHideFlags: 0
@@ -1068,6 +1070,7 @@ MonoBehaviour:
   _dropBox: {fileID: 283456050}
   _coinBox: {fileID: 1285062583}
   _itemPrefab: {fileID: 2487483893745462122, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
+  _coinPrefab: {fileID: 5035327618410807421, guid: 95f689b24e876e74a8f33bbb30a8f13f, type: 3}
 --- !u!4 &1784043754
 Transform:
   m_ObjectHideFlags: 0

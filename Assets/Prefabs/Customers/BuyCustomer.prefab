@@ -56,6 +56,7 @@ MonoBehaviour:
   _dropBox: {fileID: 0}
   _coinBox: {fileID: 0}
   _itemPrefab: {fileID: 2487483893745462122, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
+  _coinPrefab: {fileID: 5035327618410807421, guid: 95f689b24e876e74a8f33bbb30a8f13f, type: 3}
 --- !u!114 &2897857419825214831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,3 +78,4 @@ MonoBehaviour:
   <Strikes>k__BackingField: 0
   <Opinion>k__BackingField: 0
   _baseOpinionChange: 1
+  _maxTrades: 3
