@@ -7,7 +7,6 @@ public class Customer : MonoBehaviour
 
     [field:SerializeField] public string Name { get; private set; } = string.Empty;
     [field:SerializeField] public Type CustomerType { get; private set; }
-    [field:SerializeField] public Sprite Sprite { get; private set; }
     [field:SerializeField][field:Range(0, 1f)] public float Tolerance { get; private set; }
     [field:SerializeField] public int MaxStrikes { get; private set; }
     [field:SerializeField] public int Strikes { get; private set; }
@@ -15,8 +14,12 @@ public class Customer : MonoBehaviour
 
     public bool MaxTradesReached => _currentTrades >= _maxTrades;
 
+    [SerializeField] SpriteRenderer _spriteRender;
+    [SerializeField] List<GameObject> _angerMarks;
+
     [SerializeField] int _baseOpinionChange = 1;
     [SerializeField] int _maxTrades = 3;
+    
     
     int _currentTrades;
     bool _isActiveCustomer;
@@ -63,11 +66,17 @@ public class Customer : MonoBehaviour
             _isActiveCustomer = true;
             Strikes = 0;
             _currentTrades = 0;
+            _spriteRender.enabled = true;
 
             _inventory.ShowInventory(customer.CustomerType);
         }
         else
         {
+            foreach(GameObject mark in _angerMarks)
+            {
+                mark.SetActive(false);
+            }
+            _spriteRender.enabled = false;
             _isActiveCustomer = false;
         }
     }
@@ -107,6 +116,7 @@ public class Customer : MonoBehaviour
     void TradingSystem_OnChangeGiven(Type type, int change)
     {
         if(!_isActiveCustomer) { return; }
+        if(CustomerType == Type.Bank) { return; }
 
         if(change <= 0)
         {
@@ -134,7 +144,11 @@ public class Customer : MonoBehaviour
         if(!_isActiveCustomer) { return; }
 
         // TODO display some customer message
-        _currentTrades++;
+
+        if(CustomerType != Type.Bank)
+        {
+            _currentTrades++;
+        }
     }
 
     void DropBox_OnBuyPriceSet(int cost)
@@ -154,11 +168,18 @@ public class Customer : MonoBehaviour
         return _inventory.CoinBox.GetTrueValue();
     }
 
-    public void IncreaseStrikes(int amount)
+    public void IncreaseStrikes()
     {
-        Strikes += amount;
+        if(CustomerType == Type.Bank) { return; }
 
-        // TODO VFX (probably adding pieces of an anger emoji)
+        Strikes++;
+        
+        // TODO SFX
+
+        if(Strikes <= _angerMarks.Count)
+        {
+            _angerMarks[Strikes -1].SetActive(true);
+        }
     }
 
     public void AddToInventory(List<GameObject> items)

@@ -88,9 +88,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2487483893745462122, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
+      propertyPath: _selectedColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2487483893745462122, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
+      propertyPath: _selectedColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2487483893745462122, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
+      propertyPath: _selectedColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5135141672851518874, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
       propertyPath: m_Name
       value: CoinItemPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300052994151575579, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a0f59259b4be6754b94ce3dad905ff90, type: 3}
+    - target: {fileID: 5300052994151575579, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6617911384276187493, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
       propertyPath: m_SizeDelta.x
@@ -99,6 +119,14 @@ PrefabInstance:
     - target: {fileID: 6617911384276187493, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
       propertyPath: m_SizeDelta.y
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980320235752019674, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980320235752019674, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

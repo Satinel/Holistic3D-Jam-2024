@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4779116fae06367449ca3bb589abd821, type: 3}
   m_Name: TestItem
   m_EditorClassIdentifier: 
-  ItemName: Radish
-  ItemSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  ItemName: Onion
+  ItemSprite: {fileID: 21300000, guid: 161e219c26ed16b4ca990f26e820a926, type: 3}
   BaseValue: 5
   Origin: 0
-  Type: 0
+  ItemType: 0

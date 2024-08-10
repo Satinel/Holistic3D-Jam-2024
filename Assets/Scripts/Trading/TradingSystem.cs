@@ -199,7 +199,8 @@ public class TradingSystem : MonoBehaviour
 
     void ProcessRejection()
     {
-        _currentCustomer.IncreaseStrikes(1); // TODO? Some formula to change this amount based on variables
+        _currentCustomer.IncreaseStrikes();
+        
         // TODO? alter customer Tolerance
 
         if(_currentCustomer.Strikes >= _currentCustomer.MaxStrikes)
@@ -251,7 +252,6 @@ public class TradingSystem : MonoBehaviour
 
         HandleCustomerType();
     }
-
 
     public void CancelTrade() // Used for UI Button
     {

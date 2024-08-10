@@ -10,10 +10,11 @@ public enum ItemType
     Food,
     Material,
     Weapon,
-    Armour,
+    Jewelry,
     Relic,
     Unique,
-    Coin
+    Coin,
+    Potion
 }
 
 public enum Currency
