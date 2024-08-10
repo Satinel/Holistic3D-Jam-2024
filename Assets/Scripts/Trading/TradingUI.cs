@@ -4,15 +4,12 @@ using UnityEngine.UI;
 
 public class TradingUI : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI _copperText, _silverText, _goldText, _platinumText, _tradeBoxText, _payText;
-    [SerializeField] TextMeshProUGUI _compCopperText, _compSilverText, _compGoldText, _compPlatinumText, _compTradeBoxText;
+    [SerializeField] TextMeshProUGUI _tradeBoxText, _payText;
+    [SerializeField] TextMeshProUGUI _compTradeBoxText;
     [SerializeField] TextMeshProUGUI _profitText, _changeText, _offerText, _tradeTypeText, _customerNameText;
     [SerializeField] Image _customerImage, _itemImage;
     [SerializeField] GameObject _setPriceButton, _resetTradeButton, _payTextParent;
     [SerializeField] GameObject _resultWindow, _rejectionWindow, _noItemsWindow, _setPriceWindow, _incorrectChangeWindow, _customerName, _noCustomersWindow;
-
-    int _copperTotal, _silverTotal, _goldTotal, _platinumTotal;
-    int _compCopperTotal, _compSilverTotal, _compGoldTotal, _compPlatinumTotal;
 
     int _playerValue, _compValue;
     bool _showTradeNumbers = false;
@@ -20,8 +17,6 @@ public class TradingUI : MonoBehaviour
     void OnEnable()
     {
         DropBox.OnTradeBoxValueChanged += DropBox_OnTradeBoxValueChanged;
-        DropBox.OnCoinAdded += DropBox_OnCoinAdded;
-        DropBox.OnCoinRemoved += DropBox_OnCoinRemoved;
         DropBox.OnNoItems += DropBox_OnNoItems;
         TradingSystem.OnIncorrectChange += TradingSystem_OnIncorrectChange;
         TradingSystem.OnOfferAccepted += TradingSystem_OnOfferAccepted;
@@ -40,8 +35,6 @@ public class TradingUI : MonoBehaviour
     void OnDisable()
     {
         DropBox.OnTradeBoxValueChanged -= DropBox_OnTradeBoxValueChanged;
-        DropBox.OnCoinAdded -= DropBox_OnCoinAdded;
-        DropBox.OnCoinRemoved -= DropBox_OnCoinRemoved;
         DropBox.OnNoItems -= DropBox_OnNoItems;
         TradingSystem.OnIncorrectChange -= TradingSystem_OnIncorrectChange;
         TradingSystem.OnOfferAccepted -= TradingSystem_OnOfferAccepted;
@@ -68,116 +61,6 @@ public class TradingUI : MonoBehaviour
         else
         {
             _compTradeBoxText.text = $"{value}";
-        }
-    }
-
-    void DropBox_OnCoinAdded(bool isPlayer, Currency currencyType)
-    {
-        switch (currencyType)
-        {
-            case Currency.Copper:
-                if(isPlayer)
-                {
-                    _copperTotal++;
-                    _copperText.text = _copperTotal.ToString("N0");
-                }
-                else
-                {
-                    _compCopperTotal++;
-                    _compCopperText.text = _compCopperTotal.ToString("N0");
-                }
-                break;
-            case Currency.Silver:
-                if(isPlayer)
-                {
-                    _silverTotal++;
-                    _silverText.text = _silverTotal.ToString("N0");
-                }
-                else
-                {
-                    _compSilverTotal++;
-                    _compSilverText.text = _compSilverTotal.ToString("N0");
-                }
-                break;
-            case Currency.Gold:
-                if(isPlayer)
-                {
-                    _goldTotal++;
-                    _goldText.text = _goldTotal.ToString("N0");
-                }
-                else
-                {
-                    _compGoldTotal++;
-                    _compGoldText.text = _compGoldTotal.ToString("N0");
-                }
-                break;
-            case Currency.Platinum:
-                if(isPlayer)
-                {
-                    _platinumTotal++;
-                    _platinumText.text = _platinumTotal.ToString("N0");
-                }
-                else
-                {
-                    _compPlatinumTotal++;
-                    _compPlatinumText.text = _compPlatinumTotal.ToString("N0");
-                }
-                break;
-        }
-    }
-
-    void DropBox_OnCoinRemoved(bool isPlayer, Currency currencyType)
-    {
-        switch(currencyType)
-        {
-            case Currency.Copper:
-                if(isPlayer)
-                {
-                    _copperTotal--;
-                    _copperText.text = _copperTotal.ToString("N0");
-                }
-                else
-                {
-                    _compCopperTotal--;
-                    _compCopperText.text = _compCopperTotal.ToString("N0");
-                }
-                break;
-            case Currency.Silver:
-                if(isPlayer)
-                {
-                    _silverTotal--;
-                    _silverText.text = _silverTotal.ToString("N0");
-                }
-                else
-                {
-                    _compSilverTotal--;
-                    _compSilverText.text = _compSilverTotal.ToString("N0");
-                }
-                break;
-            case Currency.Gold:
-                if(isPlayer)
-                {
-                    _goldTotal--;
-                    _goldText.text = _goldTotal.ToString("N0");
-                }
-                else
-                {
-                    _compGoldTotal--;
-                    _compGoldText.text = _compGoldTotal.ToString("N0");
-                }
-                break;
-            case Currency.Platinum:
-                if(isPlayer)
-                {
-                    _platinumTotal--;
-                    _platinumText.text = _platinumTotal.ToString("N0");
-                }
-                else
-                {
-                    _compPlatinumTotal--;
-                    _compPlatinumText.text = _compPlatinumTotal.ToString("N0");
-                }
-                break;
         }
     }
 
@@ -249,21 +132,11 @@ public class TradingUI : MonoBehaviour
         CloseNoItems();
         CloseSetPrice();
         CloseChange();
-        ResetCustomerCoins();
         _setPriceButton.SetActive(false);
         _resetTradeButton.SetActive(false);
         _tradeBoxText.text = string.Empty;
         _compTradeBoxText.text = string.Empty;
         _payTextParent.SetActive(false);
-    }
-
-    void ResetCustomerCoins()
-    {
-        _compCopperTotal = 0; _compSilverTotal = 0; _compGoldTotal = 0; _compPlatinumTotal = 0;
-        _compCopperText.text = _compCopperTotal.ToString("N0");
-        _compSilverText.text = _compSilverTotal.ToString("N0");
-        _compGoldText.text = _compGoldTotal.ToString("N0");
-        _compPlatinumText.text = _compPlatinumTotal.ToString("N0");
     }
 
     void TradingSystem_OnChangeGiven(Customer.Type customerType, int change)

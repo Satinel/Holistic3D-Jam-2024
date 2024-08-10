@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class DropBox : MonoBehaviour, IDropHandler
 {
     public static Action<bool, int> OnTradeBoxValueChanged;
-    public static Action<bool, Currency> OnCoinAdded;
-    public static Action<bool, Currency> OnCoinRemoved;
     public static Action<bool, int> OnTradeResults;
     public static Action OnNoItems;
     public static Action<Item> OnItemPicked;
@@ -15,6 +14,7 @@ public class DropBox : MonoBehaviour, IDropHandler
     public static Action<int> OnSellPriceSet;
 
     [SerializeField] Transform _copperParent, _silverParent, _goldParent, _platinumParent;
+    [SerializeField] TextMeshProUGUI _copperText, _silverText, _goldText, _platinumText;
 
     [SerializeField] bool _playerProperty, _isTradeBox, _isCoinBox;
     [SerializeField] DropBox _tradeBox, _coinBox, _inventoryBox, _partnerBox, _partnerCoinBox;
@@ -120,6 +120,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
         _sentItems.Clear();
+        Invoke(nameof(SetCoinTexts), 0.01f);
     }
 
     void TradingSystem_OnTradeCancelled()
@@ -166,6 +167,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
         _sentItems.Clear();
+        Invoke(nameof(SetCoinTexts), 0.01f);
     }
 
     void TradingSystem_OnBuyCustomer()
@@ -213,6 +215,7 @@ public class DropBox : MonoBehaviour, IDropHandler
                 }
             }
         }
+        Invoke(nameof(SetCoinTexts), 0.01f);
     }
 
     void TradingSystem_OnResetBarter()
@@ -244,6 +247,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
         _sentItems.Clear();
+        Invoke(nameof(SetCoinTexts), 0.01f);
     }
 
     void PickRandomItem()
@@ -291,11 +295,8 @@ public class DropBox : MonoBehaviour, IDropHandler
         {
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
-        if(_isCoinBox)
-        {
-            Item item = itemPrefab.GetComponent<Item>();
-            OnCoinAdded(_playerProperty, item.CurrencyType);
-        }
+        
+        Invoke(nameof(SetCoinTexts), 0.01f);
     }
 
     public void RemoveItem(GameObject itemPrefab)
@@ -311,14 +312,49 @@ public class DropBox : MonoBehaviour, IDropHandler
         {
             OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
         }
-        if(_isCoinBox)
+        
+        Invoke(nameof(SetCoinTexts), 0.01f);
+    }
+
+    void SetCoinTexts()
+    {
+        if(!_isCoinBox && !_isTradeBox) { return; }
+
+        if(_copperParent.childCount <= 0)
         {
-            Item item = itemPrefab.GetComponent<Item>();
-            OnCoinRemoved(_playerProperty, item.CurrencyType);
+            _copperText.text = string.Empty;
+        }
+        else
+        {
+            _copperText.text = _copperParent.childCount.ToString();
+        }
+        if(_silverParent.childCount <= 0)
+        {
+            _silverText.text = string.Empty;
+        }
+        else
+        {
+            _silverText.text = _silverParent.childCount.ToString();
+        }
+        if(_goldParent.childCount <= 0)
+        {
+            _goldText.text = string.Empty;
+        }
+        else
+        {
+            _goldText.text = _goldParent.childCount.ToString();
+        }
+        if(_platinumParent.childCount <= 0)
+        {
+            _platinumText.text = string.Empty;
+        }
+        else
+        {
+            _platinumText.text = _platinumParent.childCount.ToString();
         }
     }
 
-    public void SendChildItem(Transform parent) // UI Button (Note this only works for currency but could be applied to stackable items with Item.cs and UI reworking)
+    public void SendChildItem(Transform parent) // UI Button (Note this only works for currency but could be applied to stackable items with Item.SortCoins and UI reworking)
     {
         if(parent.childCount > 0)
         {
@@ -327,6 +363,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             item.SendToDropBox(_tradeBox);
             item.SetInTrade(true);
             AddToSentItems(item);
+            item.SortCoins(_tradeBox);
         }
     }
 
