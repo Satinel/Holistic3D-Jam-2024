@@ -8,11 +8,12 @@ public class TradingUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI _compTradeBoxText;
     [SerializeField] TextMeshProUGUI _profitText, _changeText, _offerText, _tradeTypeText, _customerNameText;
     [SerializeField] Image _customerImage, _itemImage;
-    [SerializeField] GameObject _setPriceButton, _resetTradeButton, _payTextParent;
+    [SerializeField] GameObject _setPriceButton, _resetTradeButton, _payTextParent, _repeatCustomerButton;
     [SerializeField] GameObject _resultWindow, _rejectionWindow, _noItemsWindow, _setPriceWindow, _incorrectChangeWindow, _customerName, _noCustomersWindow;
 
     int _playerValue, _compValue;
     bool _showTradeNumbers = false;
+    Customer _customer;
 
     void OnEnable()
     {
@@ -89,6 +90,7 @@ public class TradingUI : MonoBehaviour
     {
         if(!customer)
         {
+            _customer = null;
             _showTradeNumbers = false;
             _resetTradeButton.SetActive(false);
             _customerImage.enabled = false;
@@ -97,6 +99,7 @@ public class TradingUI : MonoBehaviour
             return;
         }
 
+        _customer = customer;
         _resetTradeButton.SetActive(true);
         _customerImage.sprite = customer.Sprite;
         _customerImage.enabled = true;
@@ -137,6 +140,7 @@ public class TradingUI : MonoBehaviour
         _tradeBoxText.text = string.Empty;
         _compTradeBoxText.text = string.Empty;
         _payTextParent.SetActive(false);
+        _itemImage.enabled = false;
     }
 
     void TradingSystem_OnChangeGiven(Customer.Type customerType, int change)
@@ -180,6 +184,7 @@ public class TradingUI : MonoBehaviour
         _tradeBoxText.text = string.Empty;
         _compTradeBoxText.text = string.Empty;
         _payTextParent.SetActive(false);
+        _itemImage.enabled = false;
     }
 
     void DropBox_OnItemPicked(Item item)
@@ -203,6 +208,18 @@ public class TradingUI : MonoBehaviour
 
         _resultWindow.SetActive(true);
         _profitText.text = $"Profit: {_compValue - _playerValue:N0}";
+
+        if(_customer)
+        {
+            if(!_customer.MaxTradesReached)
+            {
+                _repeatCustomerButton.SetActive(true);
+            }
+            else
+            {
+                _repeatCustomerButton.SetActive(false);
+            }
+        }
     }
 
     void DropBox_OnBuyPriceSet(int totalValue)
@@ -239,7 +256,6 @@ public class TradingUI : MonoBehaviour
 
     public void CloseSetPrice() // UI Button
     {
-        _itemImage.enabled = false;
         _setPriceWindow.SetActive(false);
     }
 

@@ -9848,6 +9848,7 @@ MonoBehaviour:
   _setPriceButton: {fileID: 5049340403719657170}
   _resetTradeButton: {fileID: 5786309138545182660}
   _payTextParent: {fileID: 5146580181498400368}
+  _repeatCustomerButton: {fileID: 6141425929496980669}
   _resultWindow: {fileID: 5201998988826021069}
   _rejectionWindow: {fileID: 7847528693880139284}
   _noItemsWindow: {fileID: 4521908516362504301}
