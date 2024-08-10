@@ -4,17 +4,18 @@ using UnityEngine.UI;
 
 public class TradingUI : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI _copperText, _silverText, _goldText, _platinumText, _tradeBoxText;
+    [SerializeField] TextMeshProUGUI _copperText, _silverText, _goldText, _platinumText, _tradeBoxText, _payText;
     [SerializeField] TextMeshProUGUI _compCopperText, _compSilverText, _compGoldText, _compPlatinumText, _compTradeBoxText;
     [SerializeField] TextMeshProUGUI _profitText, _changeText, _offerText, _tradeTypeText, _customerNameText;
     [SerializeField] Image _customerImage, _itemImage;
-    [SerializeField] GameObject _setPriceButton, _resetTradeButton;
+    [SerializeField] GameObject _setPriceButton, _resetTradeButton, _payTextParent;
     [SerializeField] GameObject _resultWindow, _rejectionWindow, _noItemsWindow, _setPriceWindow, _incorrectChangeWindow, _customerName, _noCustomersWindow;
 
     int _copperTotal, _silverTotal, _goldTotal, _platinumTotal;
     int _compCopperTotal, _compSilverTotal, _compGoldTotal, _compPlatinumTotal;
 
     int _playerValue, _compValue;
+    bool _showTradeNumbers = false;
 
     void OnEnable()
     {
@@ -31,6 +32,8 @@ public class TradingUI : MonoBehaviour
         TradingSystem.OnChangeGiven += TradingSystem_OnChangeGiven;
         DropBox.OnItemPicked += DropBox_OnItemPicked;
         DropBox.OnTradeResults += DropBox_OnTradeResults;
+        DropBox.OnBuyPriceSet += DropBox_OnBuyPriceSet;
+        DropBox.OnSellPriceSet += DropBox_OnSellPriceSet;
         Town.OnNoCustomers += Town_OnNoCustomers;
     }
 
@@ -49,11 +52,15 @@ public class TradingUI : MonoBehaviour
         TradingSystem.OnChangeGiven -= TradingSystem_OnChangeGiven;
         DropBox.OnItemPicked -= DropBox_OnItemPicked;
         DropBox.OnTradeResults -= DropBox_OnTradeResults;
+        DropBox.OnBuyPriceSet -= DropBox_OnBuyPriceSet;
+        DropBox.OnSellPriceSet -= DropBox_OnSellPriceSet;
         Town.OnNoCustomers -= Town_OnNoCustomers;
     }
 
     void DropBox_OnTradeBoxValueChanged(bool isPlayer, int value)
     {
+        if(!_showTradeNumbers) { return; }
+
         if(isPlayer)
         {
             _tradeBoxText.text = $"{value}";
@@ -199,6 +206,7 @@ public class TradingUI : MonoBehaviour
     {
         if(!customer)
         {
+            _showTradeNumbers = false;
             _resetTradeButton.SetActive(false);
             _customerImage.enabled = false;
             _customerName.SetActive(false);
@@ -214,11 +222,17 @@ public class TradingUI : MonoBehaviour
         _changeText.text = string.Empty;
         if(customer.CustomerType == Customer.Type.Buy)
         {
+            _showTradeNumbers = false;
             _tradeTypeText.text = "Sell Offer";
         }
-        if(customer.CustomerType == Customer.Type.Sell)
+        else if(customer.CustomerType == Customer.Type.Sell)
         {
+            _showTradeNumbers = false;
             _tradeTypeText.text = "Buy Offer";
+        }
+        else
+        {
+            _showTradeNumbers = true;
         }
         // TODO Set a text field based on a string supplied by customer as a greeting
     }
@@ -238,7 +252,9 @@ public class TradingUI : MonoBehaviour
         ResetCustomerCoins();
         _setPriceButton.SetActive(false);
         _resetTradeButton.SetActive(false);
-
+        _tradeBoxText.text = string.Empty;
+        _compTradeBoxText.text = string.Empty;
+        _payTextParent.SetActive(false);
     }
 
     void ResetCustomerCoins()
@@ -288,7 +304,9 @@ public class TradingUI : MonoBehaviour
                 // TODO Player Rep--
             }
         }
-        
+        _tradeBoxText.text = string.Empty;
+        _compTradeBoxText.text = string.Empty;
+        _payTextParent.SetActive(false);
     }
 
     void DropBox_OnItemPicked(Item item)
@@ -312,6 +330,18 @@ public class TradingUI : MonoBehaviour
 
         _resultWindow.SetActive(true);
         _profitText.text = $"Profit: {_compValue - _playerValue:N0}";
+    }
+
+    void DropBox_OnBuyPriceSet(int totalValue)
+    {
+        _payTextParent.SetActive(true);
+        _payText.text = $"Customer Pays: {totalValue:N0}₡";
+    }
+
+    void DropBox_OnSellPriceSet(int totalValue)
+    {
+        _payTextParent.SetActive(true);
+        _payText.text = _payText.text = $"You Pay: {totalValue:N0}₡";
     }
 
     void Town_OnNoCustomers()

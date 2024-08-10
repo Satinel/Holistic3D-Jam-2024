@@ -124,7 +124,14 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         transform.SetParent(_currentBox.transform, true);
         transform.position = _currentBox.transform.position;
         
-        if(_inTrade) { return; }
+        if(_inTrade)
+        {
+            if(IsMoney)
+            {
+                SortCoins(_currentBox);
+            }
+            return;
+        }
 
         if(IsMoney)
         {
@@ -169,6 +176,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 _currentBox.AddToSentItems(this);
                 _currentBox.RemoveItem(gameObject);
                 SendToDropBox(_currentBox.TradeBox);
+                SortCoins(_currentBox);
                 _inTrade = true;
             }
             else
@@ -222,7 +230,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         SortCoins(coinBox);
     }
 
-    void SortCoins(DropBox coinBox)
+    public void SortCoins(DropBox coinBox)
     {
         switch(CurrencyType)
         {
@@ -247,7 +255,14 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 SetStartPosition();
                 break;
         }
-        _inTrade = false;
+        if(coinBox.IsTradeBox)
+        {
+            _inTrade = true;
+        }
+        else
+        {
+            _inTrade = false;
+        }
     }
 
     public void SetStartPosition()

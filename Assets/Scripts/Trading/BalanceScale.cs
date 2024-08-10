@@ -6,12 +6,14 @@ public class BalanceScale : MonoBehaviour
 
     [SerializeField] Transform _compPan, _playerPan, _beam;
 
+    [SerializeField] bool _useTolerance;
+
     int _basePrice, _offerValue, _compValue, _playerValue;
 
     Vector2 _compStartPosition, _playerStartPosition;
     Quaternion _beamStartRotation;
 
-    Customer.Type _customerType;
+    Customer _customer;
 
     void Start()
     {
@@ -22,6 +24,8 @@ public class BalanceScale : MonoBehaviour
 
     void OnEnable()
     {
+        Town.OnNextCustomer += Town_OnNextCustomer;
+        TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
         TradingSystem.OnBasePriceSet += TradingSystem_OnBasePriceSet;
         TradingSystem.OnOfferValueChanged += TradingSystem_OnOfferValueChanged;
         DropBox.OnTradeBoxValueChanged += DropBox_OnTradeBoxValueChanged;
@@ -29,26 +33,44 @@ public class BalanceScale : MonoBehaviour
 
     void OnDisable()
     {
+        Town.OnNextCustomer -= Town_OnNextCustomer;
+        TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
         TradingSystem.OnBasePriceSet -= TradingSystem_OnBasePriceSet;
         TradingSystem.OnOfferValueChanged -= TradingSystem_OnOfferValueChanged;
         DropBox.OnTradeBoxValueChanged -= DropBox_OnTradeBoxValueChanged;
     }
 
-    void TradingSystem_OnBasePriceSet(int basePrice, Customer.Type customerType)
+    void Town_OnNextCustomer(Customer customer)
+    {
+        _customer = customer;
+    }
+
+    void TradingSystem_OnNewCustomer(Customer customer)
+    {
+        if(customer == null)
+        {
+            _customer = null;
+        }
+
+        _customer = customer;
+    }
+
+    void TradingSystem_OnBasePriceSet(int basePrice)
     {
         _basePrice = basePrice;
-        _customerType = customerType;
     }
 
     void TradingSystem_OnOfferValueChanged(int offerValue)
     {
         _offerValue = offerValue;
 
-        if(_customerType == Customer.Type.Buy)
+        if(!_customer) { return; }
+
+        if(_customer.CustomerType == Customer.Type.Buy)
         {
             CalculateOffer(_offerValue, _basePrice);
         }
-        else if(_customerType == Customer.Type.Sell)
+        else if(_customer.CustomerType == Customer.Type.Sell)
         {
             CalculateOffer(_basePrice, _offerValue);
         }
@@ -70,12 +92,12 @@ public class BalanceScale : MonoBehaviour
 
     public void OfferWindowOpened() // UI Button
     {
-        if(_customerType == Customer.Type.Buy)
+        if(_customer.CustomerType == Customer.Type.Buy)
         {
             CalculateOffer(_offerValue, _basePrice);
             return;
         }
-        if(_customerType == Customer.Type.Sell)
+        if(_customer.CustomerType == Customer.Type.Sell)
         {
             CalculateOffer(_basePrice, _offerValue);
             return;
@@ -102,6 +124,12 @@ public class BalanceScale : MonoBehaviour
 
             float offerNormalized = 1 - ((float)_playerValue / _compValue);
 
+            if(_useTolerance && offerNormalized <= _customer.Tolerance)
+            {
+                RestoreStartValues();
+                return;
+            }
+
             compHeight = offerNormalized * _minYHeight;
             playerHeight = offerNormalized * _maxYHeight;
             beamRotation = offerNormalized * _maxZRotation;
@@ -111,6 +139,13 @@ public class BalanceScale : MonoBehaviour
             if(_playerValue == 0) { return; } // No divide by zero
 
             float offerNormalized = 1 - ((float)_compValue / _playerValue);
+            
+            if(_useTolerance && offerNormalized <= _customer.Tolerance)
+            {
+                RestoreStartValues();
+                return;
+            }
+
             playerHeight = offerNormalized * _minYHeight;
             compHeight = offerNormalized * _maxYHeight;
             beamRotation = offerNormalized * _minZRotation;
@@ -138,6 +173,11 @@ public class BalanceScale : MonoBehaviour
             if(baseprice == 0) { return; } // No divide by zero
 
             float offerNormalized = 1 - ((float)offerValue / baseprice);
+            if(_useTolerance && offerNormalized <= _customer.Tolerance)
+            {
+                RestoreStartValues();
+                return;
+            }
 
             compHeight = offerNormalized * _minYHeight;
             playerHeight = offerNormalized * _maxYHeight;
@@ -148,6 +188,13 @@ public class BalanceScale : MonoBehaviour
             if(offerValue == 0) { return; } // No divide by zero
 
             float offerNormalized = 1 - ((float)baseprice / offerValue);
+
+            if(_useTolerance && offerNormalized <= _customer.Tolerance)
+            {
+                RestoreStartValues();
+                return;
+            }
+            
             playerHeight = offerNormalized * _minYHeight;
             compHeight = offerNormalized * _maxYHeight;
             beamRotation = offerNormalized * _minZRotation;
