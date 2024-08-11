@@ -26,7 +26,7 @@ public class TradingSystem : MonoBehaviour
     int _offer;
     int _basePrice;
 
-    [SerializeField] GameObject _openButton, _bankButton, _exchangeButtons, _goodbyeButton, _haggleButton, _activeTradeButtons, _completeTradeButton, _barterOfferButton;
+    [SerializeField] GameObject _openButton, _bankButton, _exchangeButtons, _goodbyeButton, _haggleButton, _activeTradeButtons, _completeTradeButton, _barterOfferButton, _greetingButton;
     [SerializeField] Customer _bank;
     Customer _currentCustomer;
     
@@ -104,7 +104,7 @@ public class TradingSystem : MonoBehaviour
     {
         if(isPlayer) { return; }
 
-        HandleCustomerType();
+        _greetingButton.SetActive(true); // TODO? One day have many buttons for different dialogue responses
     }
 
     void HandleCustomerType()
@@ -365,6 +365,12 @@ public class TradingSystem : MonoBehaviour
         _exchangeButtons.SetActive(false);
         OnExchangeCurrency?.Invoke(_playerValue, (Currency)currency);
         _completeTradeButton.SetActive(true);
+    }
+
+    public void GiveAGoodGreeting() // Used for UI Button
+    {
+        _greetingButton.SetActive(false);
+        HandleCustomerType();
     }
 
     public void ChangeCopper(bool increase) // UI Button

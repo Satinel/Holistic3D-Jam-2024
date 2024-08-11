@@ -962,6 +962,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1457704235}
     m_Modifications:
+    - target: {fileID: 1752018360346606786, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 745d7a16cd701b84194f5b5f28032649, type: 3}
     - target: {fileID: 5005100326791386655, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1573,14 +1577,6 @@ PrefabInstance:
     - target: {fileID: 8333649778445846049, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8627844399269616911, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
-      propertyPath: _coinBox
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8627844399269616911, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
-      propertyPath: _dropBox
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

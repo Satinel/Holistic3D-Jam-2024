@@ -168,6 +168,78 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &5541762275939057924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 321778920614282379}
+  - component: {fileID: 8651286748624191998}
+  m_Layer: 0
+  m_Name: Dialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &321778920614282379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5541762275939057924}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8934945721807295271}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8651286748624191998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5541762275939057924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c83529cbbe6974641b67f09daa614cdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _greetings:
+  - Greetings.
+  _askToBuy:
+  - I'm interested in this.
+  _offerToSell:
+  - What will you give me for this?
+  _acceptPrice:
+  - That's a fair price.
+  _rejectPrice:
+  - Unacceptable.
+  _completeDeal:
+  - Thank you.
+  _rejectDeal:
+  - No.
+  _gainStrike:
+  - ...
+  _maxStrikes:
+  - You call yourself a trader?
+  _maxTrades:
+  - I'll be on my way.
+  _madeProfit:
+  - How generous.
+  _lostChange:
+  - Something doesn't add up...
+  _payAllMoney:
+  - This is everything I have...
+  _departures:
+  - Farewell.
 --- !u!1 &5738326573733428263
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,6 +273,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 869909669652727838}
+  - {fileID: 321778920614282379}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2799715711906494970
@@ -268,6 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventory: {fileID: 4775489334125651714}
+  _dialogue: {fileID: 8651286748624191998}
   <Name>k__BackingField: Customer
   <CustomerType>k__BackingField: 1
   <Tolerance>k__BackingField: 0.45
@@ -302,8 +376,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a7ed39e07a59e65479d34204b9db0f47, type: 2}
   _startingItems:
   - {fileID: 11400000, guid: 99db0a8704bf1f445847fffe9f5fe600, type: 2}
-  _dropBox: {fileID: 0}
-  _coinBox: {fileID: 0}
   _itemPrefab: {fileID: 2487483893745462122, guid: e2df2fcd398d45f43814429cfb84bdd7, type: 3}
   _coinPrefab: {fileID: 5035327618410807421, guid: 95f689b24e876e74a8f33bbb30a8f13f, type: 3}
 --- !u!1 &6882047374233846179

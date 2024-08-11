@@ -4,6 +4,7 @@ using UnityEngine;
 public class Customer : MonoBehaviour
 {
     [SerializeField] Inventory _inventory;
+    [SerializeField] Dialogue _dialogue;
 
     [field:SerializeField] public string Name { get; private set; } = string.Empty;
     [field:SerializeField] public Type CustomerType { get; private set; }
@@ -64,6 +65,7 @@ public class Customer : MonoBehaviour
         if(customer == this)
         {
             _isActiveCustomer = true;
+            _dialogue.SetActiveDialogue(true);
             Strikes = 0;
             _currentTrades = 0;
             _spriteRender.enabled = true;
@@ -78,7 +80,10 @@ public class Customer : MonoBehaviour
             }
             _spriteRender.enabled = false;
             _isActiveCustomer = false;
+            _dialogue.SetActiveDialogue(false);
         }
+        
+        
     }
 
     void TradingSystem_OnExchangeCurrency(int amount, Currency currency)
