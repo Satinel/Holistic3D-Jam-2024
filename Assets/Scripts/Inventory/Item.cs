@@ -84,6 +84,11 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 }
                 break;
             case Customer.Type.Barter:
+                if(!PlayerProperty && IsMoney)
+                {
+                    eventData.pointerDrag = null;
+                    return;
+                }
                 break;
             case Customer.Type.Bank:
                 if(!IsMoney)
@@ -161,6 +166,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 if(!IsMoney) { return; }
                 break;
             case Customer.Type.Barter:
+                if(!PlayerProperty && IsMoney) { return; }
                 break;
             default:
                 if(!PlayerProperty) { return; }

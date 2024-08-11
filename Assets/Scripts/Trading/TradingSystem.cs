@@ -344,6 +344,7 @@ public class TradingSystem : MonoBehaviour
     public void GoToBank() // Used for UI Button
     {
         NewCustomer(_bank);
+        _openButton.SetActive(false);
         _bankButton.SetActive(false);
         _exchangeButton.SetActive(true);
         _completeTradeButton.SetActive(true);
