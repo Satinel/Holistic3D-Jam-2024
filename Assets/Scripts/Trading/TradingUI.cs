@@ -6,10 +6,10 @@ public class TradingUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _tradeBoxText, _payText;
     [SerializeField] TextMeshProUGUI _compTradeBoxText;
-    [SerializeField] TextMeshProUGUI _profitText, _changeText, _offerText, _tradeTypeText, _customerNameText;
+    [SerializeField] TextMeshProUGUI _profitText, _changeText, _offerText, _tradeTypeText, _customerNameText, _itemNameText;
     [SerializeField] Image _itemImage;
     [SerializeField] GameObject _payTextParent, _repeatCustomerButton, _tryAgainButton, _retryButton;
-    [SerializeField] GameObject _resultWindow, _rejectionWindow, _noItemsWindow, _setPriceWindow, _incorrectChangeWindow, _customerName, _noCustomersWindow;
+    [SerializeField] GameObject _resultWindow, _rejectionWindow, _noItemsWindow, _setPriceWindow, _incorrectChangeWindow, _customerName, _noCustomersWindow, _itemNameWindow;
 
     int _playerValue, _compValue;
     bool _showTradeNumbers = false;
@@ -89,10 +89,11 @@ public class TradingUI : MonoBehaviour
 
     void TradingSystem_OnNewCustomer(Customer customer)
     {
+        _showTradeNumbers = false;
+
         if(!customer)
         {
             _customer = null;
-            _showTradeNumbers = false;
             _customerName.SetActive(false);
             _tradeTypeText.text = string.Empty;
             return;
@@ -106,15 +107,13 @@ public class TradingUI : MonoBehaviour
         _changeText.text = string.Empty;
         if(customer.CustomerType == Customer.Type.Buy)
         {
-            _showTradeNumbers = false;
             _tradeTypeText.text = "Sell Offer";
         }
         else if(customer.CustomerType == Customer.Type.Sell)
         {
-            _showTradeNumbers = false;
             _tradeTypeText.text = "Buy Offer";
         }
-        else
+        else if(customer.CustomerType == Customer.Type.Bank)
         {
             _showTradeNumbers = true;
         }
@@ -145,6 +144,8 @@ public class TradingUI : MonoBehaviour
         _compTradeBoxText.text = string.Empty;
         _payTextParent.SetActive(false);
         _itemImage.enabled = false;
+        _itemNameWindow.SetActive(false);
+        _itemNameText.text = string.Empty;
     }
 
     void TradingSystem_OnChangeGiven(Customer.Type customerType, int change)
@@ -189,6 +190,8 @@ public class TradingUI : MonoBehaviour
         _compTradeBoxText.text = string.Empty;
         _payTextParent.SetActive(false);
         _itemImage.enabled = false;
+        _itemNameWindow.SetActive(false);
+        _itemNameText.text = string.Empty;
     }
 
     void DropBox_OnItemPicked(Item item)
@@ -196,6 +199,8 @@ public class TradingUI : MonoBehaviour
         // TODO (Somewhere) Customer message re: item they want to buy/sell
         _itemImage.enabled = true;
         _itemImage.sprite = item.ItemSO.ItemSprite;
+        _itemNameText.text = item.ItemSO.ItemName;
+        _itemNameWindow.SetActive(true);
     }
 
     void DropBox_OnTradeResults(bool isPlayer, int value)

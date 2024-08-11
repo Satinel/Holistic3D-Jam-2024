@@ -37,6 +37,7 @@ public class DropBox : MonoBehaviour, IDropHandler
 
     void OnEnable()
     {
+        Inventory.OnInventoryStart += Inventory_OnInventoryStart;
         TradingSystem.OnOfferAccepted += TradingSystem_OnOfferAccepted;
         TradingSystem.OnBarterAccepted += TradingSystem_OnBarterAccepted;
         TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
@@ -49,6 +50,7 @@ public class DropBox : MonoBehaviour, IDropHandler
 
     void OnDisable()
     {
+        Inventory.OnInventoryStart -= Inventory_OnInventoryStart;
         TradingSystem.OnOfferAccepted -= TradingSystem_OnOfferAccepted;
         TradingSystem.OnBarterAccepted -= TradingSystem_OnBarterAccepted;
         TradingSystem.OnTradeCompleted -= TradingSystem_OnTradeCompleted;
@@ -57,6 +59,42 @@ public class DropBox : MonoBehaviour, IDropHandler
         TradingSystem.OnSellCustomer -= TradingSystem_OnSellCustomer;
         TradingSystem.OnResetTrade -= TradingSystem_OnResetTrade;
         TradingSystem.OnResetBarter -= TradingSystem_OnResetBarter;
+    }
+
+    void Inventory_OnInventoryStart(Inventory inventory, bool isPlayer)
+    {
+        if(isPlayer)
+        {
+            if(_playerProperty)
+            {
+                if(_isCoinBox)
+                {
+                    inventory.SetCoinBox(this);
+                    return;
+                }
+                if(!_isTradeBox)
+                {
+                    inventory.SetDropBox(this);
+                    return;
+                }
+            }
+        }
+        else
+        {
+            if(!_playerProperty)
+            {
+                if(_isCoinBox)
+                {
+                    inventory.SetCoinBox(this);
+                    return;
+                }
+                if(!_isTradeBox)
+                {
+                    inventory.SetDropBox(this);
+                    return;
+                }
+            }
+        }
     }
 
     void TradingSystem_OnOfferAccepted(bool isBuying, int value)

@@ -4,69 +4,76 @@ using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour
 {
-    // public static Action<bool, ItemScriptableObject, int> OnItemAmountChanged;
-    // public static Action<bool, Dictionary<Currency, int>> OnMoneyAmountChanged;
     public static Action<bool> OnInventoryLoaded;
-
-    // public Dictionary<ItemScriptableObject, int> Items { get; private set; } = new();
-    // public Dictionary<Currency, int> Wallet { get; private set; } = new();
-
-    // public int TotalFunds => GetTotalMoney();
+    public static Action<Inventory, bool> OnInventoryStart;
 
     [SerializeField] bool _isPlayer = false;
     [SerializeField] List<int> _startingCoins = new();
     [SerializeField] List<ItemScriptableObject> _coins = new();
     [SerializeField] List<ItemScriptableObject> _startingItems = new();
-
-    [SerializeField] DropBox _dropBox, _coinBox;
     [SerializeField] Item _itemPrefab, _coinPrefab;
+
+    DropBox _dropBox, _coinBox;
 
     public DropBox CoinBox => _coinBox;
 
-    // void OnEnable()
-    // {
-    //     TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
-    // }
-
-    // void OnDisable()
-    // {
-    //     TradingSystem.OnTradeCompleted -= TradingSystem_OnTradeCompleted;
-    // }
-
     public void Start()
     {
+        OnInventoryStart?.Invoke(this, _isPlayer);
+    }
+
+    public void SetCoinBox(DropBox coinBox)
+    {
+        _coinBox = coinBox;
+
         if(_isPlayer)
         {
-            ShowInventory(Customer.Type.None);
+            LoadMoney(Customer.Type.None);
+        }
+    }
+
+    public void SetDropBox(DropBox dropBox)
+    {
+        _dropBox = dropBox;
+
+        if(_isPlayer)
+        {
+            LoadStock(Customer.Type.None);
         }
     }
 
     public void ShowInventory(Customer.Type customerType)
     {
+        LoadMoney(customerType);
+
+        LoadStock(customerType);
+
+        OnInventoryLoaded?.Invoke(_isPlayer);
+    }
+
+    public void LoadMoney(Customer.Type customerType)
+    {
         int currencies = Enum.GetNames(typeof(Currency)).Length;
-        
+
         for(int i = 0; i < currencies; i++)
         {
-            if(_startingCoins.Count < i + 1) { break; }
+            if (_startingCoins.Count < i + 1) { break; }
 
-            // Wallet.Add((Currency)i, _startingCoins[i]);
-
-            for (int j = 0; j < _startingCoins[i]; j++)
+            for(int j = 0; j < _startingCoins[i]; j++)
             {
                 Item newCoin = Instantiate(_coinPrefab, _coinBox.transform.position, Quaternion.identity, _coinBox.transform);
                 newCoin.SetUpMoney(_coins[i], _isPlayer, _coinBox, (Currency)i, customerType);
-            }
+            }            
         }
-        // OnMoneyAmountChanged?.Invoke(_isPlayer, Wallet);
+    }
 
+    public void LoadStock(Customer.Type customerType)
+    {
         foreach(ItemScriptableObject startingItem in _startingItems)
         {
             Item newItem = Instantiate(_itemPrefab, _dropBox.transform.position, Quaternion.identity, _dropBox.transform);
             newItem.SetUp(startingItem, _isPlayer, _dropBox, customerType);
-            // AddToItems(startingItem, 1);
         }
-
-        OnInventoryLoaded?.Invoke(_isPlayer);
     }
 
     public void GenerateCoins(int amount, Customer.Type customerType, Currency currency)
@@ -90,7 +97,6 @@ public class Inventory : MonoBehaviour
             {
                 _startingItems.Add(itemSO);
             }
-            // TODO(?) Add Coins to a better starting coins list
         }
     }
 
@@ -107,7 +113,6 @@ public class Inventory : MonoBehaviour
                     _startingItems.Remove(itemSO);
                 }
             }
-            // TODO(?) Remove coins?? Probably not!
         }
     }
 
