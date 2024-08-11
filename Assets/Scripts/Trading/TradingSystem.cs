@@ -164,7 +164,7 @@ public class TradingSystem : MonoBehaviour
         {
             if(_offerValue > _currentCustomer.GetTotalFunds())
             {
-                return false; // TODO(?) Invoke a sad message from customer that they can't afford this
+                return true; // TODO(?) Invoke a sad message from customer saying they'll give you all they have...
             }
 
             _offer = _offerValue - _basePrice;

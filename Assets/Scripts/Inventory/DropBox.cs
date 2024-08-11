@@ -331,6 +331,7 @@ public class DropBox : MonoBehaviour, IDropHandler
 
     void SetCoinTexts()
     {
+        if(!_copperText) { return; }
         if(!_isCoinBox && !_isTradeBox) { return; }
 
         if(_copperParent.childCount <= 0)

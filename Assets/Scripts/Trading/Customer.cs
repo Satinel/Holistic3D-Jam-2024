@@ -176,7 +176,10 @@ public class Customer : MonoBehaviour
     {
         if(!_isActiveCustomer) { return; }
 
-        if(cost > GetTotalFunds()) { return; } // Note: It SHOULD NOT be possible for the price to be higher than the customer's funds due to check in TradingSystem but infinite loops are bad
+        if(cost > GetTotalFunds())
+        { 
+            cost = GetTotalFunds(); // Customer will give the sum totality of their coin in the hopes that it's good enough
+        }
         
         _inventory.CoinBox.Pay(cost);
     }
