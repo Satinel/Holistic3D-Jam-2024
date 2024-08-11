@@ -8,7 +8,7 @@ public class TradingUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI _compTradeBoxText;
     [SerializeField] TextMeshProUGUI _profitText, _changeText, _offerText, _tradeTypeText, _customerNameText;
     [SerializeField] Image _itemImage;
-    [SerializeField] GameObject _payTextParent, _repeatCustomerButton;
+    [SerializeField] GameObject _payTextParent, _repeatCustomerButton, _tryAgainButton, _retryButton;
     [SerializeField] GameObject _resultWindow, _rejectionWindow, _noItemsWindow, _setPriceWindow, _incorrectChangeWindow, _customerName, _noCustomersWindow;
 
     int _playerValue, _compValue;
@@ -98,6 +98,8 @@ public class TradingUI : MonoBehaviour
             return;
         }
 
+        _retryButton.SetActive(true);
+        _tryAgainButton.SetActive(true);
         _customer = customer;
         _customerName.SetActive(true);
         _customerNameText.text = customer.Name;
@@ -127,6 +129,8 @@ public class TradingUI : MonoBehaviour
     void TradingSystem_OnStrikeOut(Customer customer)
     {
         _payTextParent.SetActive(false);
+        _tryAgainButton.SetActive(false);
+        _retryButton.SetActive(false);
         CloseSetPrice();
     }
 

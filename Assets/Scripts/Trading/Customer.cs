@@ -81,11 +81,27 @@ public class Customer : MonoBehaviour
         }
     }
 
-    void TradingSystem_OnExchangeCurrency(int amount)
+    void TradingSystem_OnExchangeCurrency(int amount, Currency currency)
     {
         if(_isActiveCustomer && CustomerType == Type.Bank)
         {
-            _inventory.GenerateCopper(amount, CustomerType);
+            int coinAmount = 0;
+            switch(currency)
+            {
+                case Currency.Copper:
+                    coinAmount = Mathf.FloorToInt((float)amount / TradingSystem.CopperValue);
+                    break;
+                case Currency.Silver:
+                    coinAmount = Mathf.FloorToInt((float)amount / TradingSystem.SilverValue);
+                    break;
+                case Currency.Gold:
+                    coinAmount = Mathf.FloorToInt((float)amount / TradingSystem.GoldValue);
+                    break;
+                case Currency.Platinum:
+                    coinAmount = Mathf.FloorToInt((float)amount / TradingSystem.PlatinumValue);
+                    break;
+            }
+            _inventory.GenerateCoins(coinAmount, CustomerType, currency);
         }
     }
 

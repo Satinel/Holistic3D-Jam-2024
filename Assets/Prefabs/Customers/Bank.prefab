@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isPlayer: 0
-  _startingCoins: 320000001e000000140000000a000000
+  _startingCoins: 00000000000000000000000000000000
   _coins:
   - {fileID: 11400000, guid: 6ae37d4ac19c3ee4097fb6a8de312581, type: 2}
   - {fileID: 11400000, guid: 0be0d67eed6a8664a8447fecb5328647, type: 2}

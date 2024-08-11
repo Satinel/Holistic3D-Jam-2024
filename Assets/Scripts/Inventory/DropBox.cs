@@ -519,18 +519,61 @@ public class DropBox : MonoBehaviour, IDropHandler
         }
     }
 
-    public void PayInCopper(int amount)
+    public void CurrencyExchange(int amount, Currency currency)
     {
-        int cost = amount;
+        int cost;
 
-        while(cost > 0 && _copperParent.childCount > 0)
+        switch(currency)
         {
-            Item copperCoin = _copperParent.GetChild(0).GetComponent<Item>();
-            RemoveItem(copperCoin.gameObject);
-            copperCoin.SendToDropBox(_tradeBox);
-            copperCoin.SortCoins(_tradeBox);
+            case Currency.Copper:
+                cost = amount * TradingSystem.CopperValue;
+                while(cost > 0 && _copperParent.childCount > 0)
+                {
+                    Item copperCoin = _copperParent.GetChild(0).GetComponent<Item>();
+                    RemoveItem(copperCoin.gameObject);
+                    copperCoin.SendToDropBox(_tradeBox);
+                    copperCoin.SortCoins(_tradeBox);
 
-            cost -= TradingSystem.CopperValue;
+                    cost -= TradingSystem.CopperValue;
+                }
+                break;
+            case Currency.Silver:
+                cost = amount * TradingSystem.SilverValue;
+                while(cost > 0 && _silverParent.childCount > 0)
+                {
+                    Item silverCoin = _silverParent.GetChild(0).GetComponent<Item>();
+                    RemoveItem(silverCoin.gameObject);
+                    silverCoin.SendToDropBox(_tradeBox);
+                    silverCoin.SortCoins(_tradeBox);
+
+                    cost -= TradingSystem.SilverValue;
+                }
+                break;
+            case Currency.Gold:
+                cost = amount * TradingSystem.GoldValue;
+                while(cost > 0 && _goldParent.childCount > 0)
+                {
+                    Item goldCoin = _goldParent.GetChild(0).GetComponent<Item>();
+                    RemoveItem(goldCoin.gameObject);
+                    goldCoin.SendToDropBox(_tradeBox);
+                    goldCoin.SortCoins(_tradeBox);
+
+                    cost -= TradingSystem.GoldValue;
+                }
+                break;
+            case Currency.Platinum:
+                cost = amount * TradingSystem.PlatinumValue;
+                while(cost > 0 && _platinumParent.childCount > 0)
+                {
+                    Item platinumCoin = _platinumParent.GetChild(0).GetComponent<Item>();
+                    RemoveItem(platinumCoin.gameObject);
+                    platinumCoin.SendToDropBox(_tradeBox);
+                    platinumCoin.SortCoins(_tradeBox);
+
+                    cost -= TradingSystem.PlatinumValue;
+                }
+                break;
         }
+
     }
 }

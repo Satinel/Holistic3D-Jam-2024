@@ -69,15 +69,15 @@ public class Inventory : MonoBehaviour
         OnInventoryLoaded?.Invoke(_isPlayer);
     }
 
-    public void GenerateCopper(int amount, Customer.Type customerType)
+    public void GenerateCoins(int amount, Customer.Type customerType, Currency currency)
     {
         for(int i = 0; i < amount; i++)
         {
             Item newCoin = Instantiate(_coinPrefab, _coinBox.transform.position, Quaternion.identity, _coinBox.transform);
-            newCoin.SetUpMoney(_coins[0], _isPlayer, _coinBox, Currency.Copper, customerType);
+            newCoin.SetUpMoney(_coins[(int)currency], _isPlayer, _coinBox, currency, customerType);
         }
 
-        _coinBox.PayInCopper(amount);
+        _coinBox.CurrencyExchange(amount, currency);
     }
 
     public void AddItems(List<GameObject> items)

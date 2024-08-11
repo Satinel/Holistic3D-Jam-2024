@@ -18,7 +18,7 @@ public class TradingSystem : MonoBehaviour
     public static Action<Customer.Type, int> OnChangeGiven;
     public static Action OnResetTrade;
     public static Action OnResetBarter;
-    public static Action<int> OnExchangeCurrency;
+    public static Action<int, Currency> OnExchangeCurrency;
     public static Action<Customer> OnStrikeOut;
     
     int _playerValue, _compValue, _offerValue;
@@ -26,7 +26,7 @@ public class TradingSystem : MonoBehaviour
     int _offer;
     int _basePrice;
 
-    [SerializeField] GameObject _openButton, _bankButton, _exchangeButton, _goodbyeButton, _haggleButton, _activeTradeButtons, _completeTradeButton, _barterOfferButton;
+    [SerializeField] GameObject _openButton, _bankButton, _exchangeButtons, _goodbyeButton, _haggleButton, _activeTradeButtons, _completeTradeButton, _barterOfferButton;
     [SerializeField] Customer _bank;
     Customer _currentCustomer;
     
@@ -153,7 +153,7 @@ public class TradingSystem : MonoBehaviour
         OnNewCustomer?.Invoke(null);
         _activeTradeButtons.SetActive(false);
         _bankButton.SetActive(true);
-        _exchangeButton.SetActive(false);
+        _exchangeButtons.SetActive(false);
     }
 
     bool MakeOffer()
@@ -207,6 +207,11 @@ public class TradingSystem : MonoBehaviour
     {
         // TODO UI/VFX/SFX (include profit/loss and if correct change)
         OnTradeCompleted?.Invoke(_currentCustomer);
+
+        if(_currentCustomer.CustomerType == Customer.Type.Bank)
+        {
+            _exchangeButtons.SetActive(true);
+        }
     }
 
     void ProcessRejection()
@@ -291,6 +296,7 @@ public class TradingSystem : MonoBehaviour
 
     public void FinishWithCustomer()
     {
+        _exchangeButtons.SetActive(false);
         _barterOfferButton.SetActive(false);
         _activeTradeButtons.SetActive(false);
         _haggleButton.SetActive(false);
@@ -325,7 +331,7 @@ public class TradingSystem : MonoBehaviour
         OnTradeCancelled?.Invoke();
         _openButton.SetActive(false);
         _bankButton.SetActive(false);
-        _exchangeButton.SetActive(false);
+        _exchangeButtons.SetActive(false);
         OnOpenToPublic?.Invoke();
     }
 
@@ -334,6 +340,10 @@ public class TradingSystem : MonoBehaviour
         if(!_currentCustomer || _currentCustomer.CustomerType == Customer.Type.Barter || _currentCustomer.CustomerType == Customer.Type.Bank)
         {
             OnResetBarter?.Invoke();
+            if(_currentCustomer.CustomerType == Customer.Type.Bank)
+            {
+                _exchangeButtons.SetActive(true);
+            }
         }
         else
         {
@@ -346,13 +356,15 @@ public class TradingSystem : MonoBehaviour
         NewCustomer(_bank);
         _openButton.SetActive(false);
         _bankButton.SetActive(false);
-        _exchangeButton.SetActive(true);
-        _completeTradeButton.SetActive(true);
+        _exchangeButtons.SetActive(true);
+        _completeTradeButton.SetActive(false);
     }
 
-    public void ExchangeCurrency() // Used for UI Button
+    public void ExchangeCurrency(int currency) // Used for UI Button
     {
-        OnExchangeCurrency?.Invoke(_playerValue);
+        _exchangeButtons.SetActive(false);
+        OnExchangeCurrency?.Invoke(_playerValue, (Currency)currency);
+        _completeTradeButton.SetActive(true);
     }
 
     public void ChangeCopper(bool increase) // UI Button
