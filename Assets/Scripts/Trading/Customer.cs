@@ -148,14 +148,21 @@ public class Customer : MonoBehaviour
         if(CustomerType != Type.Bank)
         {
             _currentTrades++;
+            
+            if(MaxTradesReached)
+            {
+                // TODO display customer parting message
+            }
         }
     }
 
     void DropBox_OnBuyPriceSet(int cost)
     {
         if(!_isActiveCustomer) { return; }
+
+        if(cost > GetTotalFunds()) { return; } // Note: It SHOULD NOT be possible for the price to be higher than the customer's funds due to check in TradingSystem but infinite loops are bad
         
-        _inventory.CoinBox.Pay(cost); // Note: It SHOULD NOT be possible for the price to be higher than the customer's funds due to check in TradingSystem
+        _inventory.CoinBox.Pay(cost);
     }
 
     void ChangeOpinion(int change)

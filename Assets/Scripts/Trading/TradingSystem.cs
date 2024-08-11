@@ -5,6 +5,7 @@ public class TradingSystem : MonoBehaviour
 {
     public static Action OnIncorrectChange;
     public static Action<bool, int> OnOfferAccepted;
+    public static Action<int> OnBarterAccepted;
     public static Action OnOfferRejected;
     public static Action<Customer> OnTradeCompleted;
     public static Action OnTradeCancelled;
@@ -25,7 +26,7 @@ public class TradingSystem : MonoBehaviour
     int _offer;
     int _basePrice;
 
-    [SerializeField] GameObject _openButton, _bankButton, _exchangeButton;
+    [SerializeField] GameObject _openButton, _bankButton, _exchangeButton, _goodbyeButton, _haggleButton, _activeTradeButtons, _completeTradeButton, _barterOfferButton;
     [SerializeField] Customer _bank;
     Customer _currentCustomer;
     
@@ -76,6 +77,7 @@ public class TradingSystem : MonoBehaviour
 
     void DropBox_OnItemPicked(Item item)
     {
+        _haggleButton.SetActive(true);
         _basePrice = item.ItemSO.BaseValue;
         OnBasePriceSet?.Invoke(_basePrice);
     }
@@ -94,6 +96,7 @@ public class TradingSystem : MonoBehaviour
     void NewCustomer(Customer customer)
     {
         _currentCustomer = customer;
+        _activeTradeButtons.SetActive(true);
         OnNewCustomer?.Invoke(customer);
     }
 
@@ -106,6 +109,8 @@ public class TradingSystem : MonoBehaviour
 
     void HandleCustomerType()
     {
+        _completeTradeButton.SetActive(false);
+
         switch(_currentCustomer.CustomerType)
         {
             case Customer.Type.Buy:
@@ -115,7 +120,7 @@ public class TradingSystem : MonoBehaviour
                 SellingCustomer();
                 break;
             case Customer.Type.Barter:
-                // TODO Nothing?
+                BarterCustomer();
                 break;
             case Customer.Type.None:
                 // TODO Nothing!(?)
@@ -137,10 +142,16 @@ public class TradingSystem : MonoBehaviour
         // TODO Prompt for player to set a price
     }
 
+    void BarterCustomer()
+    {
+        _barterOfferButton.SetActive(true);
+    }
+
     void NoCustomer()
     {
         _currentCustomer = null;
         OnNewCustomer?.Invoke(null);
+        _activeTradeButtons.SetActive(false);
         _bankButton.SetActive(true);
         _exchangeButton.SetActive(false);
     }
@@ -181,8 +192,8 @@ public class TradingSystem : MonoBehaviour
     {
         offer = _compValue - _playerValue;
         
-        if(offer < 0) { return true; } // Player gave too much change (TODO: mention this in OnChangeGiven<int> action)
-        if(offer == 0) { return true; } // Player gave exact change (TODO: mention this in OnChangeGiven<int> action and +player rep)
+        if(offer < 0) { return true; } // Player gave too much change
+        if(offer == 0) { return true; } // Player gave exact change
         if(_playerValue <= 0) { return false; } // Should not happen
         if(_compValue <= 0) { return true; } // Also should not happen but we don't want to divide by zero
 
@@ -190,6 +201,7 @@ public class TradingSystem : MonoBehaviour
 
         return rake <= _currentCustomer.Tolerance;
     }
+
 
     void ProcessTrade()
     {
@@ -206,18 +218,42 @@ public class TradingSystem : MonoBehaviour
         if(_currentCustomer.Strikes >= _currentCustomer.MaxStrikes)
         {
             OnStrikeOut?.Invoke(_currentCustomer);
-            CancelTrade();
+            FinishWithCustomer();
         }
     }
 
-    public void Haggle()
+    public void AttemptBarter()
+    {
+        int offer = _compValue - _playerValue;
+        
+        if(offer <= 0)
+        {
+            if(_currentCustomer.GetTotalFunds() >= offer)
+            {
+                OnBarterAccepted?.Invoke(offer); // Player gave higher or equal value which customer will pay
+                _completeTradeButton.SetActive(true);
+            }
+            else
+            {
+                // TODO Invoke a sad message that customer can't afford this
+            }
+        }
+        else
+        {
+            _completeTradeButton.SetActive(true);
+        }
+    }
+
+    public void Haggle() // used for UI Button
     {
         if(!_currentCustomer) { return; }
 
         if(MakeOffer())
         {
             bool buying = _currentCustomer.CustomerType == Customer.Type.Buy;
+            _haggleButton.SetActive(false);
             OnOfferAccepted?.Invoke(buying, _offer);
+            _completeTradeButton.SetActive(true);
         }
         else
         {
@@ -246,15 +282,29 @@ public class TradingSystem : MonoBehaviour
     {
         if(_currentCustomer.MaxTradesReached)
         {
-            CancelTrade();
+            FinishWithCustomer();
             return;
         }
 
         HandleCustomerType();
     }
 
+    public void FinishWithCustomer()
+    {
+        _barterOfferButton.SetActive(false);
+        _activeTradeButtons.SetActive(false);
+        _haggleButton.SetActive(false);
+        _basePrice = 0;
+        OnBasePriceSet?.Invoke(_basePrice);
+        _offerValue = 0;
+        OnOfferValueChanged?.Invoke(_offerValue);
+        _goodbyeButton.SetActive(true);
+    }
+
     public void CancelTrade() // Used for UI Button
     {
+        _activeTradeButtons.SetActive(false);
+        _haggleButton.SetActive(false);
         _basePrice = 0;
         OnBasePriceSet?.Invoke(_basePrice);
         _offerValue = 0;
@@ -262,6 +312,7 @@ public class TradingSystem : MonoBehaviour
         OnTradeCancelled?.Invoke();
         _openButton.SetActive(true);
         _bankButton.SetActive(true);
+        _goodbyeButton.SetActive(false);
         NoCustomer();
     }
 
@@ -295,6 +346,7 @@ public class TradingSystem : MonoBehaviour
         NewCustomer(_bank);
         _bankButton.SetActive(false);
         _exchangeButton.SetActive(true);
+        _completeTradeButton.SetActive(true);
     }
 
     public void ExchangeCurrency() // Used for UI Button

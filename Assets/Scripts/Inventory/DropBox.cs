@@ -38,6 +38,7 @@ public class DropBox : MonoBehaviour, IDropHandler
     void OnEnable()
     {
         TradingSystem.OnOfferAccepted += TradingSystem_OnOfferAccepted;
+        TradingSystem.OnBarterAccepted += TradingSystem_OnBarterAccepted;
         TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
         TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
         TradingSystem.OnBuyCustomer += TradingSystem_OnBuyCustomer;
@@ -49,6 +50,7 @@ public class DropBox : MonoBehaviour, IDropHandler
     void OnDisable()
     {
         TradingSystem.OnOfferAccepted -= TradingSystem_OnOfferAccepted;
+        TradingSystem.OnBarterAccepted -= TradingSystem_OnBarterAccepted;
         TradingSystem.OnTradeCompleted -= TradingSystem_OnTradeCompleted;
         TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
         TradingSystem.OnBuyCustomer -= TradingSystem_OnBuyCustomer;
@@ -78,6 +80,17 @@ public class DropBox : MonoBehaviour, IDropHandler
             }
         }
         OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
+    }
+
+    void TradingSystem_OnBarterAccepted(int offer)
+    {
+        if(!_isTradeBox) { return; }
+        if(_playerProperty) { return; }
+
+        if(offer < 0)
+        {
+            OnBuyPriceSet?.Invoke(-offer);
+        }
     }
 
     void TradingSystem_OnTradeCompleted(Customer currentCustomer)
@@ -415,6 +428,55 @@ public class DropBox : MonoBehaviour, IDropHandler
     public void Pay(int price)
     {
         int cost = price;
+
+        while(cost >= TradingSystem.PlatinumValue && _platinumParent.childCount > 0)
+        {
+            Item platCoin = _platinumParent.GetChild(0).GetComponent<Item>();
+            RemoveItem(platCoin.gameObject);
+            platCoin.SendToDropBox(_tradeBox);
+            platCoin.SortCoins(_tradeBox);
+
+            cost -= TradingSystem.PlatinumValue;
+        }
+
+        if(_silverParent.childCount * TradingSystem.SilverValue >= cost)
+        {
+            while(cost > 0 && _silverParent.childCount > 0)
+            {
+                Item silverCoin = _silverParent.GetChild(0).GetComponent<Item>();
+                RemoveItem(silverCoin.gameObject);
+                silverCoin.SendToDropBox(_tradeBox);
+                silverCoin.SortCoins(_tradeBox);
+
+                cost -= TradingSystem.SilverValue;
+            }
+        }
+
+        if(_goldParent.childCount * TradingSystem.GoldValue >= cost)
+        {
+            while(cost > 0 && _goldParent.childCount > 0)
+            {
+                Item goldCoin = _goldParent.GetChild(0).GetComponent<Item>();
+                RemoveItem(goldCoin.gameObject);
+                goldCoin.SendToDropBox(_tradeBox);
+                goldCoin.SortCoins(_tradeBox);
+
+                cost -= TradingSystem.GoldValue;
+            }
+        }
+
+        if(_copperParent.childCount * TradingSystem.CopperValue >= cost)
+        {
+            while(cost > 0 && _copperParent.childCount > 0)
+            {
+                Item copperCoin = _copperParent.GetChild(0).GetComponent<Item>();
+                RemoveItem(copperCoin.gameObject);
+                copperCoin.SendToDropBox(_tradeBox);
+                copperCoin.SortCoins(_tradeBox);
+
+                cost -= TradingSystem.CopperValue;
+            }
+        }
 
         while(cost > 0 && _platinumParent.childCount > 0)
         {
