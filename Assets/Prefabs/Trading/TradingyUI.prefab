@@ -19307,6 +19307,10 @@ PrefabInstance:
       value: Do not return.
       objectReference: {fileID: 0}
     - target: {fileID: 5943216860710641772, guid: ee0e53dac4d20eb40aedb3a5b14f3c0e, type: 3}
+      propertyPath: _lostChange.Array.data[0]
+      value: I've made a grievous error.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943216860710641772, guid: ee0e53dac4d20eb40aedb3a5b14f3c0e, type: 3}
       propertyPath: _maxStrikes.Array.data[0]
       value: Please see yourself out.
       objectReference: {fileID: 0}

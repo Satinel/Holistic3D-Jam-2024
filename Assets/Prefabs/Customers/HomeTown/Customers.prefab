@@ -89,6 +89,102 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mage
       objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _askToBuy.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _noItems.Array.data[0]
+      value: Nothing calls to me.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _acceptPrice.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _askToBuy.Array.data[0]
+      value: I must have this.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _askToBuy.Array.data[1]
+      value: It speaks to me.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _askToBuy.Array.data[2]
+      value: Will you part with this?
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _askToBuy.Array.data[3]
+      value: Name your price.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _askToBuy.Array.data[4]
+      value: Name your price.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _completeDeal.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _greetings.Array.data[0]
+      value: A chance encounter.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _maxTrades.Array.data[0]
+      value: The path beckons.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _departures.Array.data[0]
+      value: May the wind bring you fortune.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _leaveAngry.Array.data[0]
+      value: Seek enlightenment.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _lostChange.Array.data[0]
+      value: An imbalance?
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _maxStrikes.Array.data[0]
+      value: This is not your fate.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _acceptPrice.Array.data[0]
+      value: Very well.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _acceptPrice.Array.data[1]
+      value: I can accept this.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _acceptPrice.Array.data[2]
+      value: If you're sure.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _acceptPrice.Array.data[3]
+      value: Certainly!
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _payAllMoney.Array.data[0]
+      value: I'm giving you everything.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _rejectPrice.Array.data[0]
+      value: Are you trying to take advantage of me?
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _completeDeal.Array.data[0]
+      value: It was meant to be.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _completeDeal.Array.data[1]
+      value: Delightful.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651286748624191998, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _priceTooHigh.Array.data[0]
+      value: It's not to be.
+      objectReference: {fileID: 0}
     - target: {fileID: 8934945721807295271, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -195,13 +291,149 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _acceptPrice.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _askToBuy.Array.data[0]
+      value: How much?
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectPrice.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _completeDeal.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _greetings.Array.data[0]
+      value: Hiya! Thirsty?
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _maxTrades.Array.data[0]
+      value: I've got places to be.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _departures.Array.data[0]
+      value: Stay safe out there!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _leaveAngry.Array.data[0]
+      value: Rue, I say! Rue!!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _lostChange.Array.data[0]
+      value: Something stinks.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _maxStrikes.Array.data[0]
+      value: You'll rue this day!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _acceptPrice.Array.data[0]
+      value: Sure, I guess!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _acceptPrice.Array.data[1]
+      value: Sounds good.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _acceptPrice.Array.data[2]
+      value: You drive a hard bargain.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _acceptPrice.Array.data[3]
+      value: Fair enough.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _acceptPrice.Array.data[4]
+      value: Splendid!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[0]
+      value: Everyone needs potions!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[1]
+      value: This one's extra potent.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[2]
+      value: My best seller!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[3]
+      value: Be prepared for anything.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[4]
+      value: It's delicious, too!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[5]
+      value: Emergency use only.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[6]
+      value: My latest experiment!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _payAllMoney.Array.data[0]
+      value: Put the rest on my tab, kay?
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectPrice.Array.data[0]
+      value: You're clueless!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectPrice.Array.data[1]
+      value: Never.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectPrice.Array.data[2]
+      value: Even the vial costs more.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectPrice.Array.data[3]
+      value: You don't appreciate my genius.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectPrice.Array.data[4]
+      value: Reagents aren't cheap!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectPrice.Array.data[5]
+      value: Try again.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _completeDeal.Array.data[0]
+      value: Another satisfied customer!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _completeDeal.Array.data[1]
+      value: Make sure to read the label.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _completeDeal.Array.data[2]
+      value: Thanks!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _priceTooHigh.Array.data[0]
+      value: I only brought my small purse.
+      objectReference: {fileID: 0}
     - target: {fileID: 8153868745903667487, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: m_Name
       value: PotionSeller
       objectReference: {fileID: 0}
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingItems.Array.size
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingCoins.Array.data[0]
@@ -226,11 +458,27 @@ PrefabInstance:
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingItems.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 050561aa8787a354e8faa97506218cde, type: 2}
+      objectReference: {fileID: 11400000, guid: 28d29cad1c05b0d41867bd3f556f8e1b, type: 2}
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingItems.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 050561aa8787a354e8faa97506218cde, type: 2}
+      objectReference: {fileID: 11400000, guid: f6e6fb384c410914bb71d305a7c07aa7, type: 2}
+    - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _startingItems.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4673855b10c17a545a1ce2280de82242, type: 2}
+    - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _startingItems.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 20843162447c3b649beb9b6d483d130c, type: 2}
+    - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _startingItems.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: d2ec19e16fae9df41a51678e069a62e0, type: 2}
+    - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _startingItems.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: d808fbb487a33ed42bc6d2c07451abf9, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -394,6 +642,166 @@ PrefabInstance:
     - target: {fileID: 5005100326791386655, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _maxTrades.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _lostChange.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _noItems.Array.data[0]
+      value: Just lookin' around.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectDeal.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _acceptPrice.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _askToBuy.Array.data[0]
+      value: I want it!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectPrice.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _completeDeal.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _greetings.Array.data[0]
+      value: It's your lucky day!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _maxTrades.Array.data[0]
+      value: I'm cleaned out!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _maxTrades.Array.data[1]
+      value: Heh heh... Enjoy your goods!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _departures.Array.data[0]
+      value: Emporium!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _leaveAngry.Array.data[0]
+      value: Smell ya later!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _lostChange.Array.data[0]
+      value: Wait a second...
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _lostChange.Array.data[1]
+      value: One plus three plus... five...?
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _maxStrikes.Array.data[0]
+      value: I'm the one conning YOU!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectDeal.Array.data[0]
+      value: Change. Is. Necessary!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectDeal.Array.data[1]
+      value: Count again.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectDeal.Array.data[2]
+      value: Thought you could trick me?
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _acceptPrice.Array.data[0]
+      value: Heck yeah!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _acceptPrice.Array.data[1]
+      value: Sounds good!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _acceptPrice.Array.data[2]
+      value: Wow, really? Okay!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _acceptPrice.Array.data[3]
+      value: It's a deal!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _acceptPrice.Array.data[4]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[0]
+      value: It could be anything!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[1]
+      value: Surprise mechanics!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[2]
+      value: Ethically sourced!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[3]
+      value: What's inside??
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[4]
+      value: No peeking!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[5]
+      value: The perfect gift!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[6]
+      value: Myyyssstery boooox!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _payAllMoney.Array.data[0]
+      value: Why should I have to give you any money?
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectPrice.Array.data[0]
+      value: Nuh-uh.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _rejectPrice.Array.data[1]
+      value: Nah!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _completeDeal.Array.data[0]
+      value: Pleasure doin' business!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _completeDeal.Array.data[1]
+      value: Heh heh heh.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _completeDeal.Array.data[2]
+      value: Awesome!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _completeDeal.Array.data[3]
+      value: It's a steal!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _priceTooHigh.Array.data[0]
+      value: Don't got the cash.
       objectReference: {fileID: 0}
     - target: {fileID: 8153868745903667487, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: m_Name
@@ -1055,7 +1463,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 78a5f865f0926f14e8ccc9add53635b4, type: 3}
     - target: {fileID: 7517592139975944539, guid: 50fb889dd686892429106bb045a06d96, type: 3}
       propertyPath: <Name>k__BackingField
-      value: Anyet
+      value: Anyet (and Pip!)
       objectReference: {fileID: 0}
     - target: {fileID: 7517592139975944539, guid: 50fb889dd686892429106bb045a06d96, type: 3}
       propertyPath: <Tolerance>k__BackingField

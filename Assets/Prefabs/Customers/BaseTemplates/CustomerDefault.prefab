@@ -227,7 +227,7 @@ MonoBehaviour:
   _completeDeal:
   - Thank you.
   _rejectDeal:
-  - No.
+  - Change is necessary.
   _maxStrikes:
   - You call yourself a trader?
   _maxTrades:
@@ -357,6 +357,7 @@ MonoBehaviour:
   - {fileID: 6882047374233846179}
   _baseOpinionChange: 1
   _maxTrades: 3
+  _ignoreStrikes: 0
 --- !u!114 &4775489334125651714
 MonoBehaviour:
   m_ObjectHideFlags: 0
