@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4779116fae06367449ca3bb589abd821, type: 3}
   m_Name: Apple
   m_EditorClassIdentifier: 
-  ItemName: Apple
+  ItemName: Plean
   ItemSprite: {fileID: 21300000, guid: 7f813602653877040ba891d61d9b1f54, type: 3}
-  BaseValue: 3
+  BaseValue: 20
   Origin: 0
   ItemType: 0

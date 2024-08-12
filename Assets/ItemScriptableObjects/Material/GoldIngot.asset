@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4779116fae06367449ca3bb589abd821, type: 3}
-  m_Name: CopperIngot
+  m_Name: GoldIngot
   m_EditorClassIdentifier: 
-  ItemName: Copper Ingot
-  ItemSprite: {fileID: 21300000, guid: b4fbd8c762141f64b9a0799f71e476af, type: 3}
-  BaseValue: 100
+  ItemName: Gold Ingot
+  ItemSprite: {fileID: 21300000, guid: e5a25dbf28bdf80408c786164103ca1e, type: 3}
+  BaseValue: 1000
   Origin: 0
   ItemType: 1

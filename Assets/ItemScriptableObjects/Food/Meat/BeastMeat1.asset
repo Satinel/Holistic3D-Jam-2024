@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4779116fae06367449ca3bb589abd821, type: 3}
-  m_Name: RawChicken
+  m_Name: BeastMeat1
   m_EditorClassIdentifier: 
-  ItemName: Raw Chicken
-  ItemSprite: {fileID: 21300000, guid: b43b278a690113743a155fe7528f50fb, type: 3}
-  BaseValue: 75
+  ItemName: Raw Shub Meat
+  ItemSprite: {fileID: 21300000, guid: c15b3b3b473cf1a489e095b59c8b96c4, type: 3}
+  BaseValue: 540
   Origin: 0
   ItemType: 0

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4779116fae06367449ca3bb589abd821, type: 3}
-  m_Name: CopperIngot
+  m_Name: WildBerry
   m_EditorClassIdentifier: 
-  ItemName: Copper Ingot
-  ItemSprite: {fileID: 21300000, guid: b4fbd8c762141f64b9a0799f71e476af, type: 3}
-  BaseValue: 100
+  ItemName: Dusk Berry
+  ItemSprite: {fileID: 21300000, guid: 0dc9fdba058a41e4eb72df04448a5fc3, type: 3}
+  BaseValue: 115
   Origin: 0
-  ItemType: 1
+  ItemType: 0
