@@ -17,15 +17,16 @@ public class CurrencyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     void Update()
     {
-        if(_isOver && Input.mouseScrollDelta.y > 0)
+        if(!_isOver) { return; }
+
+        if(Input.mouseScrollDelta.y > 0)
         {
             if(!_increaseButton) { return; }
 
             _increaseButton.onClick.Invoke();
-
         }
 
-        if(_isOver && Input.mouseScrollDelta.y < 0)
+        if(Input.mouseScrollDelta.y < 0)
         {
             if(_decreaseButton && !_coinBox)
             {
@@ -34,6 +35,14 @@ public class CurrencyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             else if(_coinBox)
             {
                 _coinBox.RetrieveItem(_currency);
+            }
+        }
+
+        if(Input.GetMouseButtonDown(1))
+        {
+            if(_coinBox)
+            {
+                _coinBox.SendTenChildItems(transform);
             }
         }
     }

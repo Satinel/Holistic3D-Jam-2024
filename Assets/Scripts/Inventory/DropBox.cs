@@ -419,6 +419,26 @@ public class DropBox : MonoBehaviour, IDropHandler
         }
     }
 
+    public void SendTenChildItems(Transform parent)
+    {
+        for(int i = 0; i < 10; i++)
+        {
+            if(parent.childCount > 0)
+            {
+                Item item = parent.GetChild(0).GetComponent<Item>();
+                RemoveItem(item.gameObject);
+                item.SendToDropBox(_tradeBox);
+                item.SetInTrade(true);
+                AddToSentItems(item);
+                item.SortCoins(_tradeBox);
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
     public void RetrieveItem(Currency currency) // UI Button (Note this only works for currency)
     {
         if(_sentItems.Count <= 0) { return; }
