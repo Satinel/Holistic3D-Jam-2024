@@ -26,13 +26,13 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     void OnEnable()
     {
-        OnAnyItemClicked += Item_OnAnyItemClicked;
+        // OnAnyItemClicked += Item_OnAnyItemClicked;
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
     }
 
     void OnDisable()
     {
-        OnAnyItemClicked -= Item_OnAnyItemClicked;
+        // OnAnyItemClicked -= Item_OnAnyItemClicked;
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
     }
 
@@ -104,14 +104,9 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 break;
             case Customer.Type.None:
                 eventData.pointerDrag = null; // There is no customer so don't move items
-                break;
+                return;
             default:
-                if(!PlayerProperty) // Every type is accounte for so this is irrelevant but non-player items can't be moved anyway
-                {
-                    eventData.pointerDrag = null;
-                    return;
-                }
-                break;
+                return; // NO DRAGGING ITEMS WITHOUT A CUSTOMER!
         }
 
         OnAnyItemClicked?.Invoke(this);
@@ -177,9 +172,10 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             case Customer.Type.Barter:
                 if(!PlayerProperty && IsMoney) { return; } // Cannot move customer's money
                 break;
+            case Customer.Type.None:
+                return; // No customer means no moving items!
             default:
-                if(!PlayerProperty) { return; } // Cannot move non-player items in this imaginary situation
-                break;
+                return; // Cannot move ANYTHING because it messes stuff up!
         }
 
         OnAnyItemClicked?.Invoke(this);
@@ -227,7 +223,8 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         ItemSO = itemSO;
         gameObject.name = ItemSO.ItemName;
-        _itemImage.sprite = ItemSO.ItemSprite;
+        // _itemImage.sprite = ItemSO.ItemSprite;
+        _raycastImage.sprite = ItemSO.ItemSprite;
         SetPlayerProperty(playerProperty);
         SetStartPosition();
         _currentBox = dropBox;
@@ -322,15 +319,15 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         PlayerProperty = playerProperty;
     }
 
-    void Item_OnAnyItemClicked(Item selectedItem)
-    {
-        if(selectedItem != this)
-        {
-            _raycastImage.color = _defaultColor;
-        }
-        else
-        {
-            _raycastImage.color = _selectedColor;
-        }
-    }
+    // void Item_OnAnyItemClicked(Item selectedItem)
+    // {
+    //     if(selectedItem != this)
+    //     {
+    //         _raycastImage.color = _defaultColor;
+    //     }
+    //     else
+    //     {
+    //         _raycastImage.color = _selectedColor;
+    //     }
+    // }
 }

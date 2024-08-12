@@ -136,13 +136,13 @@ public class TradingSystem : MonoBehaviour
     void BuyingCustomer()
     {
         OnBuyCustomer?.Invoke();
-        // TODO Prompt for player to set a price (Set Haggle button active and deactivate offer button?)
+        // TODO Prompt for player to set a price (Set Haggle button active and deactivate offer button?) <- already done! Make Haggle Button more obvious
     }
 
     void SellingCustomer()
     {
         OnSellCustomer?.Invoke();
-        // TODO Prompt for player to set a price (Set Haggle button active and deactivate offer button?)
+        // TODO Prompt for player to set a price (Set Haggle button active and deactivate offer button?) <- already done! Make Haggle Button more obvious
     }
 
     void BarterCustomer()
