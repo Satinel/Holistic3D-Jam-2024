@@ -14,6 +14,7 @@ public class Customer : MonoBehaviour
     [field:SerializeField] public int Opinion { get; private set; }
 
     public bool MaxTradesReached => _currentTrades >= _maxTrades;
+    public bool MaxStrikesReached => Strikes >= MaxStrikes;
 
     [SerializeField] SpriteRenderer _spriteRender;
     [SerializeField] List<GameObject> _angerMarks;

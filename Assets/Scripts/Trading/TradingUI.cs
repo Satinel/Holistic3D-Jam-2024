@@ -21,7 +21,7 @@ public class TradingUI : MonoBehaviour
         DropBox.OnNoItems += DropBox_OnNoItems;
         TradingSystem.OnIncorrectChange += TradingSystem_OnIncorrectChange;
         TradingSystem.OnOfferAccepted += TradingSystem_OnOfferAccepted;
-        TradingSystem.OnOfferRejected += TradingSystem_OnOfferRejected;
+        // TradingSystem.OnOfferRejected += TradingSystem_OnOfferRejected;
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
         TradingSystem.OnOfferValueChanged += TradingSystem_OnOfferValueChanged;
         TradingSystem.OnStrikeOut += TradingSystem_OnStrikeOut;
@@ -40,7 +40,7 @@ public class TradingUI : MonoBehaviour
         DropBox.OnNoItems -= DropBox_OnNoItems;
         TradingSystem.OnIncorrectChange -= TradingSystem_OnIncorrectChange;
         TradingSystem.OnOfferAccepted -= TradingSystem_OnOfferAccepted;
-        TradingSystem.OnOfferRejected -= TradingSystem_OnOfferRejected;
+        // TradingSystem.OnOfferRejected -= TradingSystem_OnOfferRejected;
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
         TradingSystem.OnOfferValueChanged -= TradingSystem_OnOfferValueChanged;
         TradingSystem.OnStrikeOut -= TradingSystem_OnStrikeOut;
@@ -82,10 +82,10 @@ public class TradingUI : MonoBehaviour
         CloseSetPrice();
     }
 
-    void TradingSystem_OnOfferRejected()
-    {
-        _rejectionWindow.SetActive(true);
-    }
+    // void TradingSystem_OnOfferRejected()
+    // {
+    //     _rejectionWindow.SetActive(true);
+    // }
 
     void TradingSystem_OnNewCustomer(Customer customer)
     {
@@ -113,11 +113,10 @@ public class TradingUI : MonoBehaviour
         {
             _tradeTypeText.text = "Buy Offer";
         }
-        else if(customer.CustomerType == Customer.Type.Bank)
+        else //if(customer.CustomerType == Customer.Type.Bank)
         {
             _showTradeNumbers = true;
         }
-        // TODO Set a text field based on a string supplied by customer as a greeting
     }
 
     void TradingSystem_OnOfferValueChanged(int value)
@@ -148,7 +147,7 @@ public class TradingUI : MonoBehaviour
         _itemNameText.text = string.Empty;
     }
 
-    void TradingSystem_OnChangeGiven(Customer.Type customerType, int change)
+    void TradingSystem_OnChangeGiven(Customer.Type customerType, int change) // TODO This needs to be reworked because the values aren't always change relevant
     {
         if(customerType == Customer.Type.Buy)
         {
@@ -194,9 +193,8 @@ public class TradingUI : MonoBehaviour
         _itemNameText.text = string.Empty;
     }
 
-    void DropBox_OnItemPicked(Item item)
+    void DropBox_OnItemPicked(Item item, bool isPlayer)
     {
-        // TODO (Somewhere) Customer message re: item they want to buy/sell
         _itemImage.enabled = true;
         _itemImage.sprite = item.ItemSO.ItemSprite;
         _itemNameText.text = item.ItemSO.ItemName;

@@ -9,7 +9,7 @@ public class DropBox : MonoBehaviour, IDropHandler
     public static Action<bool, int> OnTradeBoxValueChanged;
     public static Action<bool, int> OnTradeResults;
     public static Action OnNoItems;
-    public static Action<Item> OnItemPicked;
+    public static Action<Item, bool> OnItemPicked;
     public static Action<int> OnBuyPriceSet;
     public static Action<int> OnSellPriceSet;
 
@@ -311,7 +311,7 @@ public class DropBox : MonoBehaviour, IDropHandler
 
         Item randomItem = _items[UnityEngine.Random.Range(0, _items.Count)].GetComponent<Item>();
 
-        OnItemPicked?.Invoke(randomItem);
+        OnItemPicked?.Invoke(randomItem, _playerProperty);
         _items.Remove(randomItem.gameObject);
         randomItem.SendToDropBox(_tradeBox);
     }

@@ -7,30 +7,58 @@ public class Dialogue : MonoBehaviour
     public static Action<string> OnLineSpoken;
 
     [SerializeField] List<string> _greetings = new();
+    [SerializeField] List<string> _noItems = new();
     [SerializeField] List<string> _askToBuy = new();
     [SerializeField] List<string> _offerToSell = new();
     [SerializeField] List<string> _acceptPrice = new();
     [SerializeField] List<string> _rejectPrice = new();
     [SerializeField] List<string> _completeDeal = new();
     [SerializeField] List<string> _rejectDeal = new();
-    [SerializeField] List<string> _gainStrike = new();
+    // [SerializeField] List<string> _gainStrike = new();
     [SerializeField] List<string> _maxStrikes = new();
     [SerializeField] List<string> _maxTrades = new();
-    [SerializeField] List<string> _madeProfit = new();
+    [SerializeField] List<string> _priceTooHigh = new();
     [SerializeField] List<string> _lostChange = new();
     [SerializeField] List<string> _payAllMoney = new();
     [SerializeField] List<string> _departures = new();
+    [SerializeField] List<string> _leaveAngry = new();
 
     bool _isActive = false;
 
     void OnEnable()
     {
         Inventory.OnInventoryLoaded += Inventory_OnInventoryLoaded;
+        DropBox.OnNoItems += DropBox_OnNoItems;
+        DropBox.OnItemPicked += DropBox_OnItemPicked;
+        TradingSystem.OnOfferAccepted += TradingSystem_OnOfferAccepted;
+        TradingSystem.OnBarterAccepted += TradingSystem_OnBarterAccepted;
+        TradingSystem.OnOfferRejected += TradingSystem_OnOfferRejected;
+        TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
+        TradingSystem.OnIncorrectChange += TradingSystem_OnIncorrectChange;
+        TradingSystem.OnStrikeOut += TradingSystem_OnStrikeOut;
+        TradingSystem.OnMaxTradesReached += TradingSystem_OnMaxTradesReached;
+        TradingSystem.OnBarterTooHigh += TradingSystem_OnBarterTooHigh;
+        TradingSystem.OnStoleChange += TradingSystem_OnStoleChange;
+        TradingSystem.OnPoorCustomer += TradingSystem_OnPoorCustomer;
+        TradingSystem.OnFinishWithCustomer += TradingSystem_OnFinishWithCustomer;
     }
 
     void OnDisable()
     {
         Inventory.OnInventoryLoaded -= Inventory_OnInventoryLoaded;
+        DropBox.OnNoItems -= DropBox_OnNoItems;
+        DropBox.OnItemPicked -= DropBox_OnItemPicked;
+        TradingSystem.OnOfferAccepted -= TradingSystem_OnOfferAccepted;
+        TradingSystem.OnBarterAccepted -= TradingSystem_OnBarterAccepted;
+        TradingSystem.OnOfferRejected -= TradingSystem_OnOfferRejected;
+        TradingSystem.OnTradeCompleted -= TradingSystem_OnTradeCompleted;
+        TradingSystem.OnIncorrectChange -= TradingSystem_OnIncorrectChange;
+        TradingSystem.OnStrikeOut -= TradingSystem_OnStrikeOut;
+        TradingSystem.OnMaxTradesReached -= TradingSystem_OnMaxTradesReached;
+        TradingSystem.OnBarterTooHigh -= TradingSystem_OnBarterTooHigh;
+        TradingSystem.OnStoleChange -= TradingSystem_OnStoleChange;
+        TradingSystem.OnPoorCustomer -= TradingSystem_OnPoorCustomer;
+        TradingSystem.OnFinishWithCustomer -= TradingSystem_OnFinishWithCustomer;
     }
 
     public void SetActiveDialogue(bool isActive)
@@ -43,6 +71,85 @@ public class Dialogue : MonoBehaviour
         if(isPlayer) { return; }
 
         SpeakLine(_greetings);
+    }
+
+    void DropBox_OnNoItems()
+    {
+        SpeakLine(_noItems);
+    }
+
+    void TradingSystem_OnOfferAccepted(bool isBuying, int offer)
+    {
+        SpeakLine(_acceptPrice);
+    }
+
+    void TradingSystem_OnBarterAccepted(int offer)
+    {
+        SpeakLine(_acceptPrice);
+    }
+
+    void DropBox_OnItemPicked(Item item, bool isPlayer)
+    {
+        if(isPlayer)
+        {
+            SpeakLine(_askToBuy);
+        }
+        else
+        {
+            SpeakLine(_offerToSell);
+        }
+    }
+
+    void TradingSystem_OnOfferRejected()
+    {
+        SpeakLine(_rejectPrice);
+    }
+
+    void TradingSystem_OnTradeCompleted(Customer customer)
+    {
+        SpeakLine(_completeDeal);
+    }
+
+    void TradingSystem_OnIncorrectChange()
+    {
+        SpeakLine(_rejectDeal);
+    }
+
+    void TradingSystem_OnStrikeOut(Customer customer)
+    {
+        SpeakLine(_maxStrikes);
+    }
+
+    void TradingSystem_OnMaxTradesReached()
+    {
+        SpeakLine(_maxTrades);
+    }
+
+    void TradingSystem_OnBarterTooHigh()
+    {
+        SpeakLine(_priceTooHigh);
+    }
+
+    void TradingSystem_OnStoleChange() // This is definitely going to get overridden(overwritten) by OnTradeCompleted
+    {
+        SpeakLine(_lostChange);
+    }
+
+    void TradingSystem_OnPoorCustomer()
+    {
+        SpeakLine(_payAllMoney);
+    }
+
+    void TradingSystem_OnFinishWithCustomer(Customer customer)
+    {
+        if(customer.MaxStrikesReached)
+        {
+            SpeakLine(_leaveAngry);
+        }
+        else
+        {
+            SpeakLine(_departures);
+        }
     }
 
     void SpeakLine(List<string> interaction)

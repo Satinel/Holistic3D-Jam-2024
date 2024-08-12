@@ -20,6 +20,11 @@ public class TradingSystem : MonoBehaviour
     public static Action OnResetBarter;
     public static Action<int, Currency> OnExchangeCurrency;
     public static Action<Customer> OnStrikeOut;
+    public static Action OnMaxTradesReached;
+    public static Action OnBarterTooHigh;
+    public static Action OnStoleChange;
+    public static Action OnPoorCustomer;
+    public static Action<Customer> OnFinishWithCustomer;
     
     int _playerValue, _compValue, _offerValue;
 
@@ -75,7 +80,7 @@ public class TradingSystem : MonoBehaviour
         }
     }
 
-    void DropBox_OnItemPicked(Item item)
+    void DropBox_OnItemPicked(Item item, bool isPlayer)
     {
         _haggleButton.SetActive(true);
         _basePrice = item.ItemSO.BaseValue;
@@ -109,8 +114,6 @@ public class TradingSystem : MonoBehaviour
 
     void HandleCustomerType()
     {
-        _completeTradeButton.SetActive(false);
-
         switch(_currentCustomer.CustomerType)
         {
             case Customer.Type.Buy:
@@ -133,13 +136,13 @@ public class TradingSystem : MonoBehaviour
     void BuyingCustomer()
     {
         OnBuyCustomer?.Invoke();
-        // TODO Prompt for player to set a price
+        // TODO Prompt for player to set a price (Set Haggle button active and deactivate offer button?)
     }
 
     void SellingCustomer()
     {
         OnSellCustomer?.Invoke();
-        // TODO Prompt for player to set a price
+        // TODO Prompt for player to set a price (Set Haggle button active and deactivate offer button?)
     }
 
     void BarterCustomer()
@@ -164,7 +167,8 @@ public class TradingSystem : MonoBehaviour
         {
             if(_offerValue > _currentCustomer.GetTotalFunds())
             {
-                return true; // TODO(?) Invoke a sad message from customer saying they'll give you all they have...
+                OnPoorCustomer?.Invoke();
+                return true;
             }
 
             _offer = _offerValue - _basePrice;
@@ -205,7 +209,10 @@ public class TradingSystem : MonoBehaviour
 
     void ProcessTrade()
     {
+        _completeTradeButton.SetActive(false);
+
         // TODO UI/VFX/SFX (include profit/loss and if correct change)
+        
         OnTradeCompleted?.Invoke(_currentCustomer);
 
         if(_currentCustomer.CustomerType == Customer.Type.Bank)
@@ -240,12 +247,21 @@ public class TradingSystem : MonoBehaviour
             }
             else
             {
-                // TODO Invoke a sad message that customer can't afford this
+                OnBarterTooHigh?.Invoke();
             }
         }
         else
         {
-            _completeTradeButton.SetActive(true);
+            if(OfferChange(out int o))
+            {
+                OnBarterAccepted?.Invoke(o);
+                _completeTradeButton.SetActive(true);
+            }
+            else
+            {
+                OnOfferRejected?.Invoke();
+                // ProcessRejection(); For now you don't get strikes with bad barter offers but your reputation will plummet
+            }
         }
     }
 
@@ -273,6 +289,10 @@ public class TradingSystem : MonoBehaviour
 
         if(OfferChange(out int offer))
         {
+            if(offer > 0)
+            {
+                OnStoleChange?.Invoke();
+            }
             OnChangeGiven?.Invoke(_currentCustomer.CustomerType, offer);
             ProcessTrade();
         }
@@ -287,6 +307,7 @@ public class TradingSystem : MonoBehaviour
     {
         if(_currentCustomer.MaxTradesReached)
         {
+            OnMaxTradesReached?.Invoke();
             FinishWithCustomer();
             return;
         }
@@ -296,6 +317,10 @@ public class TradingSystem : MonoBehaviour
 
     public void FinishWithCustomer()
     {
+        if(_currentCustomer)
+        {
+            OnFinishWithCustomer?.Invoke(_currentCustomer);
+        }
         _exchangeButtons.SetActive(false);
         _barterOfferButton.SetActive(false);
         _activeTradeButtons.SetActive(false);

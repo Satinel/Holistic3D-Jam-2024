@@ -60,50 +60,53 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         switch(_customerType)
         {
             case Customer.Type.Buy:
-                if(PlayerProperty && !IsMoney)
+                if(PlayerProperty && !IsMoney) // Cannot add extra items to sell to customer
                 {
                     eventData.pointerDrag = null;
                     return;
                 }
-                if(!PlayerProperty)
+                if(!PlayerProperty) // Cannot move customer items
                 {
                     eventData.pointerDrag = null;
                     return;
                 }
                 break;
             case Customer.Type.Sell:
-                if(!PlayerProperty)
+                if(!PlayerProperty) // Cannot move customer items
                 {
                     eventData.pointerDrag = null;
                     return;
                 }
-                if(!IsMoney)
-                {
-                    eventData.pointerDrag = null;
-                    return;
-                }
+                // if(!IsMoney)
+                // {
+                //     eventData.pointerDrag = null;
+                //     return;
+                // }
                 break;
             case Customer.Type.Barter:
-                if(!PlayerProperty && IsMoney)
+                if(!PlayerProperty && IsMoney) // Can move customer items but not their money
                 {
                     eventData.pointerDrag = null;
                     return;
                 }
                 break;
             case Customer.Type.Bank:
-                if(!PlayerProperty)
+                if(!PlayerProperty) // Cannot move customer items (but there shouldn't be any)
                 {
                     eventData.pointerDrag = null;
                     return;
                 }
-                if(!IsMoney)
+                if(!IsMoney) // Cannot move non-money player items
                 {
                     eventData.pointerDrag = null;
                     return;
                 }
                 break;
+            case Customer.Type.None:
+                eventData.pointerDrag = null; // There is no customer so don't move items
+                break;
             default:
-                if(!PlayerProperty)
+                if(!PlayerProperty) // Every type is accounte for so this is irrelevant but non-player items can't be moved anyway
                 {
                     eventData.pointerDrag = null;
                     return;
@@ -160,22 +163,22 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         switch(_customerType)
         {
             case Customer.Type.Buy:
-                if(PlayerProperty && !IsMoney) { return; }
-                if(!PlayerProperty) { return; }
+                if(!PlayerProperty) { return; } // Can only move player items
+                if(PlayerProperty && !IsMoney) { return; } // Cannot add extra items to be sold
                 break;
             case Customer.Type.Sell:
-                if(!PlayerProperty) { return; }
-                if(!IsMoney) { return; }
+                if(!PlayerProperty) { return; } // Can only move player items
+                // if(!IsMoney) { return; }
                 break;
             case Customer.Type.Bank:
-                if(PlayerProperty && !IsMoney) { return; }
-                if(!PlayerProperty) { return; }
+                if(PlayerProperty && !IsMoney) { return; } // Can only move player money
+                if(!PlayerProperty) { return; } // Cannot move customer items
                 break;
             case Customer.Type.Barter:
-                if(!PlayerProperty && IsMoney) { return; }
+                if(!PlayerProperty && IsMoney) { return; } // Cannot move customer's money
                 break;
             default:
-                if(!PlayerProperty) { return; }
+                if(!PlayerProperty) { return; } // Cannot move non-player items in this imaginary situation
                 break;
         }
 

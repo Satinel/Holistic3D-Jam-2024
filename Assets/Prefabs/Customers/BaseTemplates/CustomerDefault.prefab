@@ -214,6 +214,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _greetings:
   - Greetings.
+  _noItems:
+  - I'm just browsing today.
   _askToBuy:
   - I'm interested in this.
   _offerToSell:
@@ -226,20 +228,20 @@ MonoBehaviour:
   - Thank you.
   _rejectDeal:
   - No.
-  _gainStrike:
-  - ...
   _maxStrikes:
   - You call yourself a trader?
   _maxTrades:
   - I'll be on my way.
-  _madeProfit:
-  - How generous.
+  _priceTooHigh:
+  - I can't afford that.
   _lostChange:
   - Something doesn't add up...
   _payAllMoney:
   - This is everything I have...
   _departures:
   - Farewell.
+  _leaveAngry:
+  - Good riddance!
 --- !u!1 &5738326573733428263
 GameObject:
   m_ObjectHideFlags: 0

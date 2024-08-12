@@ -9,12 +9,14 @@ public class DialogueWindow : MonoBehaviour
 
     void Start()
     {
+        TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
         Dialogue.OnLineSpoken += Dialogue_OnLineSpoken;
         gameObject.SetActive(false);
     }
 
     void OnDestroy()
     {
+        TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
         Dialogue.OnLineSpoken -= Dialogue_OnLineSpoken;
     }
 
@@ -27,6 +29,11 @@ public class DialogueWindow : MonoBehaviour
             gameObject.SetActive(false);
             _customerDialogueText.text = string.Empty;
         }
+    }
+
+    void TradingSystem_OnTradeCancelled()
+    {
+        gameObject.SetActive(false);
     }
 
     void Dialogue_OnLineSpoken(string line)
