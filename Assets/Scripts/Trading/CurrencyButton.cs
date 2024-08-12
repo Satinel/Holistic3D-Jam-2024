@@ -10,15 +10,22 @@ public class CurrencyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     [SerializeField] int _sendAmount;
 
-    bool _isOver;
+    bool _isOver, _isCustomer;
+
+    void OnEnable()
+    {
+        TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
+    }
 
     void OnDisable()
     {
+        TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
         _isOver = false;
     }
 
     void Update()
     {
+        if(!_isCustomer) { return; }
         if(!_isOver) { return; }
 
         if(Input.mouseScrollDelta.y > 0)
@@ -59,4 +66,22 @@ public class CurrencyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         _isOver = false;
     }
 
+    void TradingSystem_OnNewCustomer(Customer customer)
+    {
+        if(!customer)
+        {
+            _isCustomer = false;
+            return;
+        }
+
+        if(customer.CustomerType == Customer.Type.None)
+        {
+            _isCustomer = false;
+        }
+        else
+        {
+            _isCustomer = true;
+        }
+
+    }
 }

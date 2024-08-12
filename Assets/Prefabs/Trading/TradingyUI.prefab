@@ -2088,6 +2088,7 @@ GameObject:
   - component: {fileID: 6186884270478985948}
   - component: {fileID: 6236277813521505086}
   - component: {fileID: 6318588674539088452}
+  - component: {fileID: 1589964143408697873}
   m_Layer: 5
   m_Name: Platinum
   m_TagString: Untagged
@@ -2135,6 +2136,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tradeBox: {fileID: 3273867817173410400}
+--- !u!114 &1589964143408697873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740443273508555565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0.40392157, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &765912558783680653
 GameObject:
   m_ObjectHideFlags: 0
@@ -8162,6 +8193,7 @@ GameObject:
   - component: {fileID: 5326727306875656374}
   - component: {fileID: 7753339830187294992}
   - component: {fileID: 4915618379038157491}
+  - component: {fileID: 8600134005998890781}
   m_Layer: 5
   m_Name: Gold
   m_TagString: Untagged
@@ -8209,6 +8241,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tradeBox: {fileID: 3273867817173410400}
+--- !u!114 &8600134005998890781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910828041242714389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0.40392157, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3978507723383500839
 GameObject:
   m_ObjectHideFlags: 0
@@ -14017,6 +14079,7 @@ GameObject:
   - component: {fileID: 7542174489623546690}
   - component: {fileID: 805174891686826176}
   - component: {fileID: 3309674731692504949}
+  - component: {fileID: 3248181536900838667}
   m_Layer: 5
   m_Name: Copper
   m_TagString: Untagged
@@ -14064,6 +14127,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tradeBox: {fileID: 3273867817173410400}
+--- !u!114 &3248181536900838667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630965017264578310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0.40392157, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &6636775051567677324
 GameObject:
   m_ObjectHideFlags: 0
@@ -18066,6 +18159,7 @@ GameObject:
   - component: {fileID: 6723362403301141890}
   - component: {fileID: 6062491747019642293}
   - component: {fileID: 2224107086933650269}
+  - component: {fileID: 1564006988305070018}
   m_Layer: 5
   m_Name: Silver
   m_TagString: Untagged
@@ -18113,6 +18207,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tradeBox: {fileID: 3273867817173410400}
+--- !u!114 &1564006988305070018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8676607522515163270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0.40392157, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8800386339452804728
 GameObject:
   m_ObjectHideFlags: 0
