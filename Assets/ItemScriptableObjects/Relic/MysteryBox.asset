@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4779116fae06367449ca3bb589abd821, type: 3}
-  m_Name: SilverTrinket
+  m_Name: MysteryBox
   m_EditorClassIdentifier: 
-  ItemName: Silver Trinket
-  ItemSprite: {fileID: 21300000, guid: 7ff1cc4a50e19f548948fdd05ab1a182, type: 3}
-  BaseValue: 2150
+  ItemName: Mystery Box
+  ItemSprite: {fileID: 21300000, guid: d1ed3af0be9938641ae289fd2ab44337, type: 3}
+  BaseValue: 280
   Origin: 2
   ItemType: 4

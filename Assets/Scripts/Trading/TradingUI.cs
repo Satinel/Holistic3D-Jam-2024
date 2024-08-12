@@ -245,6 +245,11 @@ public class TradingUI : MonoBehaviour
         _noCustomersWindow.SetActive(true);
     }
 
+    public void SetShowTradeNumbers(bool shouldShow) // TODO use this during tutorial (possibly as a UI Button!)
+    {
+        _showTradeNumbers = shouldShow;
+    }
+
     public void CloseResults() // UI Button
     {
         _resultWindow.SetActive(false);
