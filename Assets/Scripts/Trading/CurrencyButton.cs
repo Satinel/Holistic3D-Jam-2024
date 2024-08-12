@@ -8,6 +8,8 @@ public class CurrencyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] Button _increaseButton, _decreaseButton;
     [SerializeField] Currency _currency;
 
+    [SerializeField] int _sendAmount;
+
     bool _isOver;
 
     void OnDisable()
@@ -42,7 +44,7 @@ public class CurrencyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             if(_coinBox)
             {
-                _coinBox.SendTenChildItems(transform);
+                _coinBox.SendXChildItems(transform, _sendAmount);
             }
         }
     }

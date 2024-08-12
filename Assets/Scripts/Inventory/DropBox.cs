@@ -419,9 +419,9 @@ public class DropBox : MonoBehaviour, IDropHandler
         }
     }
 
-    public void SendTenChildItems(Transform parent)
+    public void SendXChildItems(Transform parent, int amount)
     {
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < amount; i++)
         {
             if(parent.childCount > 0)
             {
@@ -453,6 +453,26 @@ public class DropBox : MonoBehaviour, IDropHandler
                 item.SendToCoinBox(this);
                 item.SetInTrade(false);
                 break;
+            }
+        }
+    }
+
+    public void RetrieveCoinStack(Transform parent)
+    {
+        if(_isTradeBox)
+        {
+            if(_playerProperty)
+            {
+                foreach(var coin in parent.GetComponentsInChildren<Item>())
+                {
+                    if(coin.ItemSO.ItemType == ItemType.Coin)
+                    {
+                        coin.SendToCoinBox(_coinBox);
+                        _coinBox.RemoveFromSentItems(coin);
+                        RemoveItem(coin.gameObject);
+                    }
+                }
+                SetCoinTexts();
             }
         }
     }
