@@ -213,7 +213,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2278862921033876654, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
       propertyPath: <Name>k__BackingField
-      value: Celesta
+      value: Elesti
       objectReference: {fileID: 0}
     - target: {fileID: 2278862921033876654, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
       propertyPath: <Tolerance>k__BackingField

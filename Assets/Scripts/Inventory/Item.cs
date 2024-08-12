@@ -57,6 +57,11 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             return;
         }
 
+        if(!IsMoney)
+        {
+            OnAnyItemClicked?.Invoke(this);
+        }
+
         switch(_customerType)
         {
             case Customer.Type.Buy:
@@ -109,8 +114,6 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 return; // NO DRAGGING ITEMS WITHOUT A CUSTOMER!
         }
 
-        OnAnyItemClicked?.Invoke(this);
-
         _raycastImage.raycastTarget = false;
         _currentBox.RemoveItem(gameObject);
         transform.SetParent(_parentCanvas.transform, true);
@@ -155,6 +158,11 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         if(eventData.button != PointerEventData.InputButton.Left) { return; }
 
+        if(!IsMoney)
+        {
+            OnAnyItemClicked?.Invoke(this);
+        }
+
         switch(_customerType)
         {
             case Customer.Type.Buy:
@@ -177,8 +185,6 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             default:
                 return; // Cannot move ANYTHING because it messes stuff up!
         }
-
-        OnAnyItemClicked?.Invoke(this);
         
         if(IsMoney)
         {
