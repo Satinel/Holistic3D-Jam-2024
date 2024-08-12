@@ -13,6 +13,10 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 2278862921033876654, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _ignoreStrikes
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2278862921033876654, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
       propertyPath: <Name>k__BackingField
       value: Bank
       objectReference: {fileID: 0}
@@ -50,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5738326573733428263, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
       propertyPath: m_Name
-      value: Bank Variant
+      value: BankCustomer Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8934945721807295271, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
       propertyPath: m_LocalPosition.x

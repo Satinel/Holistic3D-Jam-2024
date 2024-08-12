@@ -1599,11 +1599,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b0402a35fde3742921e57dac0de062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinBox: {fileID: 0}
   _increaseButton: {fileID: 3766066544527740439}
   _decreaseButton: {fileID: 707071338706234800}
   _currency: 0
-  _sendAmount: 0
 --- !u!222 &7962389315243339769
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1995,7 +1993,7 @@ GameObject:
   - component: {fileID: 2770552582881796369}
   - component: {fileID: 4577480729697689679}
   - component: {fileID: 2550409022599846884}
-  - component: {fileID: 6347988073985402533}
+  - component: {fileID: 7384652463196173959}
   m_Layer: 5
   m_Name: Silver
   m_TagString: Untagged
@@ -2060,7 +2058,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6347988073985402533
+--- !u!114 &7384652463196173959
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2069,12 +2067,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 721250055751885947}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7b0402a35fde3742921e57dac0de062, type: 3}
+  m_Script: {fileID: 11500000, guid: a308dd4bd3932c24f93f61aa0673de50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _coinBox: {fileID: 5451787061969376408}
   _increaseButton: {fileID: 6869815542771195418}
-  _decreaseButton: {fileID: 0}
   _currency: 1
   _sendAmount: 10
 --- !u!1 &740443273508555565
@@ -3048,11 +3045,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b0402a35fde3742921e57dac0de062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinBox: {fileID: 0}
   _increaseButton: {fileID: 9170454555437383705}
   _decreaseButton: {fileID: 780552026523118648}
   _currency: 0
-  _sendAmount: 0
 --- !u!222 &5357139777229652987
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3351,11 +3346,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b0402a35fde3742921e57dac0de062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinBox: {fileID: 0}
   _increaseButton: {fileID: 6510013983302817723}
   _decreaseButton: {fileID: 8355176719820246667}
   _currency: 0
-  _sendAmount: 0
 --- !u!222 &3215214537873447293
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5674,11 +5667,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b0402a35fde3742921e57dac0de062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinBox: {fileID: 0}
   _increaseButton: {fileID: 8803014955301776568}
   _decreaseButton: {fileID: 8391896928974169647}
   _currency: 0
-  _sendAmount: 0
 --- !u!222 &8337327516786985698
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6292,7 +6283,7 @@ GameObject:
   - component: {fileID: 8479841997942656961}
   - component: {fileID: 5920648127087161726}
   - component: {fileID: 264676029472077336}
-  - component: {fileID: 2254607465188860522}
+  - component: {fileID: 173264819784769770}
   m_Layer: 5
   m_Name: Platinum
   m_TagString: Untagged
@@ -6357,7 +6348,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2254607465188860522
+--- !u!114 &173264819784769770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6366,12 +6357,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3112548216702566119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7b0402a35fde3742921e57dac0de062, type: 3}
+  m_Script: {fileID: 11500000, guid: a308dd4bd3932c24f93f61aa0673de50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _coinBox: {fileID: 5451787061969376408}
   _increaseButton: {fileID: 5027644346102899970}
-  _decreaseButton: {fileID: 0}
   _currency: 3
   _sendAmount: 10
 --- !u!1 &3139613338363706360
@@ -8282,7 +8272,7 @@ GameObject:
   - component: {fileID: 2537032851038037852}
   - component: {fileID: 2977256155247567223}
   - component: {fileID: 5603400244281143797}
-  - component: {fileID: 2613520248331780331}
+  - component: {fileID: 1377378439913558001}
   m_Layer: 5
   m_Name: Gold
   m_TagString: Untagged
@@ -8347,7 +8337,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2613520248331780331
+--- !u!114 &1377378439913558001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8356,12 +8346,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3978507723383500839}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7b0402a35fde3742921e57dac0de062, type: 3}
+  m_Script: {fileID: 11500000, guid: a308dd4bd3932c24f93f61aa0673de50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _coinBox: {fileID: 5451787061969376408}
   _increaseButton: {fileID: 2282169152755384301}
-  _decreaseButton: {fileID: 0}
   _currency: 2
   _sendAmount: 10
 --- !u!1 &4013407782880813774
@@ -10175,7 +10164,7 @@ GameObject:
   - component: {fileID: 5346712636851976461}
   - component: {fileID: 1009677367802928976}
   - component: {fileID: 8479376297672637133}
-  - component: {fileID: 3684223047425078276}
+  - component: {fileID: 3999693516814645559}
   m_Layer: 5
   m_Name: Copper
   m_TagString: Untagged
@@ -10240,7 +10229,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3684223047425078276
+--- !u!114 &3999693516814645559
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10249,12 +10238,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4966394771151713268}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7b0402a35fde3742921e57dac0de062, type: 3}
+  m_Script: {fileID: 11500000, guid: a308dd4bd3932c24f93f61aa0673de50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _coinBox: {fileID: 5451787061969376408}
   _increaseButton: {fileID: 2492362904459149822}
-  _decreaseButton: {fileID: 0}
   _currency: 0
   _sendAmount: 100
 --- !u!1 &4982921975059336055

@@ -186,8 +186,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _maxTrades
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _ignoreStrikes
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _baseOpinionChange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: <Name>k__BackingField
       value: Corthan
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: <MaxStrikes>k__BackingField
+      value: 616
       objectReference: {fileID: 0}
     - target: {fileID: 8191076684426939260, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: m_Sprite

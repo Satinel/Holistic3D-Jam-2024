@@ -21,6 +21,7 @@ public class Customer : MonoBehaviour
 
     [SerializeField] int _baseOpinionChange = 1;
     [SerializeField] int _maxTrades = 3;
+    [SerializeField] bool _ignoreStrikes;
     
     
     int _currentTrades;
@@ -192,7 +193,7 @@ public class Customer : MonoBehaviour
 
     void ChangeOpinion(int change)
     {
-        Opinion += change;
+        Opinion += 1 * change; // This way we can have customers who don't increase/decrease Opinion
     }
 
     public int GetTotalFunds()
@@ -202,7 +203,7 @@ public class Customer : MonoBehaviour
 
     public void IncreaseStrikes()
     {
-        if(CustomerType == Type.Bank) { return; }
+        if(_ignoreStrikes) { return; }
 
         Strikes++;
         
