@@ -111,8 +111,10 @@ public class Dialogue : MonoBehaviour
         {
             SpeakLine(_lostChange);
         }
-
-        SpeakLine(_completeDeal);
+        else
+        {
+            SpeakLine(_completeDeal);
+        }
     }
 
     void TradingSystem_OnIncorrectChange()

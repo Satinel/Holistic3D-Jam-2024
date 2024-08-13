@@ -324,6 +324,7 @@ public class TradingSystem : MonoBehaviour
         _barterOfferButton.SetActive(false);
         _activeTradeButtons.SetActive(false);
         _haggleButton.SetActive(false);
+        _completeTradeButton.SetActive(false);
         _basePrice = 0;
         OnBasePriceSet?.Invoke(_basePrice);
         _offerValue = 0;
