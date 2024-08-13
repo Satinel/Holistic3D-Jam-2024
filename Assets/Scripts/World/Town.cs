@@ -31,7 +31,7 @@ public class Town : MonoBehaviour
     {
         if(!gameObject.activeSelf) { return; }
 
-        if (_customers.Count > 0)
+        if(_customers.Count > 0)
         {
             Customer nextCustomer = _customers[UnityEngine.Random.Range(0, _customers.Count)];
 

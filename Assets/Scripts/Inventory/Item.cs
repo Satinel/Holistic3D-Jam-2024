@@ -18,7 +18,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     [SerializeField] Canvas _parentCanvas;
     
     DropBox _currentBox;
-    bool _inTrade;
+    bool _inTrade, _barterLocked;
     Vector2 _startPosition;
     Customer.Type _customerType;
 
@@ -28,12 +28,20 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         // OnAnyItemClicked += Item_OnAnyItemClicked;
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
+        TradingSystem.OnBarterAccepted += TradingSystem_OnBarterAccepted;
+        TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
+        TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
+        TradingSystem.OnResetBarter += TradingSystem_OnResetBarter;
     }
 
     void OnDisable()
     {
         // OnAnyItemClicked -= Item_OnAnyItemClicked;
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
+        TradingSystem.OnBarterAccepted -= TradingSystem_OnBarterAccepted;
+        TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
+        TradingSystem.OnTradeCompleted -= TradingSystem_OnTradeCompleted;
+        TradingSystem.OnResetBarter -= TradingSystem_OnResetBarter;
     }
 
     void TradingSystem_OnNewCustomer(Customer customer)
@@ -47,6 +55,26 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
 
         _customerType = customer.CustomerType;
+    }
+
+    void TradingSystem_OnBarterAccepted(int offer)
+    {
+        _barterLocked = true;
+    }
+
+    void TradingSystem_OnTradeCancelled()
+    {
+        _barterLocked = false;
+    }
+
+    void TradingSystem_OnResetBarter()
+    {
+        _barterLocked = false;
+    }
+
+    void TradingSystem_OnTradeCompleted(Customer customer)
+    {
+        _barterLocked = false;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -89,6 +117,11 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 // }
                 break;
             case Customer.Type.Barter:
+                if(_barterLocked && !IsMoney)
+                {
+                    eventData.pointerDrag = null; // Cannot add/remove items when barter offer accepted (only give change)
+                    return;
+                }
                 if(!PlayerProperty && IsMoney) // Can move customer items but not their money
                 {
                     eventData.pointerDrag = null;
@@ -178,6 +211,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 if(!PlayerProperty) { return; } // Cannot move customer items
                 break;
             case Customer.Type.Barter:
+                if(_barterLocked && !IsMoney) { return; } // Cannot alter items after offer accepted
                 if(!PlayerProperty && IsMoney) { return; } // Cannot move customer's money
                 break;
             case Customer.Type.None:

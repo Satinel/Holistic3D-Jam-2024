@@ -20,7 +20,6 @@ public class TradingSystem : MonoBehaviour
     public static Action OnResetBarter;
     public static Action<int, Currency> OnExchangeCurrency;
     public static Action<Customer> OnStrikeOut;
-    public static Action OnMaxTradesReached;
     public static Action OnBarterTooHigh;
     public static Action<bool> OnStoleChange;
     public static Action OnPoorCustomer;
@@ -234,8 +233,10 @@ public class TradingSystem : MonoBehaviour
         }
     }
 
-    public void AttemptBarter()
+    public void AttemptBarter() // Used for UI Button
     {
+        if(_compValue == 0 && _playerValue == 0) { return; }
+        
         int offer = _compValue - _playerValue;
         
         if(offer <= 0)
@@ -244,6 +245,7 @@ public class TradingSystem : MonoBehaviour
             {
                 OnBarterAccepted?.Invoke(offer); // Player gave higher or equal value which customer will pay
                 _completeTradeButton.SetActive(true);
+                _barterOfferButton.SetActive(false);
             }
             else
             {
@@ -256,6 +258,7 @@ public class TradingSystem : MonoBehaviour
             {
                 OnBarterAccepted?.Invoke(o);
                 _completeTradeButton.SetActive(true);
+                _barterOfferButton.SetActive(false);
             }
             else
             {
@@ -265,7 +268,7 @@ public class TradingSystem : MonoBehaviour
         }
     }
 
-    public void Haggle() // used for UI Button
+    public void Haggle() // Used for UI Button
     {
         if(!_currentCustomer) { return; }
 
@@ -304,7 +307,6 @@ public class TradingSystem : MonoBehaviour
     {
         if(_currentCustomer.MaxTradesReached)
         {
-            OnMaxTradesReached?.Invoke();
             FinishWithCustomer();
             return;
         }
@@ -365,6 +367,11 @@ public class TradingSystem : MonoBehaviour
             if(_currentCustomer.CustomerType == Customer.Type.Bank)
             {
                 _exchangeButtons.SetActive(true);
+            }
+            if(_currentCustomer.CustomerType == Customer.Type.Barter)
+            {
+                _barterOfferButton.SetActive(true);
+                _completeTradeButton.SetActive(false);
             }
         }
         else

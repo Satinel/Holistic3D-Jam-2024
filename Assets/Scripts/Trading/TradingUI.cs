@@ -21,7 +21,7 @@ public class TradingUI : MonoBehaviour
         DropBox.OnNoItems += DropBox_OnNoItems;
         TradingSystem.OnIncorrectChange += TradingSystem_OnIncorrectChange;
         TradingSystem.OnOfferAccepted += TradingSystem_OnOfferAccepted;
-        // TradingSystem.OnOfferRejected += TradingSystem_OnOfferRejected;
+        TradingSystem.OnResetBarter += TradingSystem_OnResetBarter;
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
         TradingSystem.OnOfferValueChanged += TradingSystem_OnOfferValueChanged;
         TradingSystem.OnStrikeOut += TradingSystem_OnStrikeOut;
@@ -40,7 +40,7 @@ public class TradingUI : MonoBehaviour
         DropBox.OnNoItems -= DropBox_OnNoItems;
         TradingSystem.OnIncorrectChange -= TradingSystem_OnIncorrectChange;
         TradingSystem.OnOfferAccepted -= TradingSystem_OnOfferAccepted;
-        // TradingSystem.OnOfferRejected -= TradingSystem_OnOfferRejected;
+        TradingSystem.OnResetBarter += TradingSystem_OnResetBarter;
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
         TradingSystem.OnOfferValueChanged -= TradingSystem_OnOfferValueChanged;
         TradingSystem.OnStrikeOut -= TradingSystem_OnStrikeOut;
@@ -82,10 +82,10 @@ public class TradingUI : MonoBehaviour
         CloseSetPrice();
     }
 
-    // void TradingSystem_OnOfferRejected()
-    // {
-    //     _rejectionWindow.SetActive(true);
-    // }
+    void TradingSystem_OnResetBarter()
+    {
+        _payTextParent.SetActive(false);
+    }
 
     void TradingSystem_OnNewCustomer(Customer customer)
     {
