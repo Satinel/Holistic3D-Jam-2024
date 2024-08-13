@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4779116fae06367449ca3bb589abd821, type: 3}
   m_Name: ManaPotion
   m_EditorClassIdentifier: 
-  ItemName: Health Potion
-  ItemSprite: {fileID: 21300000, guid: 247cb05d7ba1b834ca4f02a53a227206, type: 3}
-  BaseValue: 450
+  ItemName: Mana Potion
+  ItemSprite: {fileID: 21300000, guid: 9e3fa9898cf3c8744a424e4cfabae207, type: 3}
+  BaseValue: 520
   Origin: 0
   ItemType: 7

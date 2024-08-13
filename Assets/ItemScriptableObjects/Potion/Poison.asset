@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4779116fae06367449ca3bb589abd821, type: 3}
   m_Name: Poison
   m_EditorClassIdentifier: 
-  ItemName: Weak Health Potion
-  ItemSprite: {fileID: 21300000, guid: 108ef8e03b06d184098e237f6121a6d3, type: 3}
+  ItemName: Poison
+  ItemSprite: {fileID: 21300000, guid: b1a5b146616c9624a87658b136322e3e, type: 3}
   BaseValue: 150
   Origin: 0
   ItemType: 7
