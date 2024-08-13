@@ -23,7 +23,7 @@ public class Dialogue : MonoBehaviour
     [SerializeField] List<string> _departures = new();
     [SerializeField] List<string> _leaveAngry = new();
 
-    bool _isActive = false, _stoleChange;
+    bool _isActive = false, _stoleChange, _poorCustomer;
 
     void OnEnable()
     {
@@ -80,7 +80,14 @@ public class Dialogue : MonoBehaviour
 
     void TradingSystem_OnOfferAccepted(bool isBuying, int offer)
     {
-        SpeakLine(_acceptPrice);
+        if(_poorCustomer)
+        {
+            SpeakLine(_payAllMoney);
+        }
+        else
+        {
+            SpeakLine(_acceptPrice);
+        }
     }
 
     void TradingSystem_OnBarterAccepted(int offer)
@@ -144,11 +151,12 @@ public class Dialogue : MonoBehaviour
 
     void TradingSystem_OnPoorCustomer()
     {
-        SpeakLine(_payAllMoney);
+        _poorCustomer = true;
     }
 
     void TradingSystem_OnFinishWithCustomer(Customer customer)
     {
+        _poorCustomer = false; // This should be fine...
         if(customer.MaxStrikesReached)
         {
             SpeakLine(_leaveAngry);
