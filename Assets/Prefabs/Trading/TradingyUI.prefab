@@ -328,7 +328,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Finish With This Customer
+  m_text: Close
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1538,7 +1538,7 @@ GameObject:
   - component: {fileID: 6815213303257569411}
   - component: {fileID: 2299978901233419092}
   m_Layer: 5
-  m_Name: CancelTradeButton
+  m_Name: FinishWithCustomerButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1561,8 +1561,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 274.99997, y: -260}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 365, y: -305}
+  m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8636815400612805047
 CanvasRenderer:
@@ -2248,7 +2248,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Stop Trading
+  m_text: Finish With This Customer
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4402,11 +4402,11 @@ RectTransform:
   - {fileID: 3138455990267745619}
   - {fileID: 6335881456776905896}
   - {fileID: 8439717849808442141}
-  - {fileID: 441410210513611999}
   - {fileID: 5992813762561154452}
   - {fileID: 2533755379894814679}
   - {fileID: 7513774188041186403}
   - {fileID: 8370164658826138299}
+  - {fileID: 441410210513611999}
   m_Father: {fileID: 8333649778445846049}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5130,7 +5130,7 @@ GameObject:
   - component: {fileID: 7779978439346885884}
   - component: {fileID: 4225099876153149015}
   m_Layer: 5
-  m_Name: FinishButton
+  m_Name: CloseResultsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5153,7 +5153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: -300}
+  m_AnchoredPosition: {x: 0, y: -300}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3235401425823231285
@@ -5238,18 +5238,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1143175699462310482}
-        m_TargetAssemblyTypeName: TradingSystem, Assembly-CSharp
-        m_MethodName: FinishWithCustomer
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 350603147462098946}
         m_TargetAssemblyTypeName: TradingUI, Assembly-CSharp
         m_MethodName: CloseResults
@@ -6098,7 +6086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &28861801057898202
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10036,7 +10024,6 @@ RectTransform:
   m_Children:
   - {fileID: 7071793587958229331}
   - {fileID: 306643141850439040}
-  - {fileID: 6758335843113876257}
   - {fileID: 9109882744463814390}
   m_Father: {fileID: 2110611139577863269}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10752,13 +10739,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 28861801057898202}
   - {fileID: 2080785745709002285}
   - {fileID: 7437735245940491023}
   - {fileID: 441976229665643253}
-  - {fileID: 28861801057898202}
   - {fileID: 4682757836921607000}
   - {fileID: 4715770645979617263}
   - {fileID: 8907952423610348474}
+  - {fileID: 6758335843113876257}
   m_Father: {fileID: 2110611139577863269}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -12306,7 +12294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6758335843113876257
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12314,17 +12302,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6141425929496980669}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 874908582330556660}
-  m_Father: {fileID: 441410210513611999}
+  m_Father: {fileID: 3138455990267745619}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: -300}
+  m_AnchoredPosition: {x: -390, y: -305}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7061403636024070711
@@ -12423,7 +12411,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 350603147462098946}
         m_TargetAssemblyTypeName: TradingUI, Assembly-CSharp
-        m_MethodName: CloseResults
+        m_MethodName: DisableRepeatCustomerButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

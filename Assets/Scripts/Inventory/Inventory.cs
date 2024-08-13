@@ -16,6 +16,7 @@ public class Inventory : MonoBehaviour
     DropBox _dropBox, _coinBox;
 
     public DropBox CoinBox => _coinBox;
+    public DropBox StockBox => _dropBox;
 
     public void Start()
     {

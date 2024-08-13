@@ -44,7 +44,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.size
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingCoins.Array.data[1]
@@ -180,7 +180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _maxTrades
-      value: 2147483647
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _ignoreStrikes
@@ -275,7 +275,7 @@ PrefabInstance:
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[9]
       value: 
-      objectReference: {fileID: 11400000, guid: 1fcb2e7144fa98a47b67e1e9ef523211, type: 2}
+      objectReference: {fileID: 11400000, guid: c229b9b3471bf6344aa6b085e9b01787, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[10]
       value: 
@@ -404,7 +404,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.size
-      value: 20
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingCoins.Array.data[1]
@@ -417,7 +417,7 @@ PrefabInstance:
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 776b56c8bdeee144e8c43aeb3579ef3b, type: 2}
+      objectReference: {fileID: 11400000, guid: 1fcb2e7144fa98a47b67e1e9ef523211, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[1]
       value: 
@@ -540,7 +540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _maxTrades
-      value: 2147483647
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _ignoreStrikes

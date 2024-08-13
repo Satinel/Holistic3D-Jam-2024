@@ -469,6 +469,11 @@ Transform:
   - {fileID: 1940868680}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!223 &364459579 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2566658410352480429, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
+  m_PrefabInstance: {fileID: 4607863986091374571}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &436907210
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,6 +744,7 @@ GameObject:
   m_Component:
   - component: {fileID: 681036655}
   - component: {fileID: 681036656}
+  - component: {fileID: 681036657}
   m_Layer: 0
   m_Name: TutorialTown
   m_TagString: Untagged
@@ -776,6 +782,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7da3c51facb368418157eb371ab5b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &681036657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681036654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 009cbe1f5dcfbc9478c8700eac9a0776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tradingCanvas: {fileID: 364459579}
 --- !u!1 &741177768
 GameObject:
   m_ObjectHideFlags: 0

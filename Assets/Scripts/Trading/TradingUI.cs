@@ -29,6 +29,7 @@ public class TradingUI : MonoBehaviour
         TradingSystem.OnChangeGiven += TradingSystem_OnChangeGiven;
         DropBox.OnItemPicked += DropBox_OnItemPicked;
         DropBox.OnTradeResults += DropBox_OnTradeResults;
+        Player.OnProfitCalculated += Player_OnProfitCalculated;
         DropBox.OnBuyPriceSet += DropBox_OnBuyPriceSet;
         DropBox.OnSellPriceSet += DropBox_OnSellPriceSet;
         Town.OnNoCustomers += Town_OnNoCustomers;
@@ -48,6 +49,7 @@ public class TradingUI : MonoBehaviour
         TradingSystem.OnChangeGiven -= TradingSystem_OnChangeGiven;
         DropBox.OnItemPicked -= DropBox_OnItemPicked;
         DropBox.OnTradeResults -= DropBox_OnTradeResults;
+        Player.OnProfitCalculated -= Player_OnProfitCalculated;
         DropBox.OnBuyPriceSet -= DropBox_OnBuyPriceSet;
         DropBox.OnSellPriceSet -= DropBox_OnSellPriceSet;
         Town.OnNoCustomers -= Town_OnNoCustomers;
@@ -141,44 +143,45 @@ public class TradingUI : MonoBehaviour
         _itemNameText.text = string.Empty;
     }
 
-    void TradingSystem_OnChangeGiven(Customer.Type customerType, int change) // TODO This needs to be reworked because the values aren't always change relevant
+    void TradingSystem_OnChangeGiven(Customer.Type customerType, int change)
     {
-        if(customerType == Customer.Type.Buy)
-        {
-            if(change < 0)
-            {
-                _changeText.text = $"Gave {-change:N0} Extra Change!";
-                // TODO Player Rep+
-            }
-            else if(change == 0)
-            {
-                _changeText.text = $"Gave Exact Change!";
-                // TODO Player Rep++
-            }
-            else
-            {
-                _changeText.text = $"Stole {change:N0} Change!";
-                // TODO Player Rep--
-            }
-        }
-        if(customerType == Customer.Type.Sell)
-        {
-            if(change < 0)
-            {
-                _changeText.text = $"Overpaid by {-change:N0}!";
-                // TODO Player Rep+
-            }
-            else if(change == 0)
-            {
-                _changeText.text = $"Perfect Payment!";
-                // TODO Player Rep++
-            }
-            else
-            {
-                _changeText.text = $"Underpaid by {change:N0}!";
-                // TODO Player Rep--
-            }
-        }
+        // TODO This needs to be reworked because the values aren't always change relevant
+        // if(customerType == Customer.Type.Buy)
+        // {
+        //     if(change < 0)
+        //     {
+        //         _changeText.text = $"Gave {-change:N0} Extra Change!";
+        //         // TODO Player Rep+
+        //     }
+        //     else if(change == 0)
+        //     {
+        //         _changeText.text = $"Gave Exact Change!";
+        //         // TODO Player Rep++
+        //     }
+        //     else
+        //     {
+        //         _changeText.text = $"Stole {change:N0} Change!";
+        //         // TODO Player Rep--
+        //     }
+        // }
+        // if(customerType == Customer.Type.Sell)
+        // {
+        //     if(change < 0)
+        //     {
+        //         _changeText.text = $"Overpaid by {-change:N0}!";
+        //         // TODO Player Rep+
+        //     }
+        //     else if(change == 0)
+        //     {
+        //         _changeText.text = $"Perfect Payment!";
+        //         // TODO Player Rep++
+        //     }
+        //     else
+        //     {
+        //         _changeText.text = $"Underpaid by {change:N0}!";
+        //         // TODO Player Rep--
+        //     }
+        // }
         _tradeBoxText.text = string.Empty;
         _compTradeBoxText.text = string.Empty;
         _payTextParent.SetActive(false);
@@ -195,19 +198,19 @@ public class TradingUI : MonoBehaviour
         _itemNameWindow.SetActive(true);
     }
 
-    void DropBox_OnTradeResults(bool isPlayer, int value)
+    void DropBox_OnTradeResults()
     {
-        if(isPlayer)
-        {
-            _playerValue = value;
-        }
-        else
-        {
-            _compValue = value;
-        }
+        // if(isPlayer)
+        // {
+        //     _playerValue = value;
+        // }
+        // else
+        // {
+        //     _compValue = value;
+        // }
 
-        _resultWindow.SetActive(true);
-        _profitText.text = $"Profit: {_compValue - _playerValue:N0}";
+        // _resultWindow.SetActive(true);
+        // _profitText.text = $"Profit: {_compValue - _playerValue:N0}";
 
         if(_customer)
         {
@@ -219,6 +222,32 @@ public class TradingUI : MonoBehaviour
             {
                 _repeatCustomerButton.SetActive(false);
             }
+        }
+    }
+
+    void Player_OnProfitCalculated(int profit, int repChange)
+    {
+        _resultWindow.SetActive(true);
+        if(profit >= 0)
+        {
+            _profitText.text = $"Profit: {profit:N0}";
+        }
+        else
+        {
+            _profitText.text = $"Losses: {profit:N0}";
+        }
+
+        if(repChange > 0)
+        {
+            _changeText.text = "Gained Reputation!";
+        }
+        else if(repChange < 0)
+        {
+            _changeText.text = "Lost Reputation...";
+        }
+        else
+        {
+            _changeText.text = string.Empty;
         }
     }
 
@@ -269,5 +298,10 @@ public class TradingUI : MonoBehaviour
     public void CloseNoCustomersWindow() // UI Button
     {
         _noCustomersWindow.SetActive(false);
+    }
+
+    public void DisableRepeatCustomerButton()
+    {
+        _repeatCustomerButton.SetActive(false);
     }
 }

@@ -17,6 +17,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2278862921033876654, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
+      propertyPath: _baseOpinionChange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2278862921033876654, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
       propertyPath: <Name>k__BackingField
       value: Bank
       objectReference: {fileID: 0}

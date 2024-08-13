@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class DropBox : MonoBehaviour, IDropHandler
 {
     public static Action<bool, int> OnTradeBoxValueChanged;
-    public static Action<bool, int> OnTradeResults;
+    public static Action OnTradeResults;
     public static Action OnNoItems;
     public static Action<Item, bool> OnItemPicked;
     public static Action<int> OnBuyPriceSet;
@@ -137,18 +137,18 @@ public class DropBox : MonoBehaviour, IDropHandler
         {
             if(currentCustomer.CustomerType != Customer.Type.Bank)
             {
-                OnTradeResults?.Invoke(_playerProperty, GetTrueValue());
+                OnTradeResults?.Invoke();
             }
 
             if(_playerProperty)
             {
                 currentCustomer.AddToInventory(_items); // Items get flipped to belong to currentCustomer in the foreach below
-                // TODO(?) Remove from player's inventory?
+                // TODO(?) Remove from player's Inventory?
             }
             else
             {
                 currentCustomer.RemoveFromInventory(_items); // Items get flipped to belong to player in the foreach blow
-                // TODO(?) Add to player's inventory?
+                // TODO(?) Add to player's Inventory?
             }
             
 
