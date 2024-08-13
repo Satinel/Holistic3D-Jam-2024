@@ -89,13 +89,12 @@ public class TradingUI : MonoBehaviour
 
     void TradingSystem_OnNewCustomer(Customer customer)
     {
-        _showTradeNumbers = false;
-
         if(!customer)
         {
             _customer = null;
             _customerName.SetActive(false);
             _tradeTypeText.text = string.Empty;
+            SetShowTradeNumbers(false);
             return;
         }
 
@@ -111,9 +110,10 @@ public class TradingUI : MonoBehaviour
         {
             _tradeTypeText.text = "Buy Offer";
         }
-        else //if(customer.CustomerType == Customer.Type.Bank)
+        
+        if(_customer.Tolerance <= 0)
         {
-            _showTradeNumbers = true;
+            SetShowTradeNumbers(true);
         }
     }
 
@@ -239,9 +239,11 @@ public class TradingUI : MonoBehaviour
         _noCustomersWindow.SetActive(true);
     }
 
-    public void SetShowTradeNumbers(bool shouldShow) // TODO use this during tutorial (possibly as a UI Button!)
+    public void SetShowTradeNumbers(bool shouldShow)
     {
         _showTradeNumbers = shouldShow;
+        _tradeBoxText.text = $"0";
+        _compTradeBoxText.text = $"0";
     }
 
     public void CloseResults() // UI Button

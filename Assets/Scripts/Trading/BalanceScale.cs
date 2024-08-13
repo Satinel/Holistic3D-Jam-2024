@@ -5,6 +5,7 @@ public class BalanceScale : MonoBehaviour
     [SerializeField] float _minYHeight, _maxYHeight, _minZRotation, _maxZRotation;
 
     [SerializeField] Transform _compPan, _playerPan, _beam;
+    [SerializeField] GameObject _panWarning;
 
     [SerializeField] bool _useTolerance;
 
@@ -47,6 +48,7 @@ public class BalanceScale : MonoBehaviour
 
     void TradingSystem_OnNewCustomer(Customer customer)
     {
+        _panWarning.SetActive(false);
         if(customer == null)
         {
             _customer = null;
@@ -152,6 +154,7 @@ public class BalanceScale : MonoBehaviour
         }
 
         AdjustScales(compHeight, playerHeight, beamRotation);
+        CheckWarnings(offer);
     }
 
     void CalculateOffer(int baseprice, int offerValue) // SOMEDAY: Figure out why this still works when the if checks return early, also how did I manage to create this?
@@ -201,6 +204,7 @@ public class BalanceScale : MonoBehaviour
         }
 
         AdjustScales(compHeight, playerHeight, beamRotation);
+        CheckWarnings(offer);
     }
 
     void AdjustScales(float compHeight, float playerHeight, float beamRotation)
@@ -215,5 +219,20 @@ public class BalanceScale : MonoBehaviour
         _compPan.localPosition = _compStartPosition;
         _playerPan.localPosition = _playerStartPosition;
         _beam.localRotation = _beamStartRotation;
+        _panWarning.SetActive(false);
+    }
+
+    void CheckWarnings(int offer)
+    {
+        if(_customer.CustomerType == Customer.Type.Barter) { return; } // TODO (someday) only skip warning when barter not locked or something
+
+        if(offer > 0)
+        {
+            _panWarning.SetActive(false);
+        }
+        else
+        {
+            _panWarning.SetActive(true);
+        }
     }
 }

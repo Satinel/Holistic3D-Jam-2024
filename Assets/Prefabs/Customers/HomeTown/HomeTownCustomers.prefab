@@ -1281,10 +1281,6 @@ PrefabInstance:
       propertyPath: <Name>k__BackingField
       value: Jorb
       objectReference: {fileID: 0}
-    - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
-      propertyPath: <Tolerance>k__BackingField
-      value: 0.01
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
