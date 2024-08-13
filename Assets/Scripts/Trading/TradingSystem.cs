@@ -22,7 +22,7 @@ public class TradingSystem : MonoBehaviour
     public static Action<Customer> OnStrikeOut;
     public static Action OnMaxTradesReached;
     public static Action OnBarterTooHigh;
-    public static Action OnStoleChange;
+    public static Action<bool> OnStoleChange;
     public static Action OnPoorCustomer;
     public static Action<Customer> OnFinishWithCustomer;
     
@@ -289,10 +289,7 @@ public class TradingSystem : MonoBehaviour
 
         if(OfferChange(out int offer))
         {
-            if(offer > 0)
-            {
-                OnStoleChange?.Invoke();
-            }
+            OnStoleChange?.Invoke(offer > 0);
             OnChangeGiven?.Invoke(_currentCustomer.CustomerType, offer);
             ProcessTrade();
         }

@@ -14,16 +14,16 @@ public class Dialogue : MonoBehaviour
     [SerializeField] List<string> _rejectPrice = new();
     [SerializeField] List<string> _completeDeal = new();
     [SerializeField] List<string> _rejectDeal = new();
-    // [SerializeField] List<string> _gainStrike = new();
-    [SerializeField] List<string> _maxStrikes = new();
-    [SerializeField] List<string> _maxTrades = new();
+    // [SerializeField] List<string> _gainStrike = new(); // Overwritten by rejecting prices and offers
+    // [SerializeField] List<string> _maxStrikes = new(); // Overwritten by OnFinishWithCustomer
+    // [SerializeField] List<string> _maxTrades = new(); // Overwritten by OnFinishWithCustomer
     [SerializeField] List<string> _priceTooHigh = new();
     [SerializeField] List<string> _lostChange = new();
     [SerializeField] List<string> _payAllMoney = new();
     [SerializeField] List<string> _departures = new();
     [SerializeField] List<string> _leaveAngry = new();
 
-    bool _isActive = false;
+    bool _isActive = false, _stoleChange;
 
     void OnEnable()
     {
@@ -35,8 +35,8 @@ public class Dialogue : MonoBehaviour
         TradingSystem.OnOfferRejected += TradingSystem_OnOfferRejected;
         TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
         TradingSystem.OnIncorrectChange += TradingSystem_OnIncorrectChange;
-        TradingSystem.OnStrikeOut += TradingSystem_OnStrikeOut;
-        TradingSystem.OnMaxTradesReached += TradingSystem_OnMaxTradesReached;
+        // TradingSystem.OnStrikeOut += TradingSystem_OnStrikeOut; // Overwritten by OnFinishWithCustomer
+        // TradingSystem.OnMaxTradesReached += TradingSystem_OnMaxTradesReached; // Overwritten by OnFinishWithCustomer
         TradingSystem.OnBarterTooHigh += TradingSystem_OnBarterTooHigh;
         TradingSystem.OnStoleChange += TradingSystem_OnStoleChange;
         TradingSystem.OnPoorCustomer += TradingSystem_OnPoorCustomer;
@@ -53,8 +53,8 @@ public class Dialogue : MonoBehaviour
         TradingSystem.OnOfferRejected -= TradingSystem_OnOfferRejected;
         TradingSystem.OnTradeCompleted -= TradingSystem_OnTradeCompleted;
         TradingSystem.OnIncorrectChange -= TradingSystem_OnIncorrectChange;
-        TradingSystem.OnStrikeOut -= TradingSystem_OnStrikeOut;
-        TradingSystem.OnMaxTradesReached -= TradingSystem_OnMaxTradesReached;
+        // TradingSystem.OnStrikeOut -= TradingSystem_OnStrikeOut; // Overwritten by OnFinishWithCustomer
+        // TradingSystem.OnMaxTradesReached -= TradingSystem_OnMaxTradesReached; // Overwritten by OnFinishWithCustomer
         TradingSystem.OnBarterTooHigh -= TradingSystem_OnBarterTooHigh;
         TradingSystem.OnStoleChange -= TradingSystem_OnStoleChange;
         TradingSystem.OnPoorCustomer -= TradingSystem_OnPoorCustomer;
@@ -107,6 +107,11 @@ public class Dialogue : MonoBehaviour
 
     void TradingSystem_OnTradeCompleted(Customer customer)
     {
+        if(_stoleChange)
+        {
+            SpeakLine(_lostChange);
+        }
+
         SpeakLine(_completeDeal);
     }
 
@@ -115,24 +120,24 @@ public class Dialogue : MonoBehaviour
         SpeakLine(_rejectDeal);
     }
 
-    void TradingSystem_OnStrikeOut(Customer customer)
-    {
-        SpeakLine(_maxStrikes);
-    }
+    // void TradingSystem_OnStrikeOut(Customer customer)
+    // {
+    //     SpeakLine(_maxStrikes);
+    // }
 
-    void TradingSystem_OnMaxTradesReached()
-    {
-        SpeakLine(_maxTrades);
-    }
+    // void TradingSystem_OnMaxTradesReached()
+    // {
+    //     SpeakLine(_maxTrades);
+    // }
 
     void TradingSystem_OnBarterTooHigh()
     {
         SpeakLine(_priceTooHigh);
     }
 
-    void TradingSystem_OnStoleChange() // This is definitely going to get overridden(overwritten) by OnTradeCompleted
+    void TradingSystem_OnStoleChange(bool stoleChange)
     {
-        SpeakLine(_lostChange);
+        _stoleChange = stoleChange;
     }
 
     void TradingSystem_OnPoorCustomer()
