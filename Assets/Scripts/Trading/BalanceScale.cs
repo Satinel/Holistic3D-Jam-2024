@@ -224,6 +224,7 @@ public class BalanceScale : MonoBehaviour
 
     void CheckWarnings(int offer)
     {
+        if(!_customer) { return; }
         if(_customer.CustomerType == Customer.Type.Barter) { return; } // TODO (someday) only skip warning when barter not locked or something
 
         if(offer > 0)

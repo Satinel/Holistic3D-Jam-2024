@@ -37,6 +37,11 @@ public class Player : MonoBehaviour
         TradingSystem.OnTradeCompleted -= TradingSystem_OnFinishWithCustomer;
     }
 
+    public void EnableInventory()
+    {
+        _inventory.enabled = true;
+    }
+
     void Inventory_OnInventoryLoaded(bool isPlayer)
     {
         if (!isPlayer) { return; }

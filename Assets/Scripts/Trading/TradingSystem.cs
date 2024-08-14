@@ -11,7 +11,7 @@ public class TradingSystem : MonoBehaviour
     public static Action OnTradeCancelled;
     public static Action<Customer> OnNewCustomer;
     public static Action OnOpenToPublic;
-    public static Action OnBuyCustomer;
+    public static Action<bool> OnBuyCustomer;
     public static Action OnSellCustomer;
     public static Action<int> OnOfferValueChanged;
     public static Action<int> OnBasePriceSet;
@@ -29,6 +29,7 @@ public class TradingSystem : MonoBehaviour
 
     int _offer;
     int _basePrice;
+    bool _isBuyTutorial = true;
 
     [SerializeField] GameObject _openButton, _bankButton, _exchangeButtons, _goodbyeButton, _haggleButton, _activeTradeButtons, _completeTradeButton, _barterOfferButton, _greetingButton;
     [SerializeField] Customer _bank;
@@ -75,7 +76,10 @@ public class TradingSystem : MonoBehaviour
 
     void DropBox_OnItemPicked(Item item, bool isPlayer)
     {
-        _haggleButton.SetActive(true);
+        if(!_isBuyTutorial)
+        {
+            _haggleButton.SetActive(true);
+        }
         _basePrice = item.ItemSO.BaseValue;
         OnBasePriceSet?.Invoke(_basePrice);
     }
@@ -128,7 +132,7 @@ public class TradingSystem : MonoBehaviour
 
     void BuyingCustomer()
     {
-        OnBuyCustomer?.Invoke();
+        OnBuyCustomer?.Invoke(_isBuyTutorial);
         // TODO Prompt for player to set a price (Set Haggle button active and deactivate offer button?) <- already done! Make Haggle Button more obvious
     }
 
@@ -202,6 +206,7 @@ public class TradingSystem : MonoBehaviour
 
     void ProcessTrade()
     {
+        _isBuyTutorial = false;
         _completeTradeButton.SetActive(false);
 
         // TODO UI/VFX/SFX (include profit/loss and if correct change)
@@ -487,5 +492,14 @@ public class TradingSystem : MonoBehaviour
         }
 
         OnOfferValueChanged?.Invoke(_offerValue);
+    }
+
+    public void SetTutorialCustomer(Customer customer) // Tutorial!
+    {
+        if(customer == null)
+        {
+            _activeTradeButtons.SetActive(false);
+        }
+        NewCustomer(customer);
     }
 }

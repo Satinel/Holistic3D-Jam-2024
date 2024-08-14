@@ -113,7 +113,7 @@ public class TradingUI : MonoBehaviour
             _tradeTypeText.text = "Buy Offer";
         }
         
-        if(_customer.Tolerance <= 0)
+        if(_customer.Tolerance <= 0 || _customer.IsTutorial)
         {
             SetShowTradeNumbers(true);
         }

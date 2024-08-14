@@ -12,6 +12,7 @@ public class DropBox : MonoBehaviour, IDropHandler
     public static Action<Item, bool> OnItemPicked;
     public static Action<int> OnBuyPriceSet;
     public static Action<int> OnSellPriceSet;
+    public static Action OnTradeBoxProcessed;
 
     [SerializeField] Transform _copperParent, _silverParent, _goldParent, _platinumParent;
     [SerializeField] TextMeshProUGUI _copperText, _silverText, _goldText, _platinumText;
@@ -172,6 +173,14 @@ public class DropBox : MonoBehaviour, IDropHandler
         }
         _sentItems.Clear();
         Invoke(nameof(SetCoinTexts), 0.01f);
+
+        if(_isTradeBox && _playerProperty)
+        {
+            if(currentCustomer.IsTutorial)
+            {
+                OnTradeBoxProcessed?.Invoke();
+            }
+        }
     }
 
     void TradingSystem_OnTradeCancelled()
@@ -221,12 +230,21 @@ public class DropBox : MonoBehaviour, IDropHandler
         Invoke(nameof(SetCoinTexts), 0.01f);
     }
 
-    void TradingSystem_OnBuyCustomer()
+    void TradingSystem_OnBuyCustomer(bool isTutorial)
     {
-        if (_isCoinBox || _isTradeBox) { return; }
+        if(_isCoinBox || _isTradeBox) { return; }
 
-        if (!_playerProperty) { return; }
+        if(!_playerProperty) { return; }
 
+        if(isTutorial)
+        {
+            Item item = _items[0].GetComponent<Item>();
+
+            OnItemPicked?.Invoke(item, _playerProperty);
+            _items.Remove(item.gameObject);
+            item.SendToDropBox(_tradeBox);
+            return;
+        }
         PickRandomItem();
     }
 

@@ -12,7 +12,7 @@ public class Customer : MonoBehaviour
     [field:SerializeField] public int MaxStrikes { get; private set; }
     [field:SerializeField] public int Strikes { get; private set; }
     [field:SerializeField] public int Opinion { get; private set; }
-
+    [field:SerializeField] public bool IsTutorial { get; private set; }
     public bool MaxTradesReached => _currentTrades >= _maxTrades;
     public bool MaxStrikesReached => Strikes >= MaxStrikes;
 
@@ -84,8 +84,6 @@ public class Customer : MonoBehaviour
             _isActiveCustomer = false;
             _dialogue.SetActiveDialogue(false);
         }
-        
-        
     }
 
     void TradingSystem_OnExchangeCurrency(int amount, Currency currency)
@@ -223,5 +221,14 @@ public class Customer : MonoBehaviour
     public void RemoveFromInventory(List<GameObject> items)
     {
         _inventory.Remove(items);
+    }
+
+    public void SetTolerance(float tolerance)
+    {
+        if(tolerance < 0)
+        {
+            tolerance = 0;
+        }
+        Tolerance = tolerance;
     }
 }
