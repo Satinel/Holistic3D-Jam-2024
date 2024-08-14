@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Old Sword
   ItemSprite: {fileID: 21300000, guid: 5b8d1b8e2f27d674aa252ed9130dbc64, type: 3}
-  BaseValue: 700
+  BaseValue: 615
   Origin: 0
   ItemType: 2

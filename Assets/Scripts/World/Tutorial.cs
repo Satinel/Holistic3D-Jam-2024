@@ -4,11 +4,11 @@ using TMPro;
 public class Tutorial : MonoBehaviour
 {
     [SerializeField] GameObject _openingSplash, _clickOverlay;
-    [SerializeField] GameObject _speechWindow, _mentorSpeech, _scalesParent;
+    [SerializeField] GameObject _speechWindow, _mentorSpeech, _speechWindow2, _scalesParent;
     [SerializeField] GameObject _playerStockBox, _playerCoinBox, _playerTradeBox;
     [SerializeField] GameObject _compStockBox, _compCoinBox, _compTradeBox;
-    [SerializeField] GameObject _buttonsParent, _nextButton, _fakeHaggleButton, _haggleButton, _cancelButton, _closeSpeechButton, _goodbyeButton;
-    [SerializeField] TextMeshProUGUI _text, _mentorText, _button1Text, _button2Text, _button3Text;
+    [SerializeField] GameObject _buttonsParent, _nextButton, _fakeHaggleButton, _haggleButton, _cancelButton, _closeSpeechButton, _goodbyeButton, _openButton, _bankButton;
+    [SerializeField] TextMeshProUGUI _text, _mentorText, _button1Text, _button2Text, _button3Text, _speech2Text;
     [SerializeField] TextMeshProUGUI _greetingButtonText;
     [SerializeField] TradingSystem _tradingSystem;
     [SerializeField] Customer[] _mentors;
@@ -56,6 +56,10 @@ public class Tutorial : MonoBehaviour
         _playerCoinBox.SetActive(false);
         _playerTradeBox.SetActive(false);
         _cancelButton.SetActive(false);
+        _scalesParent.SetActive(false);
+        _haggleButton.SetActive(false);
+        _openButton.SetActive(false);
+        _bankButton.SetActive(false);
     }
 
     public void Button1()
@@ -383,8 +387,8 @@ public class Tutorial : MonoBehaviour
     public void FakeHaggleButton()
     {
         _mentorSpeech.SetActive(false);
-        _speechWindow.SetActive(true);
-        _text.text = "Click the arrows to increase or decrease your offer. You can also use the scroll wheel.";
+        _speechWindow2.SetActive(true);
+        _speech2Text.text = "Click the arrows to increase or decrease your offer. You can also use the scroll wheel.";
         _fakeHaggleButton.SetActive(false);
         _haggleButton.SetActive(true);
         _closeSpeechButton.SetActive(true);
@@ -485,6 +489,7 @@ public class Tutorial : MonoBehaviour
     {
         _mentorSpeech.SetActive(false);
         _speechWindow.SetActive(false);
+        _speechWindow2.SetActive(false);
         _closeSpeechButton.SetActive(false);
     }
 
@@ -542,6 +547,6 @@ public class Tutorial : MonoBehaviour
     {
         _cancelButton.SetActive(true);
         _mentorSpeech.SetActive(true);
-        _mentorText.text = "If ya ever find yerself in a pickle ya can always choose to reject an offer yerself.";
+        _mentorText.text = "If ya ever find yerself in a pickle ya can always choose to end an offer yerself.";
     }
 }

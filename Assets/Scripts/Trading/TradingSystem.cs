@@ -37,13 +37,6 @@ public class TradingSystem : MonoBehaviour
     
     public const int CopperValue = 1, SilverValue = 10, GoldValue = 100, PlatinumValue = 1000;
 
-
-    void Awake()
-    {
-        _bankButton.SetActive(false);
-        _openButton.SetActive(false);
-    }
-
     void OnEnable()
     {
         DropBox.OnTradeBoxValueChanged += DropBox_OnTradeBoxValueChanged;
