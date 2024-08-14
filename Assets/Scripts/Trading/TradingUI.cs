@@ -27,6 +27,7 @@ public class TradingUI : MonoBehaviour
         TradingSystem.OnStrikeOut += TradingSystem_OnStrikeOut;
         TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
         TradingSystem.OnChangeGiven += TradingSystem_OnChangeGiven;
+        TradingSystem.OnFinishWithCustomer += TradingSystem_OnFinishWithCustomer;
         DropBox.OnItemPicked += DropBox_OnItemPicked;
         DropBox.OnTradeResults += DropBox_OnTradeResults;
         Player.OnProfitCalculated += Player_OnProfitCalculated;
@@ -47,6 +48,7 @@ public class TradingUI : MonoBehaviour
         TradingSystem.OnStrikeOut -= TradingSystem_OnStrikeOut;
         TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
         TradingSystem.OnChangeGiven -= TradingSystem_OnChangeGiven;
+        TradingSystem.OnFinishWithCustomer -= TradingSystem_OnFinishWithCustomer;
         DropBox.OnItemPicked -= DropBox_OnItemPicked;
         DropBox.OnTradeResults -= DropBox_OnTradeResults;
         Player.OnProfitCalculated -= Player_OnProfitCalculated;
@@ -135,6 +137,7 @@ public class TradingUI : MonoBehaviour
         CloseResults();
         CloseNoItems();
         CloseSetPrice();
+        DisableRepeatCustomerButton();
         _tradeBoxText.text = string.Empty;
         _compTradeBoxText.text = string.Empty;
         _payTextParent.SetActive(false);
@@ -190,6 +193,11 @@ public class TradingUI : MonoBehaviour
         _itemNameText.text = string.Empty;
     }
 
+    void TradingSystem_OnFinishWithCustomer(Customer customer)
+    {
+        DisableRepeatCustomerButton();
+    }
+
     void DropBox_OnItemPicked(Item item, bool isPlayer)
     {
         _itemImage.enabled = true;
@@ -220,13 +228,15 @@ public class TradingUI : MonoBehaviour
             }
             else
             {
-                _repeatCustomerButton.SetActive(false);
+                DisableRepeatCustomerButton();
             }
         }
     }
 
     void Player_OnProfitCalculated(int profit, int repChange)
     {
+        if(_customer.IsTutorial) { return; }
+        
         _resultWindow.SetActive(true);
         if(profit >= 0)
         {
@@ -300,7 +310,7 @@ public class TradingUI : MonoBehaviour
         _noCustomersWindow.SetActive(false);
     }
 
-    public void DisableRepeatCustomerButton()
+    public void DisableRepeatCustomerButton() // UI Button
     {
         _repeatCustomerButton.SetActive(false);
     }

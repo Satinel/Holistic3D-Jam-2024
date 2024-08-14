@@ -7,16 +7,17 @@ public class Tutorial : MonoBehaviour
     [SerializeField] GameObject _speechWindow, _mentorSpeech, _speechWindow2, _scalesParent;
     [SerializeField] GameObject _playerStockBox, _playerCoinBox, _playerTradeBox;
     [SerializeField] GameObject _compStockBox, _compCoinBox, _compTradeBox;
-    [SerializeField] GameObject _buttonsParent, _nextButton, _fakeHaggleButton, _haggleButton, _cancelButton, _closeSpeechButton, _goodbyeButton, _openButton, _bankButton;
+    [SerializeField] GameObject _buttonsParent, _nextButton, _fakeHaggleButton, _haggleButton, _cancelButton, _closeSpeechButton, _goodbyeButton, _openButton, _bankButton, _resetButton;
     [SerializeField] TextMeshProUGUI _text, _mentorText, _button1Text, _button2Text, _button3Text, _speech2Text;
     [SerializeField] TextMeshProUGUI _greetingButtonText;
     [SerializeField] TradingSystem _tradingSystem;
     [SerializeField] Customer[] _mentors;
     [SerializeField] GameObject _musicPlayer;
-    
+    [SerializeField] Town _homeTown;
+    [SerializeField] GameObject _tutorialUI;
     Player _player;
 
-    bool _acceptThePremise, _setGreeting, _buyingFinished, _strikesExplained, _sellingFinished;
+    bool _acceptThePremise, _setGreeting, _buyingFinished, _strikesExplained, _sellingFinished, _barteredOnce, _tutorialComplete;
     bool[] _next = new bool[39];
 
     void Awake()
@@ -30,8 +31,9 @@ public class Tutorial : MonoBehaviour
         TradingSystem.OnOfferRejected += TradingSystem_OnOfferRejected;
         TradingSystem.OnOfferAccepted += TradingSystem_OnOfferAccepted;
         TradingSystem.OnIncorrectChange += TradingSystem_OnIncorrectChange;
-        // TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
+        TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
         DropBox.OnTradeBoxProcessed += DropBox_OnTradeBoxProcessed;
+        TradingSystem.OnFinishWithCustomer += TradingSystem_OnFinishWithCustomer;
     }
 
     void OnDisable()
@@ -40,8 +42,9 @@ public class Tutorial : MonoBehaviour
         TradingSystem.OnOfferRejected -= TradingSystem_OnOfferRejected;
         TradingSystem.OnOfferAccepted -= TradingSystem_OnOfferAccepted;
         TradingSystem.OnIncorrectChange -= TradingSystem_OnIncorrectChange;
-        // TradingSystem.OnTradeCompleted -= TradingSystem_OnTradeCompleted;
+        TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
         DropBox.OnTradeBoxProcessed -= DropBox_OnTradeBoxProcessed;
+        TradingSystem.OnFinishWithCustomer -= TradingSystem_OnFinishWithCustomer;
     }
 
     public void ClickToBegin() // UI Button
@@ -55,11 +58,12 @@ public class Tutorial : MonoBehaviour
         _playerStockBox.SetActive(false);
         _playerCoinBox.SetActive(false);
         _playerTradeBox.SetActive(false);
-        _cancelButton.SetActive(false);
+        _cancelButton.SetActive(false); // (Finish With Customer button)
         _scalesParent.SetActive(false);
         _haggleButton.SetActive(false);
         _openButton.SetActive(false);
         _bankButton.SetActive(false);
+        _resetButton.SetActive(false);
     }
 
     public void Button1()
@@ -366,7 +370,7 @@ public class Tutorial : MonoBehaviour
         }
         else
         {
-            Invoke(nameof(SellTutorial), 1.25f);
+            SellTutorial();
         }
     }
 
@@ -388,14 +392,14 @@ public class Tutorial : MonoBehaviour
     {
         _mentorSpeech.SetActive(false);
         _speechWindow2.SetActive(true);
-        _speech2Text.text = "Click the arrows to increase or decrease your offer. You can also use the scroll wheel.";
+        _speech2Text.text = "Click the arrows to increase/decrease your offer.\nYou can also use the scroll wheel.";
         _fakeHaggleButton.SetActive(false);
         _haggleButton.SetActive(true);
-        _closeSpeechButton.SetActive(true);
     }
 
     void TradingSystem_OnOfferRejected()
     {
+        CloseSpeech();
         if(!_strikesExplained)
         {
             ExplainStrikes();
@@ -414,6 +418,7 @@ public class Tutorial : MonoBehaviour
     {
         if(buying)
         {
+            _speechWindow2.SetActive(false);
             _mentorText.text = "Not so hard is it? Folks know ya need to make a profit. They'll pay a fee to have what they want, when they want it.";
             _mentorSpeech.SetActive(true);
             _nextButton.SetActive(true);
@@ -421,21 +426,21 @@ public class Tutorial : MonoBehaviour
         }
         else
         {
+            _mentors[1].SetTolerance(0);
             _mentorText.text = "There's hope for ya yet. Pay the price the same way ya gave change.";
             _mentorSpeech.SetActive(true);
             _nextButton.SetActive(true);
-            _mentors[0].SetTolerance(0);
         }
     }
 
     void Next11()
     {
-        _mentorText.text = "Now the important part is rule three. Change is necessary. Means different things to different types. For traders it goes like this:";
+        _mentorText.text = "Now the important part is rule three: 'Change is necessary.' Means different things to different types. For traders it goes like this...";
     }
 
     void Next12()
     {
-        _mentorText.text = "Ya can sell a twenty copper plean for three gold, long as it's agreed to. But shortchanging by a single coin makes ya a thief.";
+        _mentorText.text = "'Ya can sell a twenty copper plean for three gold, long as it's agreed to. But shortchanging by a single coin makes ya a thief.'";
     }
 
     void Next13()
@@ -475,13 +480,20 @@ public class Tutorial : MonoBehaviour
             _buyingFinished = true;
             _mentorText.text = "Jus' so ya know, givin' too much change ain't great, but loads better than too little. Let's see ya handle buyin' next.";
             _mentorSpeech.SetActive(true);
-            _nextButton.SetActive(true);
+            _nextButton.SetActive(true); // Next17
             return;
         }
         if(!_sellingFinished)
         {
             _sellingFinished = true;
             SellingFinished();
+            return;
+        }
+        if(!_barteredOnce)
+        {
+            _barteredOnce = true;
+            BarteredOnce();
+            return;
         }
     }
 
@@ -495,9 +507,30 @@ public class Tutorial : MonoBehaviour
 
     void Next17()
     {
+        _tradingSystem.FinishWithCustomer();
         _mentorSpeech.SetActive(false);
         _nextButton.SetActive(false);
-        _tradingSystem.SetTutorialCustomer(_mentors[1]);
+    }
+
+    void TradingSystem_OnTradeCancelled() {}
+
+    void TradingSystem_OnFinishWithCustomer(Customer customer)
+    {
+        if(!_sellingFinished)
+        {
+            _tradingSystem.SetTutorialCustomer(_mentors[1]);
+            return;
+        }
+        if(!_barteredOnce)
+        {
+            _tradingSystem.SetTutorialCustomer(_mentors[2]);
+            return;
+        }
+        if(!_tutorialComplete)
+        {
+            _tutorialComplete = true;
+            TutorialComplete();
+        }
     }
 
     void SellTutorial()
@@ -522,7 +555,7 @@ public class Tutorial : MonoBehaviour
 
     void SellingFinished()
     {
-        _mentorText.text = "Maybe yer cut out for this after all. Last thing to know is dealing with other traders.";
+        _mentorText.text = "Maybe yer cut out for this after all. Last thing to know is dealin' with other traders.";
         _mentorSpeech.SetActive(true);
         _nextButton.SetActive(true);
     }
@@ -539,14 +572,61 @@ public class Tutorial : MonoBehaviour
 
     void Next22()
     {
+        _tradingSystem.FinishWithCustomer();
+        _nextButton.SetActive(false);
         _mentorSpeech.SetActive(false);
-        _tradingSystem.SetTutorialCustomer(_mentors[2]);
+    }
+
+    void BarteredOnce()
+    {
+        _cancelButton.SetActive(true);
+        _mentorText.text = "Most folk'll let you trade three times. Ya can always stop early, like if ya end up with too little cash.\nIf yer low on small change, head to the bank to trade 'em in.";
+        _mentorSpeech.SetActive(true);
+        _closeSpeechButton.SetActive(true);
+    }
+
+    void TutorialComplete()
+    {
+        _mentorText.text = "That's everything ya need. The rest is in yer hands.";
+        _mentorSpeech.SetActive(true);
+        _nextButton.SetActive(true);
     }
 
     void Next23()
     {
-        _cancelButton.SetActive(true);
+        _mentorText.text = "Get out there and make yer fortune.";
         _mentorSpeech.SetActive(true);
-        _mentorText.text = "If ya ever find yerself in a pickle ya can always choose to end an offer yerself.";
+        _nextButton.SetActive(true);
+    }
+
+    void Next24()
+    {
+        WrapUpTutorial();
+    }
+
+    private void WrapUpTutorial()
+    {
+        CloseSpeech();
+
+        _tutorialUI.SetActive(false);
+        _clickOverlay.SetActive(false);
+        _musicPlayer.SetActive(false);
+        _buttonsParent.SetActive(true);
+        _compStockBox.SetActive(true);
+        _compTradeBox.SetActive(true);
+        _compCoinBox.SetActive(true);
+        _playerStockBox.SetActive(true);
+        _playerCoinBox.SetActive(true);
+        _playerTradeBox.SetActive(true);
+        _cancelButton.SetActive(true); // (Finish With Customer button)
+        _scalesParent.SetActive(true);
+        _haggleButton.SetActive(true);
+        _openButton.SetActive(true);
+        _bankButton.SetActive(true);
+        _resetButton.SetActive(true);
+
+        _player.EnableInventory();
+        _homeTown.gameObject.SetActive(true);
+        gameObject.SetActive(false);
     }
 }

@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public int TotalCoinValue { get; private set; }
     public int NetWorth { get; private set; }
     public int Debt { get; private set; }
+    public int TotalProfits { get; private set; }
 
     [SerializeField] Inventory _inventory;
 
@@ -75,6 +76,10 @@ public class Player : MonoBehaviour
             Reputation--;
         }
 
-        OnProfitCalculated?.Invoke(CalculateNetWorth() - _preTradeWorth, Reputation - _preTradeRep);
+        int profit = CalculateNetWorth() - _preTradeWorth;
+
+        TotalProfits += profit;
+
+        OnProfitCalculated?.Invoke(profit, Reputation - _preTradeRep);
     }
 }

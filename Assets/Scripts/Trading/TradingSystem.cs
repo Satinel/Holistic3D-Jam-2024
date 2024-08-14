@@ -29,7 +29,7 @@ public class TradingSystem : MonoBehaviour
 
     int _offer;
     int _basePrice;
-    bool _isBuyTutorial = true;
+    [SerializeField] bool _isBuyTutorial = true;
 
     [SerializeField] GameObject _openButton, _bankButton, _exchangeButtons, _goodbyeButton, _haggleButton, _activeTradeButtons, _completeTradeButton, _barterOfferButton, _greetingButton;
     [SerializeField] Customer _bank;
@@ -99,6 +99,8 @@ public class TradingSystem : MonoBehaviour
     {
         if(isPlayer) { return; }
 
+        if(_currentCustomer.CustomerType == Customer.Type.Bank) { return; }
+
         _greetingButton.SetActive(true); // TODO? One day have many buttons for different dialogue responses
     }
 
@@ -114,9 +116,6 @@ public class TradingSystem : MonoBehaviour
                 break;
             case Customer.Type.Barter:
                 BarterCustomer();
-                break;
-            case Customer.Type.None:
-                // TODO Nothing!(?)
                 break;
             default:
                 break;
@@ -321,7 +320,14 @@ public class TradingSystem : MonoBehaviour
         OnBasePriceSet?.Invoke(_basePrice);
         _offerValue = 0;
         OnOfferValueChanged?.Invoke(_offerValue);
-        _goodbyeButton.SetActive(true);
+        if(!_currentCustomer.IsTutorial)
+        {
+            _goodbyeButton.SetActive(true);
+        }
+        else
+        {
+            _activeTradeButtons.SetActive(true);
+        }
     }
 
     public void CancelTrade() // Used for UI Button
@@ -491,7 +497,8 @@ public class TradingSystem : MonoBehaviour
     {
         if(customer == null)
         {
-            _activeTradeButtons.SetActive(false);
+            NoCustomer();
+            _bankButton.SetActive(false);
         }
         NewCustomer(customer);
     }
