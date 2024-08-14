@@ -29,9 +29,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8362139985203255678}
   - {fileID: 7124694436341451568}
   - {fileID: 4887885007300440499}
+  - {fileID: 8362139985203255678}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5644884313224342161
@@ -195,6 +195,10 @@ PrefabInstance:
       value: Corthan
       objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: <Tolerance>k__BackingField
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: <MaxStrikes>k__BackingField
       value: 616
       objectReference: {fileID: 0}
@@ -318,7 +322,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 945f1117e2dc81343bea891cca216abf, type: 2}
     - target: {fileID: 1789261515465166497, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: m_Name
-      value: Mentor
+      value: MentorBarter
       objectReference: {fileID: 0}
     - target: {fileID: 3209192453466546593, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: m_LocalPosition.x
@@ -553,6 +557,10 @@ PrefabInstance:
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: <Name>k__BackingField
       value: Corthan
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: <Tolerance>k__BackingField
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: <MaxStrikes>k__BackingField

@@ -37,17 +37,11 @@ public class TradingSystem : MonoBehaviour
     public const int CopperValue = 1, SilverValue = 10, GoldValue = 100, PlatinumValue = 1000;
 
 
-    // void Update()
-    // {
-    //     if(Input.GetKeyDown(KeyCode.T))
-    //     {
-
-    //     }
-    //     if(Input.GetKeyDown(KeyCode.X))
-    //     {
-    //         NoCustomer();
-    //     }
-    // }
+    void Awake()
+    {
+        _bankButton.SetActive(false);
+        _openButton.SetActive(false);
+    }
 
     void OnEnable()
     {

@@ -11,7 +11,7 @@ public class TradingUI : MonoBehaviour
     [SerializeField] GameObject _payTextParent, _repeatCustomerButton;
     [SerializeField] GameObject _resultWindow, _noItemsWindow, _setPriceWindow, _customerName, _noCustomersWindow, _itemNameWindow;
 
-    int _playerValue, _compValue;
+    // int _playerValue, _compValue;
     bool _showTradeNumbers = false;
     Customer _customer;
 

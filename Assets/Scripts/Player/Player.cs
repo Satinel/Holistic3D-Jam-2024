@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public int TotalStockValue { get; private set; }
     public int TotalCoinValue { get; private set; }
     public int NetWorth { get; private set; }
+    public int Debt { get; private set; }
 
     [SerializeField] Inventory _inventory;
 
