@@ -33,6 +33,7 @@ public class TradingSystem : MonoBehaviour
 
     [SerializeField] GameObject _openButton, _bankButton, _exchangeButtons, _goodbyeButton, _haggleButton, _activeTradeButtons, _completeTradeButton, _barterOfferButton, _greetingButton;
     [SerializeField] Customer _bank;
+    [SerializeField] AudioSource _audioSource;
     Customer _currentCustomer;
     
     public const int CopperValue = 1, SilverValue = 10, GoldValue = 100, PlatinumValue = 1000;
@@ -205,6 +206,10 @@ public class TradingSystem : MonoBehaviour
 
     void ProcessTrade()
     {
+        if(_audioSource)
+        {
+            _audioSource.Play();
+        }
         _isBuyTutorial = false;
         _completeTradeButton.SetActive(false);
 

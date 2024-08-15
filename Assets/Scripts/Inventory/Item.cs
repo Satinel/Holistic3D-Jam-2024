@@ -85,10 +85,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             return;
         }
 
-        if(!IsMoney)
-        {
-            OnAnyItemClicked?.Invoke(this);
-        }
+        OnAnyItemClicked?.Invoke(this);
 
         switch(_customerType)
         {
@@ -189,12 +186,9 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(eventData.button != PointerEventData.InputButton.Left) { return; }
+        OnAnyItemClicked?.Invoke(this);
 
-        if(!IsMoney)
-        {
-            OnAnyItemClicked?.Invoke(this);
-        }
+        if(eventData.button != PointerEventData.InputButton.Left) { return; }
 
         switch(_customerType)
         {

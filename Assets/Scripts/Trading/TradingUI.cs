@@ -8,7 +8,7 @@ public class TradingUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI _compTradeBoxText;
     [SerializeField] TextMeshProUGUI _profitText, _changeText, _offerText, _tradeTypeText, _tradeTypeText2, _customerNameText, _itemNameText;
     [SerializeField] Image _itemImage;
-    [SerializeField] GameObject _payTextParent, _repeatCustomerButton;
+    [SerializeField] GameObject _payTextParent, _repeatCustomerButton, _tradeTypeText2Parent;
     [SerializeField] GameObject _resultWindow, _noItemsWindow, _setPriceWindow, _customerName, _noCustomersWindow, _itemNameWindow;
 
     // int _playerValue, _compValue;
@@ -101,6 +101,7 @@ public class TradingUI : MonoBehaviour
             _customerName.SetActive(false);
             _tradeTypeText.text = string.Empty;
             _tradeTypeText2.text = string.Empty;
+            _tradeTypeText2Parent.SetActive(false);
             SetShowTradeNumbers(false);
             return;
         }
@@ -113,11 +114,13 @@ public class TradingUI : MonoBehaviour
         {
             _tradeTypeText.text = "Sell Offer";
             _tradeTypeText2.text = "SELLING";
+            _tradeTypeText2Parent.SetActive(true);
         }
         else if(customer.CustomerType == Customer.Type.Sell)
         {
             _tradeTypeText.text = "Buy Offer";
             _tradeTypeText2.text = "BUYING";
+            _tradeTypeText2Parent.SetActive(true);
         }
         
         if(_customer.Tolerance <= 0 || _customer.IsTutorial)
@@ -149,6 +152,7 @@ public class TradingUI : MonoBehaviour
         _itemImage.enabled = false;
         _itemNameWindow.SetActive(false);
         _itemNameText.text = string.Empty;
+        _tradeTypeText2Parent.SetActive(false);
     }
 
     void TradingSystem_OnChangeGiven(Customer.Type customerType, int change)
@@ -196,6 +200,7 @@ public class TradingUI : MonoBehaviour
         _itemImage.enabled = false;
         _itemNameWindow.SetActive(false);
         _itemNameText.text = string.Empty;
+        _tradeTypeText2Parent.SetActive(false);
     }
 
     void TradingSystem_OnFinishWithCustomer(Customer customer)
@@ -205,10 +210,12 @@ public class TradingUI : MonoBehaviour
 
     void DropBox_OnItemPicked(Item item, bool isPlayer)
     {
+        _tradeTypeText2Parent.SetActive(true);
         _itemImage.enabled = true;
         _itemImage.sprite = item.ItemSO.ItemSprite;
         _itemNameText.text = item.ItemSO.ItemName;
         _itemNameWindow.SetActive(true);
+        _tradeTypeText2Parent.SetActive(true);
     }
 
     void DropBox_OnTradeResults()

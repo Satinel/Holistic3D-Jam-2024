@@ -7,6 +7,7 @@ public class CoinSend : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] DropBox _coinBox;
     [SerializeField] Button _increaseButton;
     [SerializeField] Currency _currency;
+    [SerializeField] AudioSource _audioSource;
 
     [SerializeField] int _sendAmount;
 
@@ -33,11 +34,21 @@ public class CoinSend : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             if(!_increaseButton) { return; }
 
             _increaseButton.onClick.Invoke();
+
+            if(_audioSource)
+            {
+                _audioSource.Play();
+            }
         }
 
         if(Input.mouseScrollDelta.y < 0)
         {
             _coinBox.RetrieveItem(_currency);
+
+            if(_audioSource)
+            {
+                _audioSource.Play();
+            }
         }
 
         if(Input.GetMouseButtonDown(1))
@@ -45,6 +56,11 @@ public class CoinSend : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             if(_coinBox)
             {
                 _coinBox.SendXChildItems(transform, _sendAmount);
+
+                if(_audioSource)
+                {
+                    _audioSource.Play();
+                }
             }
         }
     }

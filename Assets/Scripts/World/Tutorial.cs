@@ -310,7 +310,7 @@ public class Tutorial : MonoBehaviour
         _mentorText.text = "But 'fore all that, how are ya gonna greet yer customers?";
         _button1Text.text = "\"What can I do for you?\"";
         _button2Text.text = "\"I have wares, if you have coin.\"";
-        _button3Text.text = "\"Buy something!\"";
+        _button3Text.text = "\"Buy Something!\"";
         _buttonsParent.SetActive(true);
     }
 
