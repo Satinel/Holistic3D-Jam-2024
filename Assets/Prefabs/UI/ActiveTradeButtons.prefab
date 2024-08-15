@@ -214,11 +214,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 384364026341107815, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_text
-      value: Finish With Customer
+      value: Stop Trading
       objectReference: {fileID: 0}
     - target: {fileID: 384364026341107815, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_fontSize
-      value: 25.8
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 999042260965161679, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_Pivot.x
@@ -330,7 +330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5773274697356954758, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_Name
-      value: FinishWithCustomer
+      value: QuitButton
       objectReference: {fileID: 0}
     - target: {fileID: 8246153812016445296, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size

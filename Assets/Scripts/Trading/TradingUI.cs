@@ -257,7 +257,7 @@ public class TradingUI : MonoBehaviour
         }
         else
         {
-            _changeText.text = string.Empty;
+            _changeText.text = "Reputation Unchanged.";
         }
     }
 

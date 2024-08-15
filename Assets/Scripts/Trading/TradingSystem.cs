@@ -379,6 +379,11 @@ public class TradingSystem : MonoBehaviour
         }
     }
 
+    public void ResetTradeBoxesOnQuit()
+    {
+        OnResetBarter?.Invoke();
+    }
+
     public void GoToBank() // Used for UI Button
     {
         NewCustomer(_bank);
@@ -501,5 +506,10 @@ public class TradingSystem : MonoBehaviour
             _bankButton.SetActive(false);
         }
         NewCustomer(customer);
+    }
+
+    public void SetIsBuyTutorial(bool isBuyTutorial)
+    {
+        _isBuyTutorial = isBuyTutorial;
     }
 }

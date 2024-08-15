@@ -343,7 +343,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.size
-      value: 20
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingCoins.Array.data[1]
@@ -368,71 +368,71 @@ PrefabInstance:
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 4c36998b224af3741a270613a843ed7e, type: 2}
+      objectReference: {fileID: 11400000, guid: 55f995d87f1fa12458ddc842becafdc2, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 55f995d87f1fa12458ddc842becafdc2, type: 2}
+      objectReference: {fileID: 11400000, guid: fa21dca1869dc6a4aac64e9bf2ec0150, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[5]
       value: 
-      objectReference: {fileID: 11400000, guid: 2dec7c2be874b864cb01b96e17ff9bf2, type: 2}
+      objectReference: {fileID: 11400000, guid: 5eaf8bf32d2e1cc468fc4dcb96697aa9, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[6]
       value: 
-      objectReference: {fileID: 11400000, guid: fa21dca1869dc6a4aac64e9bf2ec0150, type: 2}
+      objectReference: {fileID: 11400000, guid: 744b824da2922cd47ae77da830b3de12, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[7]
       value: 
-      objectReference: {fileID: 11400000, guid: 5eaf8bf32d2e1cc468fc4dcb96697aa9, type: 2}
+      objectReference: {fileID: 11400000, guid: c229b9b3471bf6344aa6b085e9b01787, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[8]
       value: 
-      objectReference: {fileID: 11400000, guid: 744b824da2922cd47ae77da830b3de12, type: 2}
+      objectReference: {fileID: 11400000, guid: 89312f75466410d418ba684f65e08270, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[9]
       value: 
-      objectReference: {fileID: 11400000, guid: c229b9b3471bf6344aa6b085e9b01787, type: 2}
+      objectReference: {fileID: 11400000, guid: 7bcda6c486464184288c535d1ab3a78b, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[10]
       value: 
-      objectReference: {fileID: 11400000, guid: 84136ee12e49e334c82f0b3f27156425, type: 2}
+      objectReference: {fileID: 11400000, guid: e0e3738b3d7185b40811fc38121dbe42, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[11]
       value: 
-      objectReference: {fileID: 11400000, guid: 89312f75466410d418ba684f65e08270, type: 2}
+      objectReference: {fileID: 11400000, guid: ec4bb7a7251f22344b7b6cd60ff7f861, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[12]
       value: 
-      objectReference: {fileID: 11400000, guid: 7bcda6c486464184288c535d1ab3a78b, type: 2}
+      objectReference: {fileID: 11400000, guid: 1881e4b8f2c657546b4f63badf2158e8, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[13]
       value: 
-      objectReference: {fileID: 11400000, guid: e0e3738b3d7185b40811fc38121dbe42, type: 2}
+      objectReference: {fileID: 11400000, guid: 050561aa8787a354e8faa97506218cde, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[14]
       value: 
-      objectReference: {fileID: 11400000, guid: ec4bb7a7251f22344b7b6cd60ff7f861, type: 2}
+      objectReference: {fileID: 11400000, guid: 3e84f94effc3fe24f9d57391287c5e94, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[15]
       value: 
-      objectReference: {fileID: 11400000, guid: 1881e4b8f2c657546b4f63badf2158e8, type: 2}
+      objectReference: {fileID: 11400000, guid: 9023f07a93f7d1544a135d3b92b2903b, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[16]
       value: 
-      objectReference: {fileID: 11400000, guid: 050561aa8787a354e8faa97506218cde, type: 2}
+      objectReference: {fileID: 11400000, guid: 945f1117e2dc81343bea891cca216abf, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[17]
       value: 
-      objectReference: {fileID: 11400000, guid: 3e84f94effc3fe24f9d57391287c5e94, type: 2}
+      objectReference: {fileID: 11400000, guid: 84136ee12e49e334c82f0b3f27156425, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[18]
       value: 
-      objectReference: {fileID: 11400000, guid: 9023f07a93f7d1544a135d3b92b2903b, type: 2}
+      objectReference: {fileID: 11400000, guid: 4c36998b224af3741a270613a843ed7e, type: 2}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[19]
       value: 
-      objectReference: {fileID: 11400000, guid: 945f1117e2dc81343bea891cca216abf, type: 2}
+      objectReference: {fileID: 11400000, guid: 2dec7c2be874b864cb01b96e17ff9bf2, type: 2}
     - target: {fileID: 1789261515465166497, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: m_Name
       value: MentorBarter

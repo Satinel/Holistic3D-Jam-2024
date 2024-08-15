@@ -11,14 +11,15 @@ public class Tutorial : MonoBehaviour
     [SerializeField] TextMeshProUGUI _text, _mentorText, _button1Text, _button2Text, _button3Text, _speech2Text;
     [SerializeField] TextMeshProUGUI _greetingButtonText;
     [SerializeField] TradingSystem _tradingSystem;
+    [SerializeField] TradingUI _tradingUI;
     [SerializeField] Customer[] _mentors;
     [SerializeField] GameObject _musicPlayer;
     [SerializeField] Town _homeTown;
-    [SerializeField] GameObject _tutorialUI;
+    [SerializeField] GameObject _tutorialUI, _skiptutorialButton;
     Player _player;
 
     bool _acceptThePremise, _setGreeting, _buyingFinished, _strikesExplained, _sellingFinished, _barteredOnce, _tutorialComplete;
-    bool[] _next = new bool[39];
+    bool[] _next = new bool[25];
 
     void Awake()
     {
@@ -64,6 +65,7 @@ public class Tutorial : MonoBehaviour
         _openButton.SetActive(false);
         _bankButton.SetActive(false);
         _resetButton.SetActive(false);
+        _skiptutorialButton.SetActive(true);
     }
 
     public void Button1()
@@ -260,10 +262,17 @@ public class Tutorial : MonoBehaviour
             Next23();
             return;
         }
+        if(!_next[24])
+        {
+            _next[24] = true;
+            Next24();
+            return;
+        }
     }
 
     void AcceptThePremise()
     {
+        _skiptutorialButton.SetActive(false);
         _acceptThePremise = true;
         _buttonsParent.SetActive(false);
         _text.text = "Whatever your personal circumstances might be,\nyour first step should be to consult an expert.";
@@ -558,6 +567,7 @@ public class Tutorial : MonoBehaviour
         _mentorText.text = "Maybe yer cut out for this after all. Last thing to know is dealin' with other traders.";
         _mentorSpeech.SetActive(true);
         _nextButton.SetActive(true);
+        _resetButton.SetActive(true);
     }
 
     void Next20()
@@ -580,7 +590,7 @@ public class Tutorial : MonoBehaviour
     void BarteredOnce()
     {
         _cancelButton.SetActive(true);
-        _mentorText.text = "Most folk'll let you trade three times. Ya can always stop early, like if ya end up with too little cash.\nIf yer low on small change, head to the bank to trade 'em in.";
+        _mentorText.text = "Most folk'll let you trade three times. Ya can always stop early, like if ya end up with too little cash.\n\nIf yer low on copper coins, head to the bank to trade for 'em.";
         _mentorSpeech.SetActive(true);
         _closeSpeechButton.SetActive(true);
     }
@@ -604,8 +614,9 @@ public class Tutorial : MonoBehaviour
         WrapUpTutorial();
     }
 
-    private void WrapUpTutorial()
+    public void WrapUpTutorial()
     {
+        _skiptutorialButton.SetActive(false);
         CloseSpeech();
 
         _tutorialUI.SetActive(false);
@@ -620,11 +631,14 @@ public class Tutorial : MonoBehaviour
         _playerTradeBox.SetActive(true);
         _cancelButton.SetActive(true); // (Finish With Customer button)
         _scalesParent.SetActive(true);
-        _haggleButton.SetActive(true);
+        _haggleButton.SetActive(false);
         _openButton.SetActive(true);
         _bankButton.SetActive(true);
         _resetButton.SetActive(true);
-
+        _openingSplash.SetActive(false);
+        
+        _tradingSystem.SetIsBuyTutorial(false);
+        _tradingUI.SetShowTradeNumbers(false);
         _player.EnableInventory();
         _homeTown.gameObject.SetActive(true);
         gameObject.SetActive(false);

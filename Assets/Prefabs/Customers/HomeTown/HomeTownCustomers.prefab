@@ -601,7 +601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2389960259321414038, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: <Tolerance>k__BackingField
-      value: 0.001
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3645795622964677926, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1309,7 +1309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2389960259321414038, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: <Tolerance>k__BackingField
-      value: 0.15
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 5005100326791386655, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1483,7 +1483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7517592139975944539, guid: 50fb889dd686892429106bb045a06d96, type: 3}
       propertyPath: <Tolerance>k__BackingField
-      value: 0.05
+      value: 0.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1509,7 +1509,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2278862921033876654, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
       propertyPath: <Tolerance>k__BackingField
-      value: 0.2
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 2799715711906494970, guid: 2ab9a3e54606fd94497804bc62155737, type: 3}
       propertyPath: m_Sprite
