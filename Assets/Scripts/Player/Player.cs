@@ -14,10 +14,13 @@ public class Player : MonoBehaviour
     public int TotalProfits { get; private set; }
 
     [SerializeField] TextMeshProUGUI _netWorthText, _debtText;
-
+    [SerializeField] GameObject _netWorthParent, _debtParent;
     [SerializeField] Inventory _inventory;
 
     int _preTradeWorth, _preTradeRep;
+
+    bool _moneyLoaded;
+    bool _stockLoaded;
 
     void Awake()
     {
@@ -29,17 +32,19 @@ public class Player : MonoBehaviour
 
     void OnEnable()
     {
-        Inventory.OnInventoryLoaded += Inventory_OnInventoryLoaded;
+        Inventory.OnPlayerMoneyLoaded += Inventory_PlayerMoneyLoaded;
+        Inventory.OnPlayerStockLoaded += Inventory_PlayerStockLoaded;
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
-        DropBox.OnTradeBoxProcessed += DropBox_OnTradeBoxProcessed;
+        DropBox.OnNetWorthReady += DropBox_OnNetWorthReady;
         TradingSystem.OnFinishWithCustomer += TradingSystem_OnFinishWithCustomer;
     }
 
     void OnDisable()
     {
-        Inventory.OnInventoryLoaded -= Inventory_OnInventoryLoaded;
+        Inventory.OnPlayerMoneyLoaded -= Inventory_PlayerMoneyLoaded;
+        Inventory.OnPlayerStockLoaded -= Inventory_PlayerStockLoaded;
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
-        DropBox.OnTradeBoxProcessed -= DropBox_OnTradeBoxProcessed;
+        DropBox.OnNetWorthReady -= DropBox_OnNetWorthReady;
         TradingSystem.OnFinishWithCustomer -= TradingSystem_OnFinishWithCustomer;
     }
 
@@ -48,30 +53,51 @@ public class Player : MonoBehaviour
         _inventory.enabled = true;
     }
 
-    void Inventory_OnInventoryLoaded(bool isPlayer)
+    void Inventory_PlayerMoneyLoaded()
     {
-        if (!isPlayer) { return; }
+        _moneyLoaded = true;
 
-        CalculateNetWorth();
+        if(_stockLoaded)
+        {
+            SetNetWorthText();
+        }
     }
 
-    int CalculateNetWorth()
+    void Inventory_PlayerStockLoaded()
+    {
+        _stockLoaded = true;
+
+        if(_moneyLoaded)
+        {
+            SetNetWorthText();
+        }
+    }
+
+    public void SetNetWorthText()
+    {
+        CalculateNetWorth();
+        _netWorthText.text = $"Net Worth\n{NetWorth:N0}";
+// Debug.Log($"Networth: Stock {TotalStockValue} + Coins {TotalCoinValue} = {NetWorth}");
+        _netWorthParent.SetActive(true);
+    }
+
+    void CalculateNetWorth()
     {
         TotalStockValue = _inventory.StockBox.GetTrueValue();
         TotalCoinValue = _inventory.CoinBox.GetTrueValue();
 
-        return TotalStockValue + TotalCoinValue;
+        NetWorth = TotalStockValue + TotalCoinValue;
     }
 
     void TradingSystem_OnNewCustomer(Customer customer)
     {
-        _preTradeWorth = CalculateNetWorth();
+        _preTradeWorth = NetWorth;
         _preTradeRep = Reputation;
     }
 
-    void DropBox_OnTradeBoxProcessed()
+    void DropBox_OnNetWorthReady()
     {
-        _netWorthText.text = "Net Worth\n" + CalculateNetWorth().ToString("N0");
+        SetNetWorthText();
     }
 
     void TradingSystem_OnFinishWithCustomer(Customer customer)
@@ -86,7 +112,8 @@ public class Player : MonoBehaviour
             Reputation--;
         }
 
-        int profit = CalculateNetWorth() - _preTradeWorth;
+        CalculateNetWorth();
+        int profit = NetWorth - _preTradeWorth;
 
         TotalProfits += profit;
 
@@ -96,6 +123,8 @@ public class Player : MonoBehaviour
     public void SetDebt(int debt)
     {
         Debt = debt;
-        _debtText.text = Debt.ToString("N0");
+        _debtText.text = $"Debt\n{Debt:N0}";
+        _debtParent.SetActive(true);
+        SetNetWorthText();
     }
 }

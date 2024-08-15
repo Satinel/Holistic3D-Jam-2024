@@ -117,6 +117,11 @@ public class Customer : MonoBehaviour
         }
     }
 
+    public void GenerateCoinType(int amount, Currency currency, bool shouldExchange)
+    {
+        _inventory.CoinsForDebt(amount, CustomerType, currency);
+    }
+
     void TradingSystem_OnOfferAccepted(bool isBuying, int offer)
     {
         if(!_isActiveCustomer) { return; }
@@ -242,5 +247,10 @@ public class Customer : MonoBehaviour
     public void ClearInventory()
     {
         _inventory.ClearInventory();
+    }
+
+    public void SetName(string name)
+    {
+        Name = name;
     }
 }

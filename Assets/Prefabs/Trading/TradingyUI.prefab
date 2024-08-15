@@ -2640,7 +2640,7 @@ GameObject:
   - component: {fileID: 9187718465616058419}
   - component: {fileID: 7544350187978816869}
   m_Layer: 5
-  m_Name: Debt
+  m_Name: DebtBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4514,7 +4514,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3209118651439248385}
   m_Layer: 5
-  m_Name: Debt
+  m_Name: DebtParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5746,7 +5746,7 @@ GameObject:
   - component: {fileID: 7280981173703436460}
   - component: {fileID: 7431595102458358452}
   m_Layer: 5
-  m_Name: Debt
+  m_Name: DebtText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8233,7 +8233,7 @@ GameObject:
   - component: {fileID: 710855233801074749}
   - component: {fileID: 4567181057498866760}
   m_Layer: 5
-  m_Name: Debt
+  m_Name: DebtFG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12323,12 +12323,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8536753435174876586}
   m_Layer: 5
-  m_Name: PlayerNetWorth
+  m_Name: NetWorthParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8536753435174876586
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17323,11 +17323,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 384364026341107815, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_text
-      value: Open To Customers
+      value: Look For Customers
       objectReference: {fileID: 0}
     - target: {fileID: 384364026341107815, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_fontSize
-      value: 30
+      value: 19.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 384364026341107815, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 999042260965161679, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_Pivot.x

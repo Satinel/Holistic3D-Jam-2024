@@ -6,6 +6,8 @@ public class Inventory : MonoBehaviour
 {
     public static Action<bool> OnInventoryLoaded;
     public static Action<Inventory, bool> OnInventoryStart;
+    public static Action OnPlayerMoneyLoaded;
+    public static Action OnPlayerStockLoaded;
 
     [SerializeField] bool _isPlayer = false;
     [SerializeField] List<int> _startingCoins = new();
@@ -30,6 +32,7 @@ public class Inventory : MonoBehaviour
         if(_isPlayer)
         {
             LoadMoney(Customer.Type.None);
+            OnPlayerMoneyLoaded?.Invoke();
         }
     }
 
@@ -40,6 +43,7 @@ public class Inventory : MonoBehaviour
         if(_isPlayer)
         {
             LoadStock(Customer.Type.None);
+            OnPlayerStockLoaded?.Invoke();
         }
     }
 
@@ -88,6 +92,15 @@ public class Inventory : MonoBehaviour
         _coinBox.CurrencyExchange(amount, currency);
     }
 
+    public void CoinsForDebt(int amount, Customer.Type customerType, Currency currency)
+    {
+        for(int i = 0; i < amount; i++)
+        {
+            Item newCoin = Instantiate(_coinPrefab, _coinBox.transform.position, Quaternion.identity, _coinBox.transform);
+            newCoin.SetUpMoney(_coins[(int)currency], _isPlayer, _coinBox, currency, customerType);
+        }
+    }
+
     public void AddItems(List<GameObject> items)
     {
         foreach(GameObject itemPrefab in items)
@@ -122,6 +135,7 @@ public class Inventory : MonoBehaviour
         if(!_isPlayer)
         {
             _dropBox.TutorialClear();
+            _coinBox.TutorialClear();
         }
     }
 

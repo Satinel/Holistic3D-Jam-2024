@@ -329,4 +329,10 @@ public class TradingUI : MonoBehaviour
     {
         _repeatCustomerButton.SetActive(false);
     }
+
+    public void SetCustomerName(string name)
+    {
+        _customerNameText.text = name;
+        _customerName.SetActive(true);
+    }
 }

@@ -288,14 +288,22 @@ public class Tutorial : MonoBehaviour
         _text.text = "There just so happens to be a veteran merchant passing through town...";
         if(_mentorSprites[1].activeSelf)
         {
+            foreach(Customer mentor in _mentors)
+            {
+                mentor.SetName("Corthan");
+            }
             _text.text = "You know about a semi-retired trader living in town...";
-            return;
         }
         if(_mentorSprites[2].activeSelf)
         {
+            foreach(Customer mentor in _mentors)
+            {
+                mentor.SetName("Tigey");
+            }
+            _tradingUI.SetCustomerName(_mentors[0].Name);
             _text.text = "You've heard tales of a white tiger who loves capitalism...";
-            return;
         }
+        _tradingUI.SetCustomerName(_mentors[0].Name);
     }
 
     void Next1()
@@ -340,7 +348,7 @@ public class Tutorial : MonoBehaviour
     {
         _playerStockBox.SetActive(true);
         _playerCoinBox.SetActive(true);
-        _mentorText.text = "This here's where all yer stock is\nput out on display.";
+        _mentorText.text = "This's where yer stock is displayed.";
         _player.EnableInventory();
     }
 
@@ -358,6 +366,7 @@ public class Tutorial : MonoBehaviour
         _mentorSpeech.SetActive(false);
         _mentorText.text = "When yer makin' deals the stuff up for grabs goes here.\nWhoever's payin' will put their copper on the opposite side.";
         _nextButton.SetActive(false);
+        _player.SetNetWorthText();
         Invoke(nameof(Delayed6), 1f);
     }
 
@@ -468,7 +477,7 @@ public class Tutorial : MonoBehaviour
 
     void Next13()
     {
-        _mentorText.text = "Even if they don't notice in the moment, by the end of the day, when coin's been counted, the word'll spread.";
+        _mentorText.text = "Even if they don't notice in the moment, by the end of the day, when coins've been counted, the word'll spread.";
     }
 
     void Next14()
@@ -586,24 +595,48 @@ public class Tutorial : MonoBehaviour
         _mentorSpeech.SetActive(true);
         _nextButton.SetActive(true);
         _resetButton.SetActive(true);
+        _mentors[1].ClearInventory();
+        _mentors[1].GenerateCoinType(100, Currency.Copper, false); // 100 + 200 + 1000 + 3000
+        _mentors[1].GenerateCoinType(20, Currency.Silver, false);
+        _mentors[1].GenerateCoinType(10, Currency.Gold, false);
+        _mentors[1].GenerateCoinType(4, Currency.Platinum, false);
     }
 
     void Next20()
     {
         // _mentorText.text = "Don't expect to make money off another merchant, but ya can restock by barterin' with 'em.";
-        _mentorText.text = "This here is an investment, yer gonna pay this back at the end of the day. With interest!";
+        _mentorText.text = "This here is an investment that yer gonna pay back... With interest!";
+        
         int debt = _mentors[1].CustomerInventory.CoinBox.GetTrueValue();
-Debug.Log($"Debt: {debt}");
-        debt += Mathf.CeilToInt(debt / 10f);
-Debug.Log($"Debt with interest: ({Mathf.CeilToInt(debt / 10f)}) = {debt}");
+        int debtInterest = Mathf.CeilToInt(debt / 10f);
+Debug.Log($"Debt: {debt} + interest {debtInterest} = ...");
+        debt += debtInterest;
+Debug.Log($"Debt with interest: {debt}");
         _mentors[1].CustomerInventory.CreateDebt();
         _player.SetDebt(debt);
+        // TODO Play cash sound!?
     }
+
+    // void Update()
+    // {
+    //     if(Input.GetKeyDown(KeyCode.T))
+    //     {
+    //         _mentors[0].ClearInventory();
+    //     }
+    //     if(Input.GetKeyDown(KeyCode.G))
+    //     {Debug.Log("PUSHED G BUTTON");
+    //         _mentors[0].GenerateCoinType(10, Currency.Gold, false);
+    //     }
+    //     if(Input.GetKeyDown(KeyCode.B))
+    //     {
+    //         _mentors[0].CustomerInventory.CreateDebt();
+    //     }
+    // }
 
     void Next21()
     {
         // _mentorText.text = "Yer free to pick as much of their stuff as ya want in a single trade, or offload things ya can't move.";
-        _mentorText.text = "Barter for some of my stock first, I'll accept cash or goods when I come to collect.";
+        _mentorText.text = "Barter for some of my stock first. I'll accept payment in cash <i>and</i> goods when I come collectin'.";
     }
 
     void Next22()
@@ -616,7 +649,7 @@ Debug.Log($"Debt with interest: ({Mathf.CeilToInt(debt / 10f)}) = {debt}");
     void BarteredOnce()
     {
         _cancelButton.SetActive(true);
-        _mentorText.text = "Most folk'll let you trade three times. Ya can always stop early, like if ya end up with too little cash.\n\nIf yer low on copper coins, head to the bank to trade for 'em.";
+        _mentorText.text = "Most folk'll let ya trade three times. Ya can always stop early, like if ya end up with too little cash.\n\nIf yer low on copper coins, head to the bank to trade for 'em.";
         _mentorSpeech.SetActive(true);
         _closeSpeechButton.SetActive(true);
     }
@@ -631,7 +664,7 @@ Debug.Log($"Debt with interest: ({Mathf.CeilToInt(debt / 10f)}) = {debt}");
     void Next23()
     {
         // _mentorText.text = "Get out there and make yer fortune.";
-        _mentorText.text = "If ya really got what it takes, ya can pay off my debt and still make a profit.";
+        _mentorText.text = "If ya really got what it takes, ya can pay off yer debt an' still make a profit.";
         _mentorSpeech.SetActive(true);
         _nextButton.SetActive(true);
     }

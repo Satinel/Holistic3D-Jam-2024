@@ -13,6 +13,7 @@ public class DropBox : MonoBehaviour, IDropHandler
     public static Action<int> OnBuyPriceSet;
     public static Action<int> OnSellPriceSet;
     public static Action OnTradeBoxProcessed;
+    public static Action OnNetWorthReady;
 
     [SerializeField] Transform _copperParent, _silverParent, _goldParent, _platinumParent;
     [SerializeField] TextMeshProUGUI _copperText, _silverText, _goldText, _platinumText;
@@ -174,11 +175,21 @@ public class DropBox : MonoBehaviour, IDropHandler
         }
         _sentItems.Clear();
         Invoke(nameof(SetCoinTexts), 0.01f);
+        Invoke(nameof(UpdateNetWorth), 0.01f);
 
         if(_isTradeBox && _playerProperty)
         {
             OnTradeBoxProcessed?.Invoke();
         }
+    }
+
+    void UpdateNetWorth()
+    {
+        if(!_playerProperty) { return; }
+        if(_isTradeBox) { return; }
+        if(_isCoinBox) { return; }
+
+        OnNetWorthReady?.Invoke();
     }
 
     void TradingSystem_OnTradeCancelled()
@@ -688,14 +699,13 @@ public class DropBox : MonoBehaviour, IDropHandler
                 }
                 break;
         }
-
     }
 
     public void TransferAllMoney()
     {
         if(_isCoinBox && !_playerProperty)
         {
-            foreach(var coin in _items)
+            foreach(GameObject coin in _items)
             {
                 Item item = coin.GetComponent<Item>();
                 item.SetInTrade(false);
@@ -704,13 +714,8 @@ public class DropBox : MonoBehaviour, IDropHandler
                 {
                     item.SendToCoinBox(_partnerCoinBox);
                 }
-                else
-                {
-                    item.SendToDropBox(_partnerBox);
-                }
             }
             _items.Clear();
-            _totalValue = 0;
         }
     }
 }

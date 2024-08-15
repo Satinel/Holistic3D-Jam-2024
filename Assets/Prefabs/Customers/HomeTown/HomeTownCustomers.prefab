@@ -1357,7 +1357,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingItems.Array.size
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingCoins.Array.data[0]
@@ -1390,15 +1390,15 @@ PrefabInstance:
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingItems.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: a9c83c600e3027e46bddbd8b10522da2, type: 2}
+      objectReference: {fileID: 11400000, guid: 94c22afd6fca54847ae06495ab606e91, type: 2}
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingItems.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 94c22afd6fca54847ae06495ab606e91, type: 2}
+      objectReference: {fileID: 11400000, guid: 3e84f94effc3fe24f9d57391287c5e94, type: 2}
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingItems.Array.data[5]
       value: 
-      objectReference: {fileID: 11400000, guid: 3e84f94effc3fe24f9d57391287c5e94, type: 2}
+      objectReference: {fileID: 11400000, guid: a9c83c600e3027e46bddbd8b10522da2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

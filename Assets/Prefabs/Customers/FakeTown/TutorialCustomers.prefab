@@ -220,7 +220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: <Name>k__BackingField
-      value: Corthan
+      value: Ornatha
       objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: <Tolerance>k__BackingField
@@ -277,12 +277,20 @@ PrefabInstance:
       value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _startingCoins.Array.data[0]
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingCoins.Array.data[1]
-      value: 80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingCoins.Array.data[2]
-      value: 15
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _startingCoins.Array.data[3]
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[0]
@@ -446,7 +454,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: <Name>k__BackingField
-      value: Corthan
+      value: Ornatha
       objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: <IsTutorial>k__BackingField
@@ -495,12 +503,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _startingCoins.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingCoins.Array.data[1]
-      value: 80
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingCoins.Array.data[2]
-      value: 15
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _startingCoins.Array.data[3]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[0]
@@ -664,7 +680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: <Name>k__BackingField
-      value: Corthan
+      value: Ornatha
       objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: <Tolerance>k__BackingField
