@@ -168,6 +168,10 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 44
       objectReference: {fileID: 0}
+    - target: {fileID: 384364026341107815, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 999042260965161679, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

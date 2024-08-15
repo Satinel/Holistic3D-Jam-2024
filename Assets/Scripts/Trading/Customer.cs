@@ -18,6 +18,7 @@ public class Customer : MonoBehaviour
     [field:SerializeField] public bool IsTutorial { get; private set; }
     public bool MaxTradesReached => _currentTrades >= _maxTrades;
     public bool MaxStrikesReached => Strikes >= MaxStrikes;
+    public Inventory CustomerInventory => _inventory;
 
     [SerializeField] SpriteRenderer _spriteRender;
     [SerializeField] List<GameObject> _angerMarks;
@@ -73,7 +74,10 @@ public class Customer : MonoBehaviour
             _dialogue.SetActiveDialogue(true);
             Strikes = 0;
             _currentTrades = 0;
-            _spriteRender.enabled = true;
+            if(!IsTutorial)
+            {
+                _spriteRender.enabled = true;
+            }
 
             _inventory.ShowInventory(customer.CustomerType);
         }

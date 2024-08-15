@@ -153,7 +153,6 @@ public class DropBox : MonoBehaviour, IDropHandler
                 currentCustomer.RemoveFromInventory(_items); // Items get flipped to belong to player in the foreach blow
                 // TODO(?) Add to player's Inventory?
             }
-            
 
             foreach(var tradedItem in _items)
             {
@@ -178,10 +177,7 @@ public class DropBox : MonoBehaviour, IDropHandler
 
         if(_isTradeBox && _playerProperty)
         {
-            if(currentCustomer.IsTutorial)
-            {
-                OnTradeBoxProcessed?.Invoke();
-            }
+            OnTradeBoxProcessed?.Invoke();
         }
     }
 
@@ -206,7 +202,6 @@ public class DropBox : MonoBehaviour, IDropHandler
             }
             _items.Clear();
             _totalValue = 0;
-            
         }
 
         if(_isTradeBox && _playerProperty)
@@ -230,6 +225,16 @@ public class DropBox : MonoBehaviour, IDropHandler
         }
         _sentItems.Clear();
         Invoke(nameof(SetCoinTexts), 0.01f);
+    }
+
+    public void TutorialClear()
+    {
+        foreach(GameObject item in _items)
+        {
+            Destroy(item);
+        }
+        _items.Clear();
+        _totalValue = 0;
     }
 
     void TradingSystem_OnBuyCustomer(bool isTutorial)
@@ -684,5 +689,28 @@ public class DropBox : MonoBehaviour, IDropHandler
                 break;
         }
 
+    }
+
+    public void TransferAllMoney()
+    {
+        if(_isCoinBox && !_playerProperty)
+        {
+            foreach(var coin in _items)
+            {
+                Item item = coin.GetComponent<Item>();
+                item.SetInTrade(false);
+                item.SetPlayerProperty(!_playerProperty);
+                if(item.ItemSO.ItemType == ItemType.Coin)
+                {
+                    item.SendToCoinBox(_partnerCoinBox);
+                }
+                else
+                {
+                    item.SendToDropBox(_partnerBox);
+                }
+            }
+            _items.Clear();
+            _totalValue = 0;
+        }
     }
 }

@@ -17,6 +17,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] Town _homeTown;
     [SerializeField] GameObject _tutorialUI, _skiptutorialButton;
     Player _player;
+    [SerializeField] GameObject[] _mentorSprites;
 
     bool _acceptThePremise, _setGreeting, _buyingFinished, _strikesExplained, _sellingFinished, _barteredOnce, _tutorialComplete;
     bool[] _next = new bool[25];
@@ -72,6 +73,7 @@ public class Tutorial : MonoBehaviour
     {
         if(!_acceptThePremise)
         {
+            _mentorSprites[0].SetActive(true);
             AcceptThePremise();
             return;
         }
@@ -88,6 +90,7 @@ public class Tutorial : MonoBehaviour
     {
         if(!_acceptThePremise)
         {
+            _mentorSprites[1].SetActive(true);
             AcceptThePremise();
             return;
         }
@@ -104,6 +107,7 @@ public class Tutorial : MonoBehaviour
     {
         if(!_acceptThePremise)
         {
+            _mentorSprites[2].SetActive(true);
             AcceptThePremise();
             return;
         }
@@ -281,7 +285,17 @@ public class Tutorial : MonoBehaviour
 
     void Next0()
     {
-        _text.text = "There just so happens to be a semi-retired merchant in town...";
+        _text.text = "There just so happens to be a veteran merchant passing through town...";
+        if(_mentorSprites[1].activeSelf)
+        {
+            _text.text = "You know about a semi-retired trader living in town...";
+            return;
+        }
+        if(_mentorSprites[2].activeSelf)
+        {
+            _text.text = "You've heard tales of a white tiger who loves capitalism...";
+            return;
+        }
     }
 
     void Next1()
@@ -567,7 +581,8 @@ public class Tutorial : MonoBehaviour
 
     void SellingFinished()
     {
-        _mentorText.text = "Maybe yer cut out for this after all. Last thing to know is dealin' with other traders.";
+        //_mentorText.text = "Maybe yer cut out for this after all. Last thing to know is dealin' with other traders.";
+        _mentorText.text = "Alright, ya convinced me. To get started yer gonna need more coin, it takes cash to make cash.";
         _mentorSpeech.SetActive(true);
         _nextButton.SetActive(true);
         _resetButton.SetActive(true);
@@ -575,12 +590,20 @@ public class Tutorial : MonoBehaviour
 
     void Next20()
     {
-        _mentorText.text = "Don't expect to make money off another merchant, but ya can restock by barterin' with 'em.";
+        // _mentorText.text = "Don't expect to make money off another merchant, but ya can restock by barterin' with 'em.";
+        _mentorText.text = "This here is an investment, yer gonna pay this back at the end of the day. With interest!";
+        int debt = _mentors[1].CustomerInventory.CoinBox.GetTrueValue();
+Debug.Log($"Debt: {debt}");
+        debt += Mathf.CeilToInt(debt / 10f);
+Debug.Log($"Debt with interest: ({Mathf.CeilToInt(debt / 10f)}) = {debt}");
+        _mentors[1].CustomerInventory.CreateDebt();
+        _player.SetDebt(debt);
     }
 
     void Next21()
     {
-        _mentorText.text = "Yer free to pick as much of their stuff as ya want in a single trade, or offload things ya can't move.";
+        // _mentorText.text = "Yer free to pick as much of their stuff as ya want in a single trade, or offload things ya can't move.";
+        _mentorText.text = "Barter for some of my stock first, I'll accept cash or goods when I come to collect.";
     }
 
     void Next22()
@@ -607,7 +630,8 @@ public class Tutorial : MonoBehaviour
 
     void Next23()
     {
-        _mentorText.text = "Get out there and make yer fortune.";
+        // _mentorText.text = "Get out there and make yer fortune.";
+        _mentorText.text = "If ya really got what it takes, ya can pay off my debt and still make a profit.";
         _mentorSpeech.SetActive(true);
         _nextButton.SetActive(true);
     }

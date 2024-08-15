@@ -121,11 +121,13 @@ public class Inventory : MonoBehaviour
     {
         if(!_isPlayer)
         {
-            foreach(Item item in _dropBox.GetComponentsInChildren<Item>())
-            {
-                Destroy(item.gameObject);
-            }
+            _dropBox.TutorialClear();
         }
+    }
+
+    public void CreateDebt()
+    {
+        _coinBox.TransferAllMoney();
     }
 
     // public int GetTotalMoney()

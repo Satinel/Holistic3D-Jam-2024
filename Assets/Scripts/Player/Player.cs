@@ -1,5 +1,6 @@
-using System;
 using UnityEngine;
+using System;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class Player : MonoBehaviour
     public int NetWorth { get; private set; }
     public int Debt { get; private set; }
     public int TotalProfits { get; private set; }
+
+    [SerializeField] TextMeshProUGUI _netWorthText, _debtText;
 
     [SerializeField] Inventory _inventory;
 
@@ -28,6 +31,7 @@ public class Player : MonoBehaviour
     {
         Inventory.OnInventoryLoaded += Inventory_OnInventoryLoaded;
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
+        DropBox.OnTradeBoxProcessed += DropBox_OnTradeBoxProcessed;
         TradingSystem.OnFinishWithCustomer += TradingSystem_OnFinishWithCustomer;
     }
 
@@ -35,7 +39,8 @@ public class Player : MonoBehaviour
     {
         Inventory.OnInventoryLoaded -= Inventory_OnInventoryLoaded;
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
-        TradingSystem.OnTradeCompleted -= TradingSystem_OnFinishWithCustomer;
+        DropBox.OnTradeBoxProcessed -= DropBox_OnTradeBoxProcessed;
+        TradingSystem.OnFinishWithCustomer -= TradingSystem_OnFinishWithCustomer;
     }
 
     public void EnableInventory()
@@ -64,6 +69,11 @@ public class Player : MonoBehaviour
         _preTradeRep = Reputation;
     }
 
+    void DropBox_OnTradeBoxProcessed()
+    {
+        _netWorthText.text = "Net Worth\n" + CalculateNetWorth().ToString("N0");
+    }
+
     void TradingSystem_OnFinishWithCustomer(Customer customer)
     {
         if(customer.Opinion > 0)
@@ -81,5 +91,11 @@ public class Player : MonoBehaviour
         TotalProfits += profit;
 
         OnProfitCalculated?.Invoke(profit, Reputation - _preTradeRep);
+    }
+
+    public void SetDebt(int debt)
+    {
+        Debt = debt;
+        _debtText.text = Debt.ToString("N0");
     }
 }
