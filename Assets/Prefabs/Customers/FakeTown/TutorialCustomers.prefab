@@ -137,11 +137,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingCoins.Array.data[1]
-      value: 80
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingCoins.Array.data[2]
-      value: 15
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _startingCoins.Array.data[3]
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingItems.Array.data[0]

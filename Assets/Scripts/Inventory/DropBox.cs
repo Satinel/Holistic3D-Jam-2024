@@ -47,6 +47,7 @@ public class DropBox : MonoBehaviour, IDropHandler
         TradingSystem.OnSellCustomer += TradingSystem_OnSellCustomer;
         TradingSystem.OnResetTrade += TradingSystem_OnResetTrade;
         TradingSystem.OnResetBarter += TradingSystem_OnResetBarter;
+        TradingSystem.OnStrikeOut += TradingSystem_OnStrikeOut;
     }
 
     void OnDisable()
@@ -60,6 +61,7 @@ public class DropBox : MonoBehaviour, IDropHandler
         TradingSystem.OnSellCustomer -= TradingSystem_OnSellCustomer;
         TradingSystem.OnResetTrade -= TradingSystem_OnResetTrade;
         TradingSystem.OnResetBarter -= TradingSystem_OnResetBarter;
+        TradingSystem.OnStrikeOut -= TradingSystem_OnStrikeOut;
     }
 
     void Inventory_OnInventoryStart(Inventory inventory, bool isPlayer)
@@ -289,6 +291,11 @@ public class DropBox : MonoBehaviour, IDropHandler
 
     void TradingSystem_OnResetBarter()
     {
+        ResetTradeBox();
+    }
+
+    void ResetTradeBox()
+    {
         if(_isTradeBox)
         {
             List<GameObject> tempList = new();
@@ -297,7 +304,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             {
                 Item item = itemGO.GetComponent<Item>();
                 item.SetInTrade(false);
-                if(item.ItemSO.ItemType == ItemType.Coin)
+                if (item.ItemSO.ItemType == ItemType.Coin)
                 {
                     item.SendToCoinBox(_coinBox);
                 }
@@ -317,6 +324,11 @@ public class DropBox : MonoBehaviour, IDropHandler
         }
         _sentItems.Clear();
         Invoke(nameof(SetCoinTexts), 0.01f);
+    }
+
+    void TradingSystem_OnStrikeOut(Customer customer)
+    {
+        ResetTradeBox();
     }
 
     void PickRandomItem()

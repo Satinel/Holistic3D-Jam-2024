@@ -44,6 +44,7 @@ public class TradingSystem : MonoBehaviour
         Town.OnNextCustomer += Town_OnNextCustomer;
         Town.OnNoCustomers += Town_OnNoCustomers;
         Inventory.OnInventoryLoaded += Inventory_OnInventoryLoaded;
+        Customer.OnMaxTradesReached += Customer_OnMaxTradesReached;
     }
 
     void OnDisable()
@@ -53,6 +54,7 @@ public class TradingSystem : MonoBehaviour
         Town.OnNextCustomer -= Town_OnNextCustomer;
         Town.OnNoCustomers -= Town_OnNoCustomers;
         Inventory.OnInventoryLoaded -= Inventory_OnInventoryLoaded;
+        Customer.OnMaxTradesReached -= Customer_OnMaxTradesReached;
     }
 
     void DropBox_OnTradeBoxValueChanged(bool playerProperty, int value)
@@ -102,6 +104,11 @@ public class TradingSystem : MonoBehaviour
         if(_currentCustomer.CustomerType == Customer.Type.Bank) { return; }
 
         _greetingButton.SetActive(true); // TODO? One day have many buttons for different dialogue responses
+    }
+
+    void Customer_OnMaxTradesReached()
+    {
+        FinishWithCustomer();
     }
 
     void HandleCustomerType()

@@ -6,7 +6,7 @@ public class TradingUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _tradeBoxText, _payText;
     [SerializeField] TextMeshProUGUI _compTradeBoxText;
-    [SerializeField] TextMeshProUGUI _profitText, _changeText, _offerText, _tradeTypeText, _customerNameText, _itemNameText;
+    [SerializeField] TextMeshProUGUI _profitText, _changeText, _offerText, _tradeTypeText, _tradeTypeText2, _customerNameText, _itemNameText;
     [SerializeField] Image _itemImage;
     [SerializeField] GameObject _payTextParent, _repeatCustomerButton;
     [SerializeField] GameObject _resultWindow, _noItemsWindow, _setPriceWindow, _customerName, _noCustomersWindow, _itemNameWindow;
@@ -30,6 +30,7 @@ public class TradingUI : MonoBehaviour
         TradingSystem.OnFinishWithCustomer += TradingSystem_OnFinishWithCustomer;
         DropBox.OnItemPicked += DropBox_OnItemPicked;
         DropBox.OnTradeResults += DropBox_OnTradeResults;
+        Customer.OnMaxTradesReached += Customer_OnMaxTradesReached;
         Player.OnProfitCalculated += Player_OnProfitCalculated;
         DropBox.OnBuyPriceSet += DropBox_OnBuyPriceSet;
         DropBox.OnSellPriceSet += DropBox_OnSellPriceSet;
@@ -51,6 +52,7 @@ public class TradingUI : MonoBehaviour
         TradingSystem.OnFinishWithCustomer -= TradingSystem_OnFinishWithCustomer;
         DropBox.OnItemPicked -= DropBox_OnItemPicked;
         DropBox.OnTradeResults -= DropBox_OnTradeResults;
+        Customer.OnMaxTradesReached -= Customer_OnMaxTradesReached;
         Player.OnProfitCalculated -= Player_OnProfitCalculated;
         DropBox.OnBuyPriceSet -= DropBox_OnBuyPriceSet;
         DropBox.OnSellPriceSet -= DropBox_OnSellPriceSet;
@@ -98,6 +100,7 @@ public class TradingUI : MonoBehaviour
             _customer = null;
             _customerName.SetActive(false);
             _tradeTypeText.text = string.Empty;
+            _tradeTypeText2.text = string.Empty;
             SetShowTradeNumbers(false);
             return;
         }
@@ -109,10 +112,12 @@ public class TradingUI : MonoBehaviour
         if(customer.CustomerType == Customer.Type.Buy)
         {
             _tradeTypeText.text = "Sell Offer";
+            _tradeTypeText2.text = "SELLING";
         }
         else if(customer.CustomerType == Customer.Type.Sell)
         {
             _tradeTypeText.text = "Buy Offer";
+            _tradeTypeText2.text = "BUYING";
         }
         
         if(_customer.Tolerance <= 0 || _customer.IsTutorial)
@@ -226,16 +231,19 @@ public class TradingUI : MonoBehaviour
             {
                 _repeatCustomerButton.SetActive(true);
             }
-            else
-            {
-                DisableRepeatCustomerButton();
-            }
         }
+    }
+
+    void Customer_OnMaxTradesReached()
+    {
+        _repeatCustomerButton.SetActive(false);
     }
 
     void Player_OnProfitCalculated(int profit, int repChange)
     {
         if(_customer.IsTutorial) { return; }
+        
+        if(_customer.CustomerType == Customer.Type.Bank) { return; }
         
         _resultWindow.SetActive(true);
         if(profit >= 0)

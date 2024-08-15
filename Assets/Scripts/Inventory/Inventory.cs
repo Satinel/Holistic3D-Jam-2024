@@ -117,6 +117,17 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void ClearInventory()
+    {
+        if(!_isPlayer)
+        {
+            foreach(Item item in _dropBox.GetComponentsInChildren<Item>())
+            {
+                Destroy(item.gameObject);
+            }
+        }
+    }
+
     // public int GetTotalMoney()
     // {
     //     int total = 0;

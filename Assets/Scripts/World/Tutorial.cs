@@ -65,7 +65,7 @@ public class Tutorial : MonoBehaviour
         _openButton.SetActive(false);
         _bankButton.SetActive(false);
         _resetButton.SetActive(false);
-        _skiptutorialButton.SetActive(true);
+        _skiptutorialButton.SetActive(true); // TODO (probably no time but IF there was a save system we could save whether the tutorial was done or not)
     }
 
     public void Button1()
@@ -301,16 +301,16 @@ public class Tutorial : MonoBehaviour
 
     void Next2()
     {
-        _mentorText.text = "One, buy low.\nTwo, sell high.\nAnd three...\nChange is necessary.";
+        _mentorText.text = "Buy low.\nSell high.\nAnd...\nChange is necessary.";
     }
 
     void Next3()
     {
         _nextButton.SetActive(false);
         _mentorText.text = "But 'fore all that, how are ya gonna greet yer customers?";
-        _button1Text.text = "What can I do for you?";
-        _button2Text.text = "I have wares, if you have coin.";
-        _button3Text.text = "Buy something!";
+        _button1Text.text = "\"What can I do for you?\"";
+        _button2Text.text = "\"I have wares, if you have coin.\"";
+        _button3Text.text = "\"Buy something!\"";
         _buttonsParent.SetActive(true);
     }
 
@@ -356,7 +356,7 @@ public class Tutorial : MonoBehaviour
     void Next7()
     {
         _scalesParent.SetActive(true);
-        _mentorText.text = "Jus' to be real clear, I run an honest trade. These spell scales show any item's true worth. Nothin's kept secret from customers.";
+        _mentorText.text = "Jus' to be real clear, I run an honest trade. These<i> <color=#00ECFF>spell scales</color> </i>show any item's true worth. Nothin's kept secret from customers.";
     }
 
     void Next8()
@@ -401,7 +401,7 @@ public class Tutorial : MonoBehaviour
     {
         _mentorSpeech.SetActive(false);
         _speechWindow2.SetActive(true);
-        _speech2Text.text = "Click the arrows to increase/decrease your offer.\nYou can also use the scroll wheel.";
+        _speech2Text.text = "Click the arrows to increase/decrease your offer.\nYou can also use your scroll wheel.";
         _fakeHaggleButton.SetActive(false);
         _haggleButton.SetActive(true);
     }
@@ -428,7 +428,7 @@ public class Tutorial : MonoBehaviour
         if(buying)
         {
             _speechWindow2.SetActive(false);
-            _mentorText.text = "Not so hard is it? Folks know ya need to make a profit. They'll pay a fee to have what they want, when they want it.";
+            _mentorText.text = "Not so hard is it? Folks know ya need to make a profit. They'll pay a fee to have <i>what</i> they want, <i>when</i> they want it.";
             _mentorSpeech.SetActive(true);
             _nextButton.SetActive(true);
             _mentors[0].SetTolerance(0);
@@ -444,7 +444,7 @@ public class Tutorial : MonoBehaviour
 
     void Next11()
     {
-        _mentorText.text = "Now the important part is rule three: 'Change is necessary.' Means different things to different types. For traders it goes like this...";
+        _mentorText.text = "Now the important part is rule three: 'Change is necessary.' It means different things to different types. For traders it goes like this...";
     }
 
     void Next12()
@@ -527,16 +527,19 @@ public class Tutorial : MonoBehaviour
     {
         if(!_sellingFinished)
         {
+            _mentors[0].ClearInventory();
             _tradingSystem.SetTutorialCustomer(_mentors[1]);
             return;
         }
         if(!_barteredOnce)
         {
+            _mentors[1].ClearInventory();
             _tradingSystem.SetTutorialCustomer(_mentors[2]);
             return;
         }
         if(!_tutorialComplete)
         {
+            _mentors[2].ClearInventory();
             _tutorialComplete = true;
             TutorialComplete();
         }

@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
+    public static Action OnMaxTradesReached;
+    
     [SerializeField] Inventory _inventory;
     [SerializeField] Dialogue _dialogue;
 
@@ -172,7 +175,7 @@ public class Customer : MonoBehaviour
             
             if(MaxTradesReached)
             {
-                // TODO display customer parting message
+                OnMaxTradesReached?.Invoke();
             }
         }
     }
@@ -230,5 +233,10 @@ public class Customer : MonoBehaviour
             tolerance = 0;
         }
         Tolerance = tolerance;
+    }
+
+    public void ClearInventory()
+    {
+        _inventory.ClearInventory();
     }
 }

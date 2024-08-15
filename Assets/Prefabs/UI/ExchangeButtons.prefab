@@ -190,6 +190,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoldExchangeButton
       objectReference: {fileID: 0}
+    - target: {fileID: 5988127851069820277, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988127851069820277, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988127851069820277, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8246153812016445296, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -359,6 +371,18 @@ PrefabInstance:
     - target: {fileID: 5773274697356954758, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_Name
       value: SilverExchangeButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988127851069820277, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988127851069820277, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988127851069820277, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8246153812016445296, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -530,6 +554,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CopperExchangeButton
       objectReference: {fileID: 0}
+    - target: {fileID: 5988127851069820277, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988127851069820277, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988127851069820277, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8246153812016445296, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -695,6 +731,18 @@ PrefabInstance:
     - target: {fileID: 5773274697356954758, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_Name
       value: PlatinumExchangeButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988127851069820277, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988127851069820277, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988127851069820277, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8246153812016445296, guid: 47c3fe5d9f8474d41a1a3d5504b8195f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
