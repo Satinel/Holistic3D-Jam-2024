@@ -161,7 +161,7 @@ public class Customer : MonoBehaviour
         }
         else
         {
-            ChangeOpinion(-_baseOpinionChange * 2);
+            ChangeOpinion(-_baseOpinionChange * 5);
         }
     }
 

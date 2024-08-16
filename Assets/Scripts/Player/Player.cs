@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 
     bool _moneyLoaded;
     bool _stockLoaded;
+    bool _isTutorial;
 
     void Awake()
     {
@@ -114,8 +115,10 @@ public class Player : MonoBehaviour
         }
 
         CalculateNetWorth();
-        int profit = NetWorth - _preTradeWorth;
 
+        if(_isTutorial) { return; }
+
+        int profit = NetWorth - _preTradeWorth;
         TotalProfits += profit;
 
         OnProfitCalculated?.Invoke(profit, Reputation - _preTradeRep);
@@ -132,5 +135,32 @@ public class Player : MonoBehaviour
         _debtText.text = $"Debt\n{Debt:N0}";
         _debtParent.SetActive(true);
         SetNetWorthText();
+    }
+
+    public void FinishTutorial()
+    {
+        _isTutorial = false;
+    }
+
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            SetDebt(0);
+        }
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            Reputation++;
+        }
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            Reputation--;
+        }
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log(_inventory.CoinBox.GetTrueValue());
+            Debug.Log(_inventory.StockBox.GetTrueValue());
+        }
     }
 }

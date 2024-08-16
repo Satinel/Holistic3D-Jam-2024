@@ -67,7 +67,7 @@ public class Tutorial : MonoBehaviour
         _openButton.SetActive(false);
         _bankButton.SetActive(false);
         _resetButton.SetActive(false);
-        _skiptutorialButton.SetActive(true); // TODO (probably no time but IF there was a save system we could save whether the tutorial was done or not)
+        // _skiptutorialButton.SetActive(true); // TODO (probably no time but IF there was a save system we could save whether the tutorial was done or not)
     }
 
     public void Button1()
@@ -112,7 +112,7 @@ public class Tutorial : MonoBehaviour
         {
             _mentorSprites[2].SetActive(true);
             AcceptThePremise();
-            _gameOver.SetMentor(3);
+            _gameOver.SetMentor(2);
             return;
         }
 
@@ -646,6 +646,7 @@ public class Tutorial : MonoBehaviour
         _mentorText.text = "That's everything ya need. The rest is in yer hands.";
         _mentorSpeech.SetActive(true);
         _nextButton.SetActive(true);
+        _player.FinishTutorial();
     }
 
     void Next23()
@@ -661,21 +662,50 @@ public class Tutorial : MonoBehaviour
         WrapUpTutorial();
     }
 
-    public void SkipTutorial()
+    public void SkipTutorial() // NO TIME TO FIGURE IT OUT!
     {
-        _skiptutorialButton.SetActive(false);
+    //     _skiptutorialButton.SetActive(false);
+    //     CloseSpeech();
 
-        _mentors[1].ClearInventory();
-        _mentors[1].GenerateCoinType(100, Currency.Copper, false);
-        _mentors[1].GenerateCoinType(20, Currency.Silver, false);
-        _mentors[1].GenerateCoinType(10, Currency.Gold, false);
-        _mentors[1].GenerateCoinType(4, Currency.Platinum, false);
+    //     _tutorialUI.SetActive(false);
+    //     _clickOverlay.SetActive(false);
+    //     _musicPlayer.SetActive(false);
+    //     _buttonsParent.SetActive(true);
+    //     _compStockBox.SetActive(true);
+    //     _compTradeBox.SetActive(true);
+    //     _compCoinBox.SetActive(true);
+    //     _playerStockBox.SetActive(true);
+    //     _playerCoinBox.SetActive(true);
+    //     _playerTradeBox.SetActive(true);
+    //     _cancelButton.SetActive(true); // (Finish With Customer button)
+    //     _scalesParent.SetActive(true);
+    //     _haggleButton.SetActive(false);
+    //     _openButton.SetActive(true);
+    //     _bankButton.SetActive(true);
+    //     _resetButton.SetActive(true);
+    //     _openingSplash.SetActive(false);
+        
+    //     _tradingSystem.SetIsBuyTutorial(false);
+    //     _tradingUI.SetShowTradeNumbers(false);
+    //     _player.EnableInventory();
 
-        _mentors[1].CustomerInventory.CreateDebt();
+    //     _mentors[1].ClearInventory();
+    //     _mentors[1].GenerateCoinType(100, Currency.Copper, false);
+    //     _mentors[1].GenerateCoinType(20, Currency.Silver, false);
+    //     _mentors[1].GenerateCoinType(10, Currency.Gold, false);
+    //     _mentors[1].GenerateCoinType(4, Currency.Platinum, false);
 
-        _player.SetDebt(8000);
+    //     _mentors[1].CustomerInventory.CreateDebt();
 
-        WrapUpTutorial();
+    //     SetDebtDelay();
+    // }
+
+    // void SetDebtDelay()
+    // {
+    //     _player.SetDebt(8000);
+    //     _mentors[1].ClearInventory();
+    //     _homeTown.gameObject.SetActive(true);
+    //     gameObject.SetActive(false);
     }
 
     public void WrapUpTutorial()

@@ -88,7 +88,7 @@ public class GameOver : MonoBehaviour
         _goodEndButton.SetActive(true);
         _finalSpeechText.text = _goodEndLines[_lineIndex];
         _lineIndex++;
-        if(_lineIndex >= 3)
+        if(_lineIndex > 3)
         {
             _goodEndButton.SetActive(false);
             _happyEndingSplash.SetActive(true);
@@ -100,7 +100,7 @@ public class GameOver : MonoBehaviour
         _badDebtButton.SetActive(true);
         _finalSpeechText.text = _badDebtLines[_lineIndex];
         _lineIndex++;
-        if(_lineIndex >= 3)
+        if(_lineIndex > 3)
         {
             _badDebtButton.SetActive(false);
             _gameOverSplash.SetActive(true);
@@ -112,7 +112,7 @@ public class GameOver : MonoBehaviour
         _badRepButton.SetActive(true);
         _finalSpeechText.text = _badRepLines[_lineIndex];
         _lineIndex++;
-        if(_lineIndex >= 3)
+        if(_lineIndex > 3)
         {
             _badRepButton.SetActive(false);
             _gameOverSplash.SetActive(true);
@@ -124,7 +124,7 @@ public class GameOver : MonoBehaviour
         _megaBadButton.SetActive(true);
         _finalSpeechText.text = _megaBadLines[_lineIndex];
         _lineIndex++;
-        if(_lineIndex >= 3)
+        if(_lineIndex > 3)
         {
             _megaBadButton.SetActive(false);
             _gameOverSplash.SetActive(true);
