@@ -810,6 +810,7 @@ MonoBehaviour:
   <Reputation>k__BackingField: 0
   _netWorthText: {fileID: 6995713043277492639}
   _debtText: {fileID: 1404822257}
+  _finalResultsText: {fileID: 4607863986091374572}
   _netWorthParent: {fileID: 373450422}
   _debtParent: {fileID: 442651535}
   _inventory: {fileID: 1146922451}
@@ -968,6 +969,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4514379735042161175, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 1146922453}
     - target: {fileID: 5189753596902037303, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
       propertyPath: m_Name
       value: TradingUI
@@ -1021,6 +1026,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
+--- !u!114 &4607863986091374572 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1507439768997762718, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
+  m_PrefabInstance: {fileID: 4607863986091374571}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5271073963473244744
 PrefabInstance:
   m_ObjectHideFlags: 0

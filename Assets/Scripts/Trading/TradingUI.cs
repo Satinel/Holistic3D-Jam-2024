@@ -9,7 +9,7 @@ public class TradingUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI _profitText, _changeText, _offerText, _tradeTypeText, _tradeTypeText2, _customerNameText, _itemNameText;
     [SerializeField] Image _itemImage;
     [SerializeField] GameObject _payTextParent, _repeatCustomerButton, _tradeTypeText2Parent;
-    [SerializeField] GameObject _resultWindow, _noItemsWindow, _setPriceWindow, _customerName, _noCustomersWindow, _itemNameWindow;
+    [SerializeField] GameObject _resultWindow, _noItemsWindow, _setPriceWindow, _customerName, _noCustomersWindow, _itemNameWindow, _finalResultWindow;
 
     // int _playerValue, _compValue;
     bool _showTradeNumbers = false;
@@ -334,5 +334,15 @@ public class TradingUI : MonoBehaviour
     {
         _customerNameText.text = name;
         _customerName.SetActive(true);
+    }
+
+    public void OpenFinalResultWindow()
+    {
+        _finalResultWindow.SetActive(true);
+    }
+
+    public void CloseFinalResultsWindow()
+    {
+        _finalResultWindow.SetActive(false);
     }
 }

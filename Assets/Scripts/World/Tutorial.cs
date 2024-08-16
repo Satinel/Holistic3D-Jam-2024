@@ -18,6 +18,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] GameObject _tutorialUI, _skiptutorialButton;
     Player _player;
     [SerializeField] GameObject[] _mentorSprites;
+    [SerializeField] GameOver _gameOver;
 
     bool _acceptThePremise, _setGreeting, _buyingFinished, _strikesExplained, _sellingFinished, _barteredOnce, _tutorialComplete;
     bool[] _next = new bool[25];
@@ -75,6 +76,7 @@ public class Tutorial : MonoBehaviour
         {
             _mentorSprites[0].SetActive(true);
             AcceptThePremise();
+            _gameOver.SetMentor(0);
             return;
         }
 
@@ -92,6 +94,7 @@ public class Tutorial : MonoBehaviour
         {
             _mentorSprites[1].SetActive(true);
             AcceptThePremise();
+            _gameOver.SetMentor(1);
             return;
         }
 
@@ -109,6 +112,7 @@ public class Tutorial : MonoBehaviour
         {
             _mentorSprites[2].SetActive(true);
             AcceptThePremise();
+            _gameOver.SetMentor(3);
             return;
         }
 
@@ -607,31 +611,14 @@ public class Tutorial : MonoBehaviour
         // _mentorText.text = "Don't expect to make money off another merchant, but ya can restock by barterin' with 'em.";
         _mentorText.text = "This here is an investment that yer gonna pay back... With interest!";
         
-        int debt = _mentors[1].CustomerInventory.CoinBox.GetTrueValue();
-        int debtInterest = Mathf.CeilToInt(debt / 10f);
-Debug.Log($"Debt: {debt} + interest {debtInterest} = ...");
-        debt += debtInterest;
-Debug.Log($"Debt with interest: {debt}");
+        // int debt = _mentors[1].CustomerInventory.CoinBox.GetTrueValue();
+        // int debtInterest = Mathf.CeilToInt(debt / 30f);
+        // debt += debtInterest;
         _mentors[1].CustomerInventory.CreateDebt();
-        _player.SetDebt(debt);
+        // _player.SetDebt(debt);
+        _player.SetDebt(8000); // TODO Hello magic number! This seems like a good goal for a player to reach (maybe too hard? unclear! no time to test!)
         // TODO Play cash sound!?
     }
-
-    // void Update()
-    // {
-    //     if(Input.GetKeyDown(KeyCode.T))
-    //     {
-    //         _mentors[0].ClearInventory();
-    //     }
-    //     if(Input.GetKeyDown(KeyCode.G))
-    //     {Debug.Log("PUSHED G BUTTON");
-    //         _mentors[0].GenerateCoinType(10, Currency.Gold, false);
-    //     }
-    //     if(Input.GetKeyDown(KeyCode.B))
-    //     {
-    //         _mentors[0].CustomerInventory.CreateDebt();
-    //     }
-    // }
 
     void Next21()
     {
@@ -671,6 +658,23 @@ Debug.Log($"Debt with interest: {debt}");
 
     void Next24()
     {
+        WrapUpTutorial();
+    }
+
+    public void SkipTutorial()
+    {
+        _skiptutorialButton.SetActive(false);
+
+        _mentors[1].ClearInventory();
+        _mentors[1].GenerateCoinType(100, Currency.Copper, false);
+        _mentors[1].GenerateCoinType(20, Currency.Silver, false);
+        _mentors[1].GenerateCoinType(10, Currency.Gold, false);
+        _mentors[1].GenerateCoinType(4, Currency.Platinum, false);
+
+        _mentors[1].CustomerInventory.CreateDebt();
+
+        _player.SetDebt(8000);
+
         WrapUpTutorial();
     }
 

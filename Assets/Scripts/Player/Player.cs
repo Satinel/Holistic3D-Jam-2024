@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     public int Debt { get; private set; }
     public int TotalProfits { get; private set; }
 
-    [SerializeField] TextMeshProUGUI _netWorthText, _debtText;
+    [SerializeField] TextMeshProUGUI _netWorthText, _debtText, _finalResultsText;
     [SerializeField] GameObject _netWorthParent, _debtParent;
     [SerializeField] Inventory _inventory;
 
@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
         DropBox.OnNetWorthReady += DropBox_OnNetWorthReady;
         TradingSystem.OnFinishWithCustomer += TradingSystem_OnFinishWithCustomer;
+        Town.OnNoCustomers += Town_OnNoCustomers;
     }
 
     void OnDisable()
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
         DropBox.OnNetWorthReady -= DropBox_OnNetWorthReady;
         TradingSystem.OnFinishWithCustomer -= TradingSystem_OnFinishWithCustomer;
+        Town.OnNoCustomers -= Town_OnNoCustomers;
     }
 
     public void EnableInventory()
@@ -77,7 +79,6 @@ public class Player : MonoBehaviour
     {
         CalculateNetWorth();
         _netWorthText.text = $"Net Worth\n{NetWorth:N0}";
-// Debug.Log($"Networth: Stock {TotalStockValue} + Coins {TotalCoinValue} = {NetWorth}");
         _netWorthParent.SetActive(true);
     }
 
@@ -118,6 +119,11 @@ public class Player : MonoBehaviour
         TotalProfits += profit;
 
         OnProfitCalculated?.Invoke(profit, Reputation - _preTradeRep);
+    }
+
+    void Town_OnNoCustomers()
+    {
+        _finalResultsText.text = $"Total Profits Earned: {TotalProfits:N0}\nFinal Networth: {NetWorth:N0}\nReputation: {Reputation}";
     }
 
     public void SetDebt(int debt)
