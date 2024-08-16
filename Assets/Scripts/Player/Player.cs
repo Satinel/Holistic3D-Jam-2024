@@ -126,7 +126,8 @@ public class Player : MonoBehaviour
 
     void Town_OnNoCustomers()
     {
-        _finalResultsText.text = $"Total Profits Earned: {TotalProfits:N0}\nFinal Networth: {NetWorth:N0}\nReputation: {Reputation}";
+        // _finalResultsText.text = $"Total Profits Earned: {TotalProfits:N0}\nFinal Networth: {NetWorth:N0}\nReputation: {Reputation}";
+        _finalResultsText.text = $"Final Networth: {NetWorth:N0}\nReputation: {Reputation}";
     }
 
     public void SetDebt(int debt)
@@ -143,24 +144,24 @@ public class Player : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.D))
-        {
-            SetDebt(0);
-        }
-        if(Input.GetKeyDown(KeyCode.U))
-        {
-            Reputation++;
-        }
-        if(Input.GetKeyDown(KeyCode.D))
-        {
-            Reputation--;
-        }
-        if(Input.GetKeyDown(KeyCode.C))
-        {
-            Debug.Log(_inventory.CoinBox.GetTrueValue());
-            Debug.Log(_inventory.StockBox.GetTrueValue());
-        }
-    }
+    // void Update()
+    // {
+    //     if(Input.GetKeyDown(KeyCode.D))
+    //     {
+    //         SetDebt(0);
+    //     }
+    //     if(Input.GetKeyDown(KeyCode.U))
+    //     {
+    //         Reputation++;
+    //     }
+    //     if(Input.GetKeyDown(KeyCode.D))
+    //     {
+    //         Reputation--;
+    //     }
+    //     if(Input.GetKeyDown(KeyCode.C))
+    //     {
+    //         Debug.Log(_inventory.CoinBox.GetTrueValue());
+    //         Debug.Log(_inventory.StockBox.GetTrueValue());
+    //     }
+    // }
 }
