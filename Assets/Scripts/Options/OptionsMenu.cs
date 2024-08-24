@@ -8,7 +8,6 @@ public class OptionsMenu : MonoBehaviour
     [SerializeField] GameObject _closeMenuButton;
     [SerializeField] GameObject _quitPrompt;
     [SerializeField] GameObject _quitGameButton;
-    [SerializeField] float _currentTimeScale = 1;
 
 
     public void EnableOptionsCanvas()
@@ -27,18 +26,15 @@ public class OptionsMenu : MonoBehaviour
     {
         _optionsCanvas.gameObject.SetActive(true);
         EnableOptionsCanvas();
-        Time.timeScale = 0;
     }
 
     public void CloseOptions()
     {
         _optionsCanvas.gameObject.SetActive(false);
-        Time.timeScale = _currentTimeScale;
     }
 
     public void ReloadScene()
     {
-        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
