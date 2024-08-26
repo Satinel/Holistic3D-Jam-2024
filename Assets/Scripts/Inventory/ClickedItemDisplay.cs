@@ -11,11 +11,13 @@ public class ClickedItemDisplay : MonoBehaviour
     [SerializeField] float _toolTipDuration = 1f;
 
     float _timer = 0;
+    bool _isDragging;
 
     void Start()
     {
         Item.OnCoinClicked += Item_OnCoinClicked;
         Item.OnItemPointedAt += Item_OnItemPointedAt;
+        Item.OnItemDrag += Item_OnItemDrag;
         _toolTip.SetActive(false);
     }
 
@@ -23,6 +25,7 @@ public class ClickedItemDisplay : MonoBehaviour
     {
         Item.OnCoinClicked -= Item_OnCoinClicked;
         Item.OnItemPointedAt -= Item_OnItemPointedAt;
+        Item.OnItemDrag -= Item_OnItemDrag;
     }
 
     void Update()
@@ -30,7 +33,10 @@ public class ClickedItemDisplay : MonoBehaviour
         if(_toolTip.activeSelf)
         {
             _toolTip.transform.position = Input.mousePosition;
+            
             _timer += Time.deltaTime;
+            
+            if(_isDragging) { return; }
 
             if(_timer > _toolTipDuration)
             {
@@ -46,10 +52,17 @@ public class ClickedItemDisplay : MonoBehaviour
 
     void Item_OnItemPointedAt(Item item)
     {
+        if(_isDragging) { return; }
+
         // _itemImage.sprite = item.ItemSO.ItemSprite;
         _itemNameText.text = item.ItemSO.ItemName;
         _itemValueText.text = $"Value {item.ItemSO.BaseValue}₡";
         _toolTip.SetActive(true);
         _timer = 0;
+    }
+
+    void Item_OnItemDrag(bool isDragging)
+    {
+        _isDragging = isDragging;
     }
 }

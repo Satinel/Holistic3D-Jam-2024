@@ -3,10 +3,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler, IPointerEnterHandler //(and IPointerExitHandler?) to replace OnAnyItemClicked
+public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler, IPointerEnterHandler
 {
     public static Action OnCoinClicked;
-    public static Action<Item> OnItemPointedAt; // TODO Subscribe to this and update some info tab/window/tooltip
+    public static Action<Item> OnItemPointedAt;
+    public static Action<bool> OnItemDrag;
 
     [field:SerializeField] public bool PlayerProperty { get; private set; }
     [field:SerializeField] public bool IsMoney { get; private set; }
@@ -27,7 +28,6 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     void OnEnable()
     {
-        // OnAnyItemClicked += Item_OnAnyItemClicked;
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
         TradingSystem.OnBarterAccepted += TradingSystem_OnBarterAccepted;
         TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
@@ -37,7 +37,6 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     void OnDisable()
     {
-        // OnAnyItemClicked -= Item_OnAnyItemClicked;
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
         TradingSystem.OnBarterAccepted -= TradingSystem_OnBarterAccepted;
         TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
@@ -147,6 +146,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _currentBox.RemoveItem(gameObject);
         transform.SetParent(_parentCanvas.transform, true);
         _inTrade = false;
+        OnItemDrag?.Invoke(true);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -163,6 +163,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _raycastImage.raycastTarget = true;
         transform.SetParent(_currentBox.transform, true);
         transform.position = _currentBox.transform.position;
+        OnItemDrag?.Invoke(false);
         
         if(_inTrade)
         {
