@@ -3,9 +3,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler // TODO? Different logic for InputButton.Right
+public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler, IPointerEnterHandler //(and IPointerExitHandler?) to replace OnAnyItemClicked
 {
-    public static Action<Item> OnAnyItemClicked; // TODO Subscribe to this and update some info tab/window/tooltip
+    public static Action OnCoinClicked;
+    public static Action<Item> OnItemPointedAt; // TODO Subscribe to this and update some info tab/window/tooltip
 
     [field:SerializeField] public bool PlayerProperty { get; private set; }
     [field:SerializeField] public bool IsMoney { get; private set; }
@@ -84,8 +85,6 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             eventData.pointerDrag = null;
             return;
         }
-
-        OnAnyItemClicked?.Invoke(this);
 
         switch(_customerType)
         {
@@ -186,8 +185,6 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        OnAnyItemClicked?.Invoke(this);
-
         if(eventData.button != PointerEventData.InputButton.Left) { return; }
 
         switch(_customerType)
@@ -216,6 +213,8 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         
         if(IsMoney)
         {
+            OnCoinClicked?.Invoke();
+            
             if(!_inTrade)
             {
                 _currentBox.AddToSentItems(this);
@@ -246,6 +245,11 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 _inTrade = false;
             }
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnItemPointedAt?.Invoke(this);
     }
 
     public void SetInTrade(bool inTrade)

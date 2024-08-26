@@ -14,13 +14,15 @@ public class ClickedItemDisplay : MonoBehaviour
 
     void Start()
     {
-        Item.OnAnyItemClicked += Item_OnAnyItemClicked;
+        Item.OnCoinClicked += Item_OnCoinClicked;
+        Item.OnItemPointedAt += Item_OnItemPointedAt;
         _toolTip.SetActive(false);
     }
 
     void OnDestroy()
     {
-        Item.OnAnyItemClicked -= Item_OnAnyItemClicked;
+        Item.OnCoinClicked -= Item_OnCoinClicked;
+        Item.OnItemPointedAt -= Item_OnItemPointedAt;
     }
 
     void Update()
@@ -37,19 +39,17 @@ public class ClickedItemDisplay : MonoBehaviour
         }
     }
 
-    void Item_OnAnyItemClicked(Item item)
+    void Item_OnCoinClicked()
     {
-        if(item.IsMoney)
-        {
-            _audioSource.Play();
-        }
-        else
-        {
-            _itemImage.sprite = item.ItemSO.ItemSprite;
-            _itemNameText.text = item.ItemSO.ItemName;
-            _itemValueText.text = $"Value {item.ItemSO.BaseValue}₡";
-            _toolTip.SetActive(true);
-            _timer = 0;
-        }
+        _audioSource.Play();
+    }
+
+    void Item_OnItemPointedAt(Item item)
+    {
+        // _itemImage.sprite = item.ItemSO.ItemSprite;
+        _itemNameText.text = item.ItemSO.ItemName;
+        _itemValueText.text = $"Value {item.ItemSO.BaseValue}₡";
+        _toolTip.SetActive(true);
+        _timer = 0;
     }
 }

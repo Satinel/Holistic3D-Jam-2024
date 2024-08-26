@@ -20,7 +20,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] GameObject[] _mentorSprites;
     [SerializeField] GameOver _gameOver;
 
-    bool _acceptThePremise, _setGreeting, _buyingFinished, _strikesExplained, _sellingFinished, _barteredOnce, _tutorialComplete;
+    bool _acceptThePremise, _setGreeting, _buyingFinished, _strikesExplained, _sellingFinished, _barteredOnce, _tutorialComplete, _skipTutorial;
     bool[] _next = new bool[25];
 
     void Awake()
@@ -34,7 +34,6 @@ public class Tutorial : MonoBehaviour
         TradingSystem.OnOfferRejected += TradingSystem_OnOfferRejected;
         TradingSystem.OnOfferAccepted += TradingSystem_OnOfferAccepted;
         TradingSystem.OnIncorrectChange += TradingSystem_OnIncorrectChange;
-        TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
         DropBox.OnTradeBoxProcessed += DropBox_OnTradeBoxProcessed;
         TradingSystem.OnFinishWithCustomer += TradingSystem_OnFinishWithCustomer;
     }
@@ -45,7 +44,6 @@ public class Tutorial : MonoBehaviour
         TradingSystem.OnOfferRejected -= TradingSystem_OnOfferRejected;
         TradingSystem.OnOfferAccepted -= TradingSystem_OnOfferAccepted;
         TradingSystem.OnIncorrectChange -= TradingSystem_OnIncorrectChange;
-        TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
         DropBox.OnTradeBoxProcessed -= DropBox_OnTradeBoxProcessed;
         TradingSystem.OnFinishWithCustomer -= TradingSystem_OnFinishWithCustomer;
     }
@@ -67,11 +65,18 @@ public class Tutorial : MonoBehaviour
         _openButton.SetActive(false);
         _bankButton.SetActive(false);
         _resetButton.SetActive(false);
-        // _skiptutorialButton.SetActive(true); // TODO (probably no time but IF there was a save system we could save whether the tutorial was done or not)
+        _skiptutorialButton.SetActive(true); // TODO (probably no time but IF there was a save system we could save whether the tutorial was done or not)
     }
 
     public void Button1()
     {
+        if(_skipTutorial)
+        {
+            _greetingButtonText.text = _button1Text.text;
+            SkipGreeting();
+            return;
+        }
+
         if(!_acceptThePremise)
         {
             _mentorSprites[0].SetActive(true);
@@ -90,6 +95,13 @@ public class Tutorial : MonoBehaviour
 
     public void Button2()
     {
+        if(_skipTutorial)
+        {
+            _greetingButtonText.text = _button2Text.text;
+            SkipGreeting();
+            return;
+        }
+
         if(!_acceptThePremise)
         {
             _mentorSprites[1].SetActive(true);
@@ -108,6 +120,13 @@ public class Tutorial : MonoBehaviour
 
     public void Button3()
     {
+        if(_skipTutorial)
+        {
+            _greetingButtonText.text = _button3Text.text;
+            SkipGreeting();
+            return;
+        }
+
         if(!_acceptThePremise)
         {
             _mentorSprites[2].SetActive(true);
@@ -122,6 +141,15 @@ public class Tutorial : MonoBehaviour
             SetGreeting();
             return;
         }
+    }
+
+    public void SkipTutorial()
+    {
+        _skiptutorialButton.SetActive(false);
+        _mentorSprites[0].SetActive(true);
+        _gameOver.SetMentor(0);
+        _skipTutorial = true;
+        SkipThePremise();
     }
 
     public void NextButton()
@@ -287,6 +315,61 @@ public class Tutorial : MonoBehaviour
         _nextButton.SetActive(true);
     }
 
+    void SkipThePremise()
+    {
+        _acceptThePremise = true;
+        _setGreeting = true;
+        _buttonsParent.SetActive(false);
+        _text.text = "How will you greet your customers?";
+        _button1Text.text = "\"What can I do for you?\"";
+        _button2Text.text = "\"I have wares, if you have coin.\"";
+        _button3Text.text = "\"Buy Something!\"";
+        _buttonsParent.SetActive(true);
+    }
+
+    void SkipGreeting()
+    {
+        _speechWindow.SetActive(false);
+        _buttonsParent.SetActive(false);
+        _speechWindow.SetActive(false);
+        _playerStockBox.SetActive(true);
+        _playerCoinBox.SetActive(true);
+        _player.EnableInventory();
+        _compStockBox.SetActive(true);
+        _compCoinBox.SetActive(true);
+        _playerTradeBox.SetActive(true);
+        _compTradeBox.SetActive(true);
+        _scalesParent.SetActive(true);
+        Invoke(nameof(DelayedSkip1), 0.1f);
+        _strikesExplained = true;
+        _buyingFinished = true;
+        _sellingFinished = true;
+        _barteredOnce = true;
+    }
+
+    void DelayedSkip1()
+    {
+        _tradingSystem.SetTutorialCustomer(_mentors[1]);
+        _resetButton.SetActive(true);
+        _mentors[1].ClearInventory();
+        _mentors[1].GenerateCoinType(100, Currency.Copper, false); // 100 + 200 + 1000 + 3000
+        _mentors[1].GenerateCoinType(20, Currency.Silver, false);
+        _mentors[1].GenerateCoinType(10, Currency.Gold, false);
+        _mentors[1].GenerateCoinType(4, Currency.Platinum, false);
+        _mentors[1].CustomerInventory.CreateDebt();
+        _player.SetDebt(8000); // TODO Hello magic number! This seems like a good goal (and it was!)
+
+        Invoke(nameof(DelayedSkip2), 0.1f);
+    }
+
+    void DelayedSkip2()
+    {
+        _player.SetNetWorthText();
+        _tradingSystem.SetTutorialCustomer(_mentors[2]);
+        _openingSplash.SetActive(false);
+        _cancelButton.SetActive(true);
+    }
+
     void Next0()
     {
         _text.text = "There just so happens to be a veteran merchant passing through town...";
@@ -400,6 +483,8 @@ public class Tutorial : MonoBehaviour
 
     void DropBox_OnItemPicked(Item item, bool playerProperty)
     {
+        if(_skipTutorial) { return; }
+
         if(playerProperty)
         {
             Invoke(nameof(BuyTutorial), 1.25f);
@@ -435,6 +520,8 @@ public class Tutorial : MonoBehaviour
 
     void TradingSystem_OnOfferRejected()
     {
+        if(_skipTutorial) { return; }
+
         CloseSpeech();
         if(!_strikesExplained)
         {
@@ -452,6 +539,8 @@ public class Tutorial : MonoBehaviour
     
     void TradingSystem_OnOfferAccepted(bool buying, int offer)
     {
+        if(_skipTutorial) { return; }
+
         if(buying)
         {
             _speechWindow2.SetActive(false);
@@ -504,6 +593,8 @@ public class Tutorial : MonoBehaviour
 
     void TradingSystem_OnIncorrectChange()
     {
+        if(_skipTutorial) { return; }
+
         _mentorText.text = "Bad at math? I know ya can't be doing this on purpose";
         _mentorSpeech.SetActive(true);
         _closeSpeechButton.SetActive(true);
@@ -547,8 +638,6 @@ public class Tutorial : MonoBehaviour
         _mentorSpeech.SetActive(false);
         _nextButton.SetActive(false);
     }
-
-    void TradingSystem_OnTradeCancelled() {}
 
     void TradingSystem_OnFinishWithCustomer(Customer customer)
     {
@@ -643,10 +732,17 @@ public class Tutorial : MonoBehaviour
 
     void TutorialComplete()
     {
-        _mentorText.text = "That's everything ya need. The rest is in yer hands.";
-        _mentorSpeech.SetActive(true);
-        _nextButton.SetActive(true);
         _player.FinishTutorial();
+        if(!_skipTutorial)
+        {
+            _mentorText.text = "That's everything ya need. The rest is in yer hands.";
+            _mentorSpeech.SetActive(true);
+            _nextButton.SetActive(true);
+        }
+        else
+        {
+            WrapUpTutorial();
+        }
     }
 
     void Next23()
@@ -660,52 +756,6 @@ public class Tutorial : MonoBehaviour
     void Next24()
     {
         WrapUpTutorial();
-    }
-
-    public void SkipTutorial() // NO TIME TO FIGURE IT OUT!
-    {
-    //     _skiptutorialButton.SetActive(false);
-    //     CloseSpeech();
-
-    //     _tutorialUI.SetActive(false);
-    //     _clickOverlay.SetActive(false);
-    //     _musicPlayer.SetActive(false);
-    //     _buttonsParent.SetActive(true);
-    //     _compStockBox.SetActive(true);
-    //     _compTradeBox.SetActive(true);
-    //     _compCoinBox.SetActive(true);
-    //     _playerStockBox.SetActive(true);
-    //     _playerCoinBox.SetActive(true);
-    //     _playerTradeBox.SetActive(true);
-    //     _cancelButton.SetActive(true); // (Finish With Customer button)
-    //     _scalesParent.SetActive(true);
-    //     _haggleButton.SetActive(false);
-    //     _openButton.SetActive(true);
-    //     _bankButton.SetActive(true);
-    //     _resetButton.SetActive(true);
-    //     _openingSplash.SetActive(false);
-        
-    //     _tradingSystem.SetIsBuyTutorial(false);
-    //     _tradingUI.SetShowTradeNumbers(false);
-    //     _player.EnableInventory();
-
-    //     _mentors[1].ClearInventory();
-    //     _mentors[1].GenerateCoinType(100, Currency.Copper, false);
-    //     _mentors[1].GenerateCoinType(20, Currency.Silver, false);
-    //     _mentors[1].GenerateCoinType(10, Currency.Gold, false);
-    //     _mentors[1].GenerateCoinType(4, Currency.Platinum, false);
-
-    //     _mentors[1].CustomerInventory.CreateDebt();
-
-    //     SetDebtDelay();
-    // }
-
-    // void SetDebtDelay()
-    // {
-    //     _player.SetDebt(8000);
-    //     _mentors[1].ClearInventory();
-    //     _homeTown.gameObject.SetActive(true);
-    //     gameObject.SetActive(false);
     }
 
     public void WrapUpTutorial()
@@ -723,14 +773,13 @@ public class Tutorial : MonoBehaviour
         _playerStockBox.SetActive(true);
         _playerCoinBox.SetActive(true);
         _playerTradeBox.SetActive(true);
-        _cancelButton.SetActive(true); // (Finish With Customer button)
         _scalesParent.SetActive(true);
         _haggleButton.SetActive(false);
         _openButton.SetActive(true);
         _bankButton.SetActive(true);
         _resetButton.SetActive(true);
         _openingSplash.SetActive(false);
-        
+        _cancelButton.SetActive(true);
         _tradingSystem.SetIsBuyTutorial(false);
         _tradingUI.SetShowTradeNumbers(false);
         _player.EnableInventory();
