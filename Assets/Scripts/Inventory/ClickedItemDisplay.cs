@@ -4,32 +4,38 @@ using TMPro;
 
 public class ClickedItemDisplay : MonoBehaviour
 {
+    [SerializeField] GameObject _toolTip;
     [SerializeField] Image _itemImage;
-    [SerializeField] TextMeshProUGUI _itemNameText;
-    [SerializeField] GameObject _itemNameParent;
+    [SerializeField] TextMeshProUGUI _itemNameText, _itemValueText;
     [SerializeField] AudioSource _audioSource;
+    [SerializeField] float _toolTipDuration = 1f;
 
-    // Currently there's no good place to put this image that isn't going to be confusing so the original function is disabled
+    float _timer = 0;
 
     void Start()
     {
-        // TradingSystem.OnTradeCompleted += TradingSystem_OnTradeCompleted;
         Item.OnAnyItemClicked += Item_OnAnyItemClicked;
-        _itemImage.enabled = false;
-        _itemNameParent.SetActive(false);
+        _toolTip.SetActive(false);
     }
 
     void OnDestroy()
     {
-        // TradingSystem.OnTradeCompleted -= TradingSystem_OnTradeCompleted;
         Item.OnAnyItemClicked -= Item_OnAnyItemClicked;
     }
 
-    // void TradingSystem_OnTradeCompleted(Customer customer)
-    // {
-    //     _itemImage.enabled = false;
-    //     _itemNameParent.SetActive(false);
-    // }
+    void Update()
+    {
+        if(_toolTip.activeSelf)
+        {
+            _toolTip.transform.position = Input.mousePosition;
+            _timer += Time.deltaTime;
+
+            if(_timer > _toolTipDuration)
+            {
+                _toolTip.SetActive(false);
+            }
+        }
+    }
 
     void Item_OnAnyItemClicked(Item item)
     {
@@ -37,13 +43,13 @@ public class ClickedItemDisplay : MonoBehaviour
         {
             _audioSource.Play();
         }
-        // else
-        // {
-        //     _itemImage.sprite = item.ItemSO.ItemSprite;
-        //     _itemNameText.text = item.ItemSO.ItemName;
-        //     gameObject.SetActive(true);
-        //     _itemImage.enabled = true;
-        //     _itemNameParent.SetActive(true);
-        // }
+        else
+        {
+            _itemImage.sprite = item.ItemSO.ItemSprite;
+            _itemNameText.text = item.ItemSO.ItemName;
+            _itemValueText.text = $"Value {item.ItemSO.BaseValue}₡";
+            _toolTip.SetActive(true);
+            _timer = 0;
+        }
     }
 }
