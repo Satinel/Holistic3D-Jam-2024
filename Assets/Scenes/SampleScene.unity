@@ -969,10 +969,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2129822361627589526, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 650
-      objectReference: {fileID: 0}
     - target: {fileID: 4514379735042161175, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
       propertyPath: _player
       value: 
@@ -985,10 +981,6 @@ PrefabInstance:
       propertyPath: _homeTown
       value: 
       objectReference: {fileID: 1242853889}
-    - target: {fileID: 6424553701595766014, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8333649778445846049, guid: 796948062d31f2143ad29b3fee72a1ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

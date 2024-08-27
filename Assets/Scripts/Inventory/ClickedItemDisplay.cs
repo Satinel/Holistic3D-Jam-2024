@@ -5,23 +5,23 @@ using TMPro;
 public class ClickedItemDisplay : MonoBehaviour
 {
     [SerializeField] GameObject _toolTip;
-    [SerializeField] Image _itemImage;
+    [SerializeField] RectTransform _tipRectTransform, _tipPositioner;
     [SerializeField] TextMeshProUGUI _itemNameText, _itemValueText;
     [SerializeField] AudioSource _audioSource;
     [SerializeField] float _toolTipDuration = 1f;
+    [SerializeField] Vector2 _tipPositionerDefaults;
 
     float _timer = 0;
     bool _isDragging;
 
-    void Start()
+    void OnEnable()
     {
         Item.OnCoinClicked += Item_OnCoinClicked;
         Item.OnItemPointedAt += Item_OnItemPointedAt;
         Item.OnItemDrag += Item_OnItemDrag;
-        _toolTip.SetActive(false);
     }
 
-    void OnDestroy()
+    void OnDisable()
     {
         Item.OnCoinClicked -= Item_OnCoinClicked;
         Item.OnItemPointedAt -= Item_OnItemPointedAt;
@@ -33,6 +33,29 @@ public class ClickedItemDisplay : MonoBehaviour
         if(_toolTip.activeSelf)
         {
             _toolTip.transform.position = Input.mousePosition;
+
+            if(_tipRectTransform.anchoredPosition.x > 0)
+            {
+                if(_tipRectTransform.anchoredPosition.y > 0)
+                {
+                    _tipPositioner.anchoredPosition = new Vector2(-_tipPositionerDefaults.x, -_tipPositionerDefaults.y);
+                }
+                else
+                {
+                    _tipPositioner.anchoredPosition = new Vector2(-_tipPositionerDefaults.x, _tipPositionerDefaults.y);
+                }
+            }
+            else
+            {
+                if(_tipRectTransform.anchoredPosition.y > 0)
+                {
+                    _tipPositioner.anchoredPosition = new Vector2(_tipPositionerDefaults.x, -_tipPositionerDefaults.y);
+                }
+                else
+                {
+                    _tipPositioner.anchoredPosition = new Vector2(_tipPositionerDefaults.x, _tipPositionerDefaults.y);
+                }
+            }
             
             _timer += Time.deltaTime;
             

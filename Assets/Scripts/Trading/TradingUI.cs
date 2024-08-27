@@ -122,6 +122,10 @@ public class TradingUI : MonoBehaviour
             _tradeTypeText2.text = "BUYING";
             _tradeTypeText2Parent.SetActive(true);
         }
+        else
+        {
+            _tradeTypeText2Parent.SetActive(false);
+        }
         
         if(_customer.Tolerance <= 0 || _customer.IsTutorial)
         {
