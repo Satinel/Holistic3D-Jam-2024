@@ -13,7 +13,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] TradingSystem _tradingSystem;
     [SerializeField] TradingUI _tradingUI;
     [SerializeField] Customer[] _mentors;
-    [SerializeField] GameObject _musicPlayer;
+    [SerializeField] GameObject _musicPlayer, _optionsButton;
     [SerializeField] Town _homeTown;
     [SerializeField] GameObject _tutorialUI, _skiptutorialButton;
     Player _player;
@@ -511,6 +511,7 @@ public class Tutorial : MonoBehaviour
 
     public void FakeHaggleButton()
     {
+        _optionsButton.SetActive(false);
         _mentorSpeech.SetActive(false);
         _speechWindow2.SetActive(true);
         _speech2Text.text = "Click the arrows to increase/decrease your offer.\nYou can also use your scroll wheel.";
@@ -544,6 +545,7 @@ public class Tutorial : MonoBehaviour
         if(buying)
         {
             _speechWindow2.SetActive(false);
+            _optionsButton.SetActive(true);
             _mentorText.text = "Not so hard is it? Folks know ya need to make a profit. They'll pay a fee to have <i>what</i> they want, <i>when</i> they want it.";
             _mentorSpeech.SetActive(true);
             _nextButton.SetActive(true);
@@ -630,6 +632,7 @@ public class Tutorial : MonoBehaviour
         _speechWindow.SetActive(false);
         _speechWindow2.SetActive(false);
         _closeSpeechButton.SetActive(false);
+        _optionsButton.SetActive(true);
     }
 
     void Next17()

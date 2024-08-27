@@ -6,6 +6,7 @@ public class Town : MonoBehaviour
 {
     public static Action<Customer> OnNextCustomer;
     public static Action OnNoCustomers;
+    public static Action<int> OnCustomerCountChange;
 
     List<Customer> _customers = new();
 
@@ -37,6 +38,7 @@ public class Town : MonoBehaviour
 
             OnNextCustomer?.Invoke(nextCustomer);
             _customers.Remove(nextCustomer);
+            OnCustomerCountChange?.Invoke(_customers.Count);
         }
         else
         {

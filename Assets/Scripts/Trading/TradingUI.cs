@@ -6,10 +6,10 @@ public class TradingUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _tradeBoxText, _payText;
     [SerializeField] TextMeshProUGUI _compTradeBoxText;
-    [SerializeField] TextMeshProUGUI _profitText, _changeText, _offerText, _tradeTypeText, _tradeTypeText2, _customerNameText, _itemNameText;
+    [SerializeField] TextMeshProUGUI _profitText, _changeText, _offerText, _tradeTypeText, _tradeTypeText2, _customerNameText, _itemNameText, _itemValueText, _remainingCustomersText;
     [SerializeField] Image _itemImage;
-    [SerializeField] GameObject _payTextParent, _repeatCustomerButton, _tradeTypeText2Parent;
-    [SerializeField] GameObject _resultWindow, _noItemsWindow, _setPriceWindow, _customerName, _noCustomersWindow, _itemNameWindow, _finalResultWindow;
+    [SerializeField] GameObject _payTextParent, _repeatCustomerButton, _currentItemDisplay;
+    [SerializeField] GameObject _resultWindow, _noItemsWindow, _setPriceWindow, _customerName, _noCustomersWindow, _itemNameWindow, _finalResultWindow, _remainingCustomersWindow;
 
     // int _playerValue, _compValue;
     bool _showTradeNumbers = false;
@@ -35,6 +35,7 @@ public class TradingUI : MonoBehaviour
         DropBox.OnBuyPriceSet += DropBox_OnBuyPriceSet;
         DropBox.OnSellPriceSet += DropBox_OnSellPriceSet;
         Town.OnNoCustomers += Town_OnNoCustomers;
+        Town.OnCustomerCountChange += Town_OnCustomerCountChange;
     }
 
     void OnDisable()
@@ -57,6 +58,7 @@ public class TradingUI : MonoBehaviour
         DropBox.OnBuyPriceSet -= DropBox_OnBuyPriceSet;
         DropBox.OnSellPriceSet -= DropBox_OnSellPriceSet;
         Town.OnNoCustomers -= Town_OnNoCustomers;
+        Town.OnCustomerCountChange -= Town_OnCustomerCountChange;
     }
 
     void DropBox_OnTradeBoxValueChanged(bool isPlayer, int value)
@@ -101,11 +103,12 @@ public class TradingUI : MonoBehaviour
             _customerName.SetActive(false);
             _tradeTypeText.text = string.Empty;
             _tradeTypeText2.text = string.Empty;
-            _tradeTypeText2Parent.SetActive(false);
+            _currentItemDisplay.SetActive(false);
             SetShowTradeNumbers(false);
             return;
         }
 
+        _remainingCustomersWindow.SetActive(false);
         _customer = customer;
         _customerName.SetActive(true);
         _customerNameText.text = customer.Name;
@@ -114,17 +117,17 @@ public class TradingUI : MonoBehaviour
         {
             _tradeTypeText.text = "Sell Offer";
             _tradeTypeText2.text = "SELLING";
-            _tradeTypeText2Parent.SetActive(true);
+            _currentItemDisplay.SetActive(true);
         }
         else if(customer.CustomerType == Customer.Type.Sell)
         {
             _tradeTypeText.text = "Buy Offer";
             _tradeTypeText2.text = "BUYING";
-            _tradeTypeText2Parent.SetActive(true);
+            _currentItemDisplay.SetActive(true);
         }
         else
         {
-            _tradeTypeText2Parent.SetActive(false);
+            _currentItemDisplay.SetActive(false);
         }
         
         if(_customer.Tolerance <= 0 || _customer.IsTutorial)
@@ -156,7 +159,9 @@ public class TradingUI : MonoBehaviour
         _itemImage.enabled = false;
         _itemNameWindow.SetActive(false);
         _itemNameText.text = string.Empty;
-        _tradeTypeText2Parent.SetActive(false);
+        _itemValueText.text = string.Empty;
+        _currentItemDisplay.SetActive(false);
+        _remainingCustomersWindow.SetActive(true);
     }
 
     void TradingSystem_OnChangeGiven(Customer.Type customerType, int change)
@@ -204,7 +209,8 @@ public class TradingUI : MonoBehaviour
         _itemImage.enabled = false;
         _itemNameWindow.SetActive(false);
         _itemNameText.text = string.Empty;
-        _tradeTypeText2Parent.SetActive(false);
+        _itemValueText.text = string.Empty;
+        _currentItemDisplay.SetActive(false);
     }
 
     void TradingSystem_OnFinishWithCustomer(Customer customer)
@@ -214,12 +220,12 @@ public class TradingUI : MonoBehaviour
 
     void DropBox_OnItemPicked(Item item, bool isPlayer)
     {
-        _tradeTypeText2Parent.SetActive(true);
         _itemImage.enabled = true;
         _itemImage.sprite = item.ItemSO.ItemSprite;
         _itemNameText.text = item.ItemSO.ItemName;
+        _itemValueText.text = $"Value: {item.ItemSO.BaseValue:N0}₡";
         _itemNameWindow.SetActive(true);
-        _tradeTypeText2Parent.SetActive(true);
+        _currentItemDisplay.SetActive(true);
     }
 
     void DropBox_OnTradeResults()
@@ -297,6 +303,11 @@ public class TradingUI : MonoBehaviour
         _noCustomersWindow.SetActive(true);
     }
 
+    void Town_OnCustomerCountChange(int customerCount)
+    {
+        _remainingCustomersText.text = $"Remaining Customers: {customerCount}";
+    }
+
     public void SetShowTradeNumbers(bool shouldShow)
     {
         _showTradeNumbers = shouldShow;
@@ -343,6 +354,7 @@ public class TradingUI : MonoBehaviour
     public void OpenFinalResultWindow()
     {
         _finalResultWindow.SetActive(true);
+        _remainingCustomersWindow.SetActive(false);
     }
 
     public void CloseFinalResultsWindow()

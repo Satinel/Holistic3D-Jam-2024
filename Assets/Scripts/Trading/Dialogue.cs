@@ -23,7 +23,7 @@ public class Dialogue : MonoBehaviour
     [SerializeField] List<string> _departures = new();
     [SerializeField] List<string> _leaveAngry = new();
 
-    bool _isActive = false, _stoleChange, _poorCustomer;
+    bool _isActive = false, _stoleChange, _poorCustomer, _hasGreeted;
 
     void OnEnable()
     {
@@ -68,9 +68,10 @@ public class Dialogue : MonoBehaviour
 
     void Inventory_OnInventoryLoaded(bool isPlayer)
     {
-        if(isPlayer) { return; }
+        if(isPlayer || _hasGreeted) { return; }
 
         SpeakLine(_greetings);
+        _hasGreeted = true;
     }
 
     void DropBox_OnNoItems()
