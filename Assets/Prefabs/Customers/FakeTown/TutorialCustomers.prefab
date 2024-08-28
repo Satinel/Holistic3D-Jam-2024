@@ -282,11 +282,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingCoins.Array.data[1]
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingCoins.Array.data[2]
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1527820320201594244, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: _startingCoins.Array.data[3]

@@ -121,6 +121,11 @@ public class DropBox : MonoBehaviour, IDropHandler
                 OnSellPriceSet?.Invoke(_totalValue);
             }
         }
+        Invoke(nameof(DelayedValueChangeInvoke), 0.1f);
+    }
+
+    void DelayedValueChangeInvoke()
+    {
         OnTradeBoxValueChanged?.Invoke(_playerProperty, _totalValue);
     }
 

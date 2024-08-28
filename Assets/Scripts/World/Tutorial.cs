@@ -15,7 +15,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] Customer[] _mentors;
     [SerializeField] GameObject _musicPlayer, _optionsButton;
     [SerializeField] Town _homeTown;
-    [SerializeField] GameObject _tutorialUI, _skiptutorialButton;
+    [SerializeField] GameObject _tutorialUI, _skiptutorialButton, _acceptMarker, _rejectMarker;
     Player _player;
     [SerializeField] GameObject[] _mentorSprites;
     [SerializeField] GameOver _gameOver;
@@ -766,6 +766,8 @@ public class Tutorial : MonoBehaviour
         _skiptutorialButton.SetActive(false);
         CloseSpeech();
 
+        _acceptMarker.SetActive(false);
+        _rejectMarker.SetActive(false);
         _tutorialUI.SetActive(false);
         _clickOverlay.SetActive(false);
         _musicPlayer.SetActive(false);

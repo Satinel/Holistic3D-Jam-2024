@@ -5,9 +5,9 @@ public class BalanceScale : MonoBehaviour
     [SerializeField] float _minYHeight, _maxYHeight, _minZRotation, _maxZRotation;
 
     [SerializeField] Transform _compPan, _playerPan, _beam;
-    [SerializeField] GameObject _panWarning;
+    [SerializeField] GameObject _panWarning, _acceptMarker, _rejectMarker;
 
-    [SerializeField] bool _useTolerance;
+    // [SerializeField] bool _useTolerance; // For the time being I'd rather use the Marker system instead of this
 
     int _basePrice, _offerValue, _compValue, _playerValue;
 
@@ -25,30 +25,35 @@ public class BalanceScale : MonoBehaviour
 
     void OnEnable()
     {
-        Town.OnNextCustomer += Town_OnNextCustomer;
         TradingSystem.OnNewCustomer += TradingSystem_OnNewCustomer;
         TradingSystem.OnBasePriceSet += TradingSystem_OnBasePriceSet;
         TradingSystem.OnOfferValueChanged += TradingSystem_OnOfferValueChanged;
+        TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
+        TradingSystem.OnOfferRejected += TradingSystem_OnOfferRejected;
+        DropBox.OnBuyPriceSet += DropBox_OnBuyPriceSet;
+        DropBox.OnSellPriceSet += DropBox_OnSellPriceSet;
         DropBox.OnTradeBoxValueChanged += DropBox_OnTradeBoxValueChanged;
     }
 
     void OnDisable()
     {
-        Town.OnNextCustomer -= Town_OnNextCustomer;
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
         TradingSystem.OnBasePriceSet -= TradingSystem_OnBasePriceSet;
         TradingSystem.OnOfferValueChanged -= TradingSystem_OnOfferValueChanged;
+        TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
+        TradingSystem.OnOfferRejected -= TradingSystem_OnOfferRejected;
+        DropBox.OnBuyPriceSet -= DropBox_OnBuyPriceSet;
+        DropBox.OnSellPriceSet -= DropBox_OnSellPriceSet;
         DropBox.OnTradeBoxValueChanged -= DropBox_OnTradeBoxValueChanged;
-    }
-
-    void Town_OnNextCustomer(Customer customer)
-    {
-        _customer = customer;
     }
 
     void TradingSystem_OnNewCustomer(Customer customer)
     {
         _panWarning.SetActive(false);
+        _acceptMarker.SetActive(false);
+        _rejectMarker.SetActive(false);
+        _acceptMarker.transform.localPosition = Vector2.zero;
+        _rejectMarker.transform.localPosition = Vector2.zero;
         if(customer == null)
         {
             _customer = null;
@@ -75,6 +80,84 @@ public class BalanceScale : MonoBehaviour
         else if(_customer.CustomerType == Customer.Type.Sell)
         {
             CalculateOffer(_basePrice, _offerValue);
+        }
+    }
+
+    void TradingSystem_OnTradeCancelled()
+    {
+        _acceptMarker.SetActive(false);
+        _rejectMarker.SetActive(false);
+    }
+
+    void DropBox_OnBuyPriceSet(int price)
+    {
+        if(_customer.CustomerType != Customer.Type.Buy) { return; }
+
+        if(!_acceptMarker.activeSelf)
+        {
+Debug.Log($"ON BUY PRICE SET {_playerPan.localPosition.y} player to set active marker {_acceptMarker.transform.localPosition.y}");
+            _acceptMarker.SetActive(true);
+            _acceptMarker.transform.localPosition = new(0, _playerPan.localPosition.y);                
+            return;
+        }
+
+Debug.Log($"ON BUY PRICE SET {_playerPan.localPosition.y} player to marker {_acceptMarker.transform.localPosition.y}");
+        if(_playerPan.localPosition.y > _acceptMarker.transform.localPosition.y)
+        {
+            _acceptMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
+        }
+    }
+
+    void DropBox_OnSellPriceSet(int price)
+    {
+        if(!_acceptMarker.activeSelf)
+        {
+Debug.Log($"ON SELL PRICE SET {_compPan.localPosition.y} comp to set active marker {_acceptMarker.transform.localPosition.y}");
+            _acceptMarker.SetActive(true);
+            _acceptMarker.transform.localPosition = new(0, _compPan.localPosition.y);
+            return;
+        }
+
+Debug.Log($"ON SELL PRICE SET {_compPan.localPosition.y} comp to marker {_acceptMarker.transform.localPosition.y}");
+        if(_compPan.localPosition.y < _acceptMarker.transform.localPosition.y)
+        {
+            _acceptMarker.transform.localPosition = new(0, _compPan.localPosition.y);
+        }
+    }
+
+    void TradingSystem_OnOfferRejected()
+    {
+        if(!_rejectMarker.activeSelf)
+        {
+            _rejectMarker.SetActive(true);
+            if(_customer.CustomerType == Customer.Type.Sell)
+            {
+Debug.Log($"SELL CUSTOMER {_compPan.localPosition.y} comp to set active marker {_rejectMarker.transform.localPosition.y}");
+                _rejectMarker.transform.localPosition = new(0, _compPan.localPosition.y);
+            }
+            else
+            {
+Debug.Log($"BUY CUSTOMER {_playerPan.localPosition.y} player to set active marker {_rejectMarker.transform.localPosition.y}");
+                _rejectMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
+            }
+            return;
+        }
+
+        if(_customer.CustomerType == Customer.Type.Sell)
+        {
+Debug.Log($"SELL CUSTOMER {_compPan.localPosition.y} comp to marker {_rejectMarker.transform.localPosition.y}");
+            if(_compPan.localPosition.y > _rejectMarker.transform.localPosition.y)
+            {
+                _rejectMarker.transform.localPosition = new(0, _compPan.localPosition.y);
+            }
+        }
+        else
+        {
+Debug.Log($"BUY CUSTOMER {_playerPan.localPosition.y} player to marker {_rejectMarker.transform.localPosition.y}");
+            if(_playerPan.localPosition.y < _rejectMarker.transform.localPosition.y)
+            {
+                _rejectMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
+            }
         }
     }
 
@@ -126,11 +209,11 @@ public class BalanceScale : MonoBehaviour
 
             float offerNormalized = 1 - ((float)_playerValue / _compValue);
 
-            if(_useTolerance && offerNormalized <= _customer.Tolerance)
-            {
-                RestoreStartValues();
-                return;
-            }
+            // if(_useTolerance && offerNormalized <= _customer.Tolerance)
+            // {
+            //     RestoreStartValues();
+            //     return;
+            // }
 
             compHeight = offerNormalized * _minYHeight;
             playerHeight = offerNormalized * _maxYHeight;
@@ -142,11 +225,11 @@ public class BalanceScale : MonoBehaviour
 
             float offerNormalized = 1 - ((float)_compValue / _playerValue);
             
-            if(_useTolerance && offerNormalized <= _customer.Tolerance)
-            {
-                RestoreStartValues();
-                return;
-            }
+            // if(_useTolerance && offerNormalized <= _customer.Tolerance)
+            // {
+            //     RestoreStartValues();
+            //     return;
+            // }
 
             playerHeight = offerNormalized * _minYHeight;
             compHeight = offerNormalized * _maxYHeight;
@@ -176,11 +259,11 @@ public class BalanceScale : MonoBehaviour
             if(baseprice == 0) { return; } // No divide by zero
 
             float offerNormalized = 1 - ((float)offerValue / baseprice);
-            if(_useTolerance && offerNormalized <= _customer.Tolerance)
-            {
-                RestoreStartValues();
-                return;
-            }
+            // if(_useTolerance && offerNormalized <= _customer.Tolerance)
+            // {
+            //     RestoreStartValues();
+            //     return;
+            // }
 
             compHeight = offerNormalized * _minYHeight;
             playerHeight = offerNormalized * _maxYHeight;
@@ -192,11 +275,11 @@ public class BalanceScale : MonoBehaviour
 
             float offerNormalized = 1 - ((float)baseprice / offerValue);
 
-            if(_useTolerance && offerNormalized <= _customer.Tolerance)
-            {
-                RestoreStartValues();
-                return;
-            }
+            // if(_useTolerance && offerNormalized <= _customer.Tolerance)
+            // {
+            //     RestoreStartValues();
+            //     return;
+            // }
             
             playerHeight = offerNormalized * _minYHeight;
             compHeight = offerNormalized * _maxYHeight;

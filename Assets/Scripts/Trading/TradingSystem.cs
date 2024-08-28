@@ -162,15 +162,9 @@ public class TradingSystem : MonoBehaviour
 
         if(_currentCustomer.CustomerType == Customer.Type.Buy)
         {
-            if(_offerValue > _currentCustomer.GetTotalFunds())
-            {
-                OnPoorCustomer?.Invoke();
-                return true;
-            }
-
             _offer = _offerValue - _basePrice;
 
-            if(_offer <= 0) { return true; } // TODO(?) Invoke a pleased message from customer that they got a good deal
+            if(_offer <= 0) { return true; } // TODO Prompt player that they'll lose net worth (and invoke a pleased message from customer that they got a good deal?)
 
             rake = 1 - ((float)_basePrice / _offerValue);
         }
@@ -181,12 +175,23 @@ public class TradingSystem : MonoBehaviour
 
             _offer = _basePrice - _offerValue;
 
-            if(_offer <= 0) { return true; } // TODO(?) Invoke a pleased message from customer that they got a good deal
+            if(_offer <= 0) { return true; } // TODO Prompt player that they'll lose net worth (and invoke a pleased message from customer that they got a good deal?)
 
             rake = 1 - ((float)_offerValue / _basePrice);
         }
 
-        return rake <= _currentCustomer.Tolerance;
+        if(rake <= _currentCustomer.Tolerance)
+        {
+            if(_offerValue > _currentCustomer.GetTotalFunds())
+            {
+                OnPoorCustomer?.Invoke();
+            }
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     bool OfferChange(out int offer) // TODO Go over this thoroughly at some point
