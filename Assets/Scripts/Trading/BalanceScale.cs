@@ -5,7 +5,7 @@ public class BalanceScale : MonoBehaviour
     [SerializeField] float _minYHeight, _maxYHeight, _minZRotation, _maxZRotation;
 
     [SerializeField] Transform _compPan, _playerPan, _beam;
-    [SerializeField] GameObject _panWarning, _acceptMarker, _rejectMarker;
+    [SerializeField] GameObject _panWarning, _acceptMarker, _rejectMarker, _acceptIcon, _rejectIcon;
 
     // [SerializeField] bool _useTolerance; // For the time being I'd rather use the Marker system instead of this
 
@@ -85,6 +85,8 @@ public class BalanceScale : MonoBehaviour
     {
         _acceptMarker.SetActive(false);
         _rejectMarker.SetActive(false);
+        _rejectIcon.SetActive(false);
+        _acceptIcon.SetActive(false);
     }
 
     void TradingSystem_OnOfferRejected()
@@ -265,6 +267,8 @@ public class BalanceScale : MonoBehaviour
     void CheckWarnings(int offer)
     {
         _panWarning.SetActive(false);
+        _rejectIcon.SetActive(false);
+        _acceptIcon.SetActive(false);
 
         if(!_customer) { return; }
         if(_customer.CustomerType == Customer.Type.Barter) { return; } // TODO (someday) only skip warning when barter not locked or something
@@ -277,8 +281,13 @@ public class BalanceScale : MonoBehaviour
 
         if(_rejectMarker.activeSelf && _playerPan.localPosition.y >= _rejectMarker.transform.localPosition.y)
         {
-            _panWarning.SetActive(true);
+            _rejectIcon.SetActive(true);
             return;
-        }        
+        }
+        if(_acceptMarker.activeSelf && _playerPan.localPosition.y <= _acceptMarker.transform.localPosition.y)
+        {
+            _acceptIcon.SetActive(true);
+            return;
+        }
     }
 }

@@ -9779,6 +9779,8 @@ MonoBehaviour:
   _resultWindow: {fileID: 5201998988826021069}
   _noItemsWindow: {fileID: 4521908516362504301}
   _setPriceWindow: {fileID: 3560204358787092975}
+  _scaleMarkers: {fileID: 3669311434213552608}
+  _scaleIcons: {fileID: 263469931608368499}
   _customerName: {fileID: 8401048131216457560}
   _noCustomersWindow: {fileID: 108500073741985666}
   _itemNameWindow: {fileID: 3036575681219580007}
@@ -21250,9 +21252,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63513ed9046a2d444a3dcf5bb3fd341d, type: 3}
+--- !u!1 &263469931608368499 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7854342186641017248, guid: 63513ed9046a2d444a3dcf5bb3fd341d, type: 3}
+  m_PrefabInstance: {fileID: 7973678231966002387}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2835354558702605243 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5328041938326781800, guid: 63513ed9046a2d444a3dcf5bb3fd341d, type: 3}
+  m_PrefabInstance: {fileID: 7973678231966002387}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3669311434213552608 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6648493195192360243, guid: 63513ed9046a2d444a3dcf5bb3fd341d, type: 3}
   m_PrefabInstance: {fileID: 7973678231966002387}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &4290482632972322631 stripped
