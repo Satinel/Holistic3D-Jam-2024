@@ -91,13 +91,11 @@ public class BalanceScale : MonoBehaviour
     {
         if(!_rejectMarker.activeSelf)
         {
-Debug.Log($"INACTIVE {_playerPan.localPosition.y} player to set active marker {_rejectMarker.transform.localPosition.y}");
             _rejectMarker.SetActive(true);
             _rejectMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
             return;
         }
 
-Debug.Log($"ON OFFER REJECTED {_playerPan.localPosition.y} player to marker {_rejectMarker.transform.localPosition.y}");
         if(_playerPan.localPosition.y < _rejectMarker.transform.localPosition.y)
         {
             _rejectMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
@@ -109,13 +107,11 @@ Debug.Log($"ON OFFER REJECTED {_playerPan.localPosition.y} player to marker {_re
     {
         if(!_acceptMarker.activeSelf)
         {
-Debug.Log($"ON OFFER ACCEPTED {_playerPan.localPosition.y} player to set active marker {_acceptMarker.transform.localPosition.y}");
             _acceptMarker.SetActive(true);
             _acceptMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
             return;
         }
 
-Debug.Log($"OFFER ACCEPTED {_playerPan.localPosition.y} player to marker {_acceptMarker.transform.localPosition.y}");
         if(_playerPan.localPosition.y > _acceptMarker.transform.localPosition.y)
         {
             _acceptMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
