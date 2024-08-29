@@ -30,8 +30,7 @@ public class BalanceScale : MonoBehaviour
         TradingSystem.OnOfferValueChanged += TradingSystem_OnOfferValueChanged;
         TradingSystem.OnTradeCancelled += TradingSystem_OnTradeCancelled;
         TradingSystem.OnOfferRejected += TradingSystem_OnOfferRejected;
-        DropBox.OnBuyPriceSet += DropBox_OnBuyPriceSet;
-        DropBox.OnSellPriceSet += DropBox_OnSellPriceSet;
+        TradingSystem.OnOfferAccepted += TradingSystem_OnOfferAccepted;
         DropBox.OnTradeBoxValueChanged += DropBox_OnTradeBoxValueChanged;
     }
 
@@ -42,8 +41,7 @@ public class BalanceScale : MonoBehaviour
         TradingSystem.OnOfferValueChanged -= TradingSystem_OnOfferValueChanged;
         TradingSystem.OnTradeCancelled -= TradingSystem_OnTradeCancelled;
         TradingSystem.OnOfferRejected -= TradingSystem_OnOfferRejected;
-        DropBox.OnBuyPriceSet -= DropBox_OnBuyPriceSet;
-        DropBox.OnSellPriceSet -= DropBox_OnSellPriceSet;
+        TradingSystem.OnOfferAccepted -= TradingSystem_OnOfferAccepted;
         DropBox.OnTradeBoxValueChanged -= DropBox_OnTradeBoxValueChanged;
     }
 
@@ -89,75 +87,38 @@ public class BalanceScale : MonoBehaviour
         _rejectMarker.SetActive(false);
     }
 
-    void DropBox_OnBuyPriceSet(int price)
-    {
-        if(_customer.CustomerType != Customer.Type.Buy) { return; }
-
-        if(!_acceptMarker.activeSelf)
-        {
-Debug.Log($"ON BUY PRICE SET {_playerPan.localPosition.y} player to set active marker {_acceptMarker.transform.localPosition.y}");
-            _acceptMarker.SetActive(true);
-            _acceptMarker.transform.localPosition = new(0, _playerPan.localPosition.y);                
-            return;
-        }
-
-Debug.Log($"ON BUY PRICE SET {_playerPan.localPosition.y} player to marker {_acceptMarker.transform.localPosition.y}");
-        if(_playerPan.localPosition.y > _acceptMarker.transform.localPosition.y)
-        {
-            _acceptMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
-        }
-    }
-
-    void DropBox_OnSellPriceSet(int price)
-    {
-        if(!_acceptMarker.activeSelf)
-        {
-Debug.Log($"ON SELL PRICE SET {_compPan.localPosition.y} comp to set active marker {_acceptMarker.transform.localPosition.y}");
-            _acceptMarker.SetActive(true);
-            _acceptMarker.transform.localPosition = new(0, _compPan.localPosition.y);
-            return;
-        }
-
-Debug.Log($"ON SELL PRICE SET {_compPan.localPosition.y} comp to marker {_acceptMarker.transform.localPosition.y}");
-        if(_compPan.localPosition.y < _acceptMarker.transform.localPosition.y)
-        {
-            _acceptMarker.transform.localPosition = new(0, _compPan.localPosition.y);
-        }
-    }
-
     void TradingSystem_OnOfferRejected()
     {
         if(!_rejectMarker.activeSelf)
         {
+Debug.Log($"INACTIVE {_playerPan.localPosition.y} player to set active marker {_rejectMarker.transform.localPosition.y}");
             _rejectMarker.SetActive(true);
-            if(_customer.CustomerType == Customer.Type.Sell)
-            {
-Debug.Log($"SELL CUSTOMER {_compPan.localPosition.y} comp to set active marker {_rejectMarker.transform.localPosition.y}");
-                _rejectMarker.transform.localPosition = new(0, _compPan.localPosition.y);
-            }
-            else
-            {
-Debug.Log($"BUY CUSTOMER {_playerPan.localPosition.y} player to set active marker {_rejectMarker.transform.localPosition.y}");
-                _rejectMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
-            }
+            _rejectMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
             return;
         }
 
-        if(_customer.CustomerType == Customer.Type.Sell)
+Debug.Log($"ON OFFER REJECTED {_playerPan.localPosition.y} player to marker {_rejectMarker.transform.localPosition.y}");
+        if(_playerPan.localPosition.y < _rejectMarker.transform.localPosition.y)
         {
-Debug.Log($"SELL CUSTOMER {_compPan.localPosition.y} comp to marker {_rejectMarker.transform.localPosition.y}");
-            if(_compPan.localPosition.y > _rejectMarker.transform.localPosition.y)
-            {
-                _rejectMarker.transform.localPosition = new(0, _compPan.localPosition.y);
-            }
+            _rejectMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
         }
-        else
+        
+    }
+
+    void TradingSystem_OnOfferAccepted(bool isBuying, int offer)
+    {
+        if(!_acceptMarker.activeSelf)
         {
-Debug.Log($"BUY CUSTOMER {_playerPan.localPosition.y} player to marker {_rejectMarker.transform.localPosition.y}");
-            if(_playerPan.localPosition.y < _rejectMarker.transform.localPosition.y)
-            {
-                _rejectMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
-            }
+Debug.Log($"ON OFFER ACCEPTED {_playerPan.localPosition.y} player to set active marker {_acceptMarker.transform.localPosition.y}");
+            _acceptMarker.SetActive(true);
+            _acceptMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
+            return;
+        }
+
+Debug.Log($"OFFER ACCEPTED {_playerPan.localPosition.y} player to marker {_acceptMarker.transform.localPosition.y}");
+        if(_playerPan.localPosition.y > _acceptMarker.transform.localPosition.y)
+        {
+            _acceptMarker.transform.localPosition = new(0, _playerPan.localPosition.y);
         }
     }
 

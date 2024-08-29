@@ -1403,7 +1403,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 0549fa8c24250a444b714fce2c09b831, type: 2}
     - target: {fileID: 1789261515465166497, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: m_Name
-      value: FruitTrader
+      value: FruitSeller
       objectReference: {fileID: 0}
     - target: {fileID: 3209192453466546593, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: m_LocalPosition.x

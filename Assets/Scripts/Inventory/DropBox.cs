@@ -110,7 +110,7 @@ public class DropBox : MonoBehaviour, IDropHandler
             if(_playerProperty)
             {
                 _totalValue += value;
-                OnBuyPriceSet?.Invoke(_totalValue);
+                Invoke(nameof(DelayedBuyPriceInvoke), 0.1f);
             }
         }
         else
@@ -118,10 +118,20 @@ public class DropBox : MonoBehaviour, IDropHandler
             if(!_playerProperty)
             {
                 _totalValue -= value;
-                OnSellPriceSet?.Invoke(_totalValue);
+                Invoke(nameof(DelayedSellPriceInvoke), 0.1f);
             }
         }
-        Invoke(nameof(DelayedValueChangeInvoke), 0.1f);
+        Invoke(nameof(DelayedValueChangeInvoke), 0.125f);
+    }
+
+    void DelayedBuyPriceInvoke()
+    {
+        OnBuyPriceSet?.Invoke(_totalValue);
+    }
+
+    void DelayedSellPriceInvoke()
+    {
+        OnSellPriceSet?.Invoke(_totalValue);
     }
 
     void DelayedValueChangeInvoke()
