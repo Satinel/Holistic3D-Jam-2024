@@ -268,16 +268,21 @@ Debug.Log($"OFFER ACCEPTED {_playerPan.localPosition.y} player to marker {_accep
 
     void CheckWarnings(int offer)
     {
+        _panWarning.SetActive(false);
+
         if(!_customer) { return; }
         if(_customer.CustomerType == Customer.Type.Barter) { return; } // TODO (someday) only skip warning when barter not locked or something
 
-        if(offer > 0)
-        {
-            _panWarning.SetActive(false);
-        }
-        else
+        if(offer < 0)
         {
             _panWarning.SetActive(true);
+            return;
         }
+
+        if(_rejectMarker.activeSelf && _playerPan.localPosition.y >= _rejectMarker.transform.localPosition.y)
+        {
+            _panWarning.SetActive(true);
+            return;
+        }        
     }
 }
