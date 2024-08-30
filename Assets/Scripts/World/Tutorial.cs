@@ -15,7 +15,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] Customer[] _mentors;
     [SerializeField] GameObject _musicPlayer, _optionsButton;
     [SerializeField] Town _homeTown;
-    [SerializeField] GameObject _tutorialUI, _skiptutorialButton, _acceptMarker, _rejectMarker;
+    [SerializeField] GameObject _tutorialUI, _skiptutorialButton, _acceptMarker, _rejectMarker, _ignoreWarningButton;
     Player _player;
     [SerializeField] GameObject[] _mentorSprites;
     [SerializeField] GameOver _gameOver;
@@ -65,6 +65,7 @@ public class Tutorial : MonoBehaviour
         _openButton.SetActive(false);
         _bankButton.SetActive(false);
         _resetButton.SetActive(false);
+        _ignoreWarningButton.SetActive(false);
         _skiptutorialButton.SetActive(true); // TODO (probably no time but IF there was a save system we could save whether the tutorial was done or not)
     }
 
@@ -340,6 +341,7 @@ public class Tutorial : MonoBehaviour
         _playerTradeBox.SetActive(true);
         _compTradeBox.SetActive(true);
         _scalesParent.SetActive(true);
+        _ignoreWarningButton.SetActive(true);
         Invoke(nameof(DelayedSkip1), 0.1f);
         _strikesExplained = true;
         _buyingFinished = true;
@@ -727,6 +729,7 @@ public class Tutorial : MonoBehaviour
 
     void BarteredOnce()
     {
+        _ignoreWarningButton.SetActive(true);
         _cancelButton.SetActive(true);
         _mentorText.text = "Most folk'll let ya trade three times. Ya can always stop early, like if ya end up with too little cash.\n\nIf yer low on copper coins, head to the bank to trade for 'em.";
         _mentorSpeech.SetActive(true);
@@ -766,6 +769,7 @@ public class Tutorial : MonoBehaviour
         _skiptutorialButton.SetActive(false);
         CloseSpeech();
 
+        _ignoreWarningButton.SetActive(true);
         _acceptMarker.SetActive(false);
         _rejectMarker.SetActive(false);
         _tutorialUI.SetActive(false);

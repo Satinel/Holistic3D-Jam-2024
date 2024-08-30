@@ -30,8 +30,10 @@ public class TradingSystem : MonoBehaviour
     int _offer;
     int _basePrice;
     [SerializeField] bool _isBuyTutorial = true;
+    bool _wasWarned;
 
     [SerializeField] GameObject _openButton, _bankButton, _exchangeButtons, _goodbyeButton, _haggleButton, _activeTradeButtons, _completeTradeButton, _barterOfferButton, _greetingButton;
+    [SerializeField] GameObject _warningPrompt;
     [SerializeField] Customer _bank;
     [SerializeField] AudioSource _audioSource;
     Customer _currentCustomer;
@@ -280,6 +282,28 @@ public class TradingSystem : MonoBehaviour
     {
         if(!_currentCustomer) { return; }
 
+        if(!_wasWarned)
+        {
+            int checkOffer = 0;
+
+            if(_currentCustomer.CustomerType == Customer.Type.Buy)
+            {
+                checkOffer = _offerValue - _basePrice;
+            }
+
+            if(_currentCustomer.CustomerType == Customer.Type.Sell)
+            {
+                checkOffer = _basePrice - _offerValue;
+            }
+            
+            if(checkOffer < 0)
+            {
+                _warningPrompt.SetActive(true);
+                return;
+            }
+        }
+        _wasWarned = false;
+
         if(MakeOffer())
         {
             bool buying = _currentCustomer.CustomerType == Customer.Type.Buy;
@@ -292,6 +316,18 @@ public class TradingSystem : MonoBehaviour
             OnOfferRejected?.Invoke();
             ProcessRejection();
         }
+    }
+
+    public void IgnoreWarning() // Used for UI Button
+    {
+        _warningPrompt.SetActive(false);
+        _wasWarned = true;
+        Haggle();
+    }
+
+    public void TakeWarning() // Used for UI Button
+    {
+        _warningPrompt.SetActive(false);
     }
 
     public void AttemptTrade() // Used for UI Button
