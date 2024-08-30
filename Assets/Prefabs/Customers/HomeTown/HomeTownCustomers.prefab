@@ -1445,6 +1445,110 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _lostChange.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _acceptPrice.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _offerToSell.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _rejectPrice.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _completeDeal.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _greetings.Array.data[0]
+      value: Fine day to you.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _departures.Array.data[0]
+      value: Another time.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _leaveAngry.Array.data[0]
+      value: Rotten to the core.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _lostChange.Array.data[0]
+      value: The seed of doubt is planted.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _lostChange.Array.data[1]
+      value: Something's rotten.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _acceptPrice.Array.data[0]
+      value: I suppose.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _acceptPrice.Array.data[1]
+      value: Alright.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _acceptPrice.Array.data[2]
+      value: Could be worse.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _acceptPrice.Array.data[3]
+      value: Shrewd.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _acceptPrice.Array.data[4]
+      value: Fair.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _offerToSell.Array.data[0]
+      value: Get it while it's fresh.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _offerToSell.Array.data[1]
+      value: Eat healthy.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _offerToSell.Array.data[2]
+      value: Nature's candy.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _rejectPrice.Array.data[0]
+      value: Nope.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _rejectPrice.Array.data[1]
+      value: Try again.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _rejectPrice.Array.data[2]
+      value: Are you trading or begging?
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _rejectPrice.Array.data[3]
+      value: A sour deal.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _completeDeal.Array.data[0]
+      value: Enjoy.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _completeDeal.Array.data[1]
+      value: My thanks.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _completeDeal.Array.data[2]
+      value: Good business.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3420925052991746936, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
+      propertyPath: _completeDeal.Array.data[3]
+      value: Grand.
+      objectReference: {fileID: 0}
     - target: {fileID: 5248452249013466664, guid: a2e91ad177bdcdb43ba8cb96abf1a305, type: 3}
       propertyPath: <Name>k__BackingField
       value: Jorb
