@@ -281,13 +281,13 @@ public class DropBox : MonoBehaviour, IDropHandler
         PickRandomItem();
     }
 
-    void TradingSystem_OnSellCustomer()
+    void TradingSystem_OnSellCustomer(Customer sellCustomer)
     {
         if(_isCoinBox || _isTradeBox) { return; }
 
         if(_playerProperty) { return; }
 
-        PickRandomItem();
+        PickRandomSellableItem(sellCustomer);
     }
 
     void TradingSystem_OnResetTrade()
@@ -371,6 +371,40 @@ public class DropBox : MonoBehaviour, IDropHandler
         }
 
         Item randomItem = _items[UnityEngine.Random.Range(0, _items.Count)].GetComponent<Item>();
+
+        OnItemPicked?.Invoke(randomItem, _playerProperty);
+        _items.Remove(randomItem.gameObject);
+        randomItem.SendToDropBox(_tradeBox);
+    }
+
+    void PickRandomSellableItem(Customer sellCustomer)
+    {
+        List<ItemScriptableObject> sellableItems = sellCustomer.CustomerInventory.SellableItems;
+
+        if(sellableItems.Count < 1)
+        {
+            OnNoItems?.Invoke();
+            return;
+        }
+
+        ItemScriptableObject randomSellable = sellableItems[UnityEngine.Random.Range(0, sellableItems.Count)];
+        Item randomItem = null;
+
+        foreach(GameObject item in _items)
+        {
+            if(item.GetComponent<Item>().ItemSO == randomSellable)
+            {
+                randomItem = item.GetComponent<Item>();
+                sellCustomer.RemoveFromSellables(randomSellable);
+                break;
+            }
+        }
+
+        if(randomItem == null)
+        {
+            OnNoItems?.Invoke();
+            return;
+        }
 
         OnItemPicked?.Invoke(randomItem, _playerProperty);
         _items.Remove(randomItem.gameObject);

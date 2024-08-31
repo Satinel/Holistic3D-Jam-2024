@@ -235,6 +235,11 @@ public class Customer : MonoBehaviour
         _inventory.Remove(items);
     }
 
+    public void RemoveFromSellables(ItemScriptableObject sellableItem)
+    {
+        _inventory.RemoveSellable(sellableItem);
+    }
+
     public void SetTolerance(float tolerance)
     {
         if(tolerance < 0)

@@ -12,7 +12,7 @@ public class TradingSystem : MonoBehaviour
     public static Action<Customer> OnNewCustomer;
     public static Action OnOpenToPublic;
     public static Action<bool> OnBuyCustomer;
-    public static Action OnSellCustomer;
+    public static Action<Customer> OnSellCustomer;
     public static Action<int> OnOfferValueChanged;
     public static Action<int> OnBasePriceSet;
     public static Action<Customer.Type, int> OnChangeGiven;
@@ -140,7 +140,7 @@ public class TradingSystem : MonoBehaviour
 
     void SellingCustomer()
     {
-        OnSellCustomer?.Invoke();
+        OnSellCustomer?.Invoke(_currentCustomer);
         // TODO Prompt for player to set a price (Set Haggle button active and deactivate offer button?) <- already done! Make Haggle Button more obvious
     }
 
@@ -166,7 +166,7 @@ public class TradingSystem : MonoBehaviour
         {
             _offer = _offerValue - _basePrice;
 
-            if(_offer <= 0) { return true; } // TODO Prompt player that they'll lose net worth (and invoke a pleased message from customer that they got a good deal?)
+            if(_offer <= 0) { return true; }
 
             rake = 1 - ((float)_basePrice / _offerValue);
         }
@@ -177,7 +177,7 @@ public class TradingSystem : MonoBehaviour
 
             _offer = _basePrice - _offerValue;
 
-            if(_offer <= 0) { return true; } // TODO Prompt player that they'll lose net worth (and invoke a pleased message from customer that they got a good deal?)
+            if(_offer <= 0) { return true; }
 
             rake = 1 - ((float)_offerValue / _basePrice);
         }

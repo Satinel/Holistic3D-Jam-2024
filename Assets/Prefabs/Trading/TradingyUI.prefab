@@ -17524,7 +17524,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622249272210613098, guid: df2a26b58c567b841ab8090e523ea0a9, type: 3}
       propertyPath: _departures.Array.data[0]
-      value: Lastly...
+      value: Next up..
       objectReference: {fileID: 0}
     - target: {fileID: 4622249272210613098, guid: df2a26b58c567b841ab8090e523ea0a9, type: 3}
       propertyPath: _acceptPrice.Array.data[0]
@@ -17545,6 +17545,10 @@ PrefabInstance:
     - target: {fileID: 7002879073100225001, guid: df2a26b58c567b841ab8090e523ea0a9, type: 3}
       propertyPath: _departures.Array.data[0]
       value: Next up..
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645940133965794215, guid: df2a26b58c567b841ab8090e523ea0a9, type: 3}
+      propertyPath: _greetings.Array.data[0]
+      value: Lastly...
       objectReference: {fileID: 0}
     - target: {fileID: 8645940133965794215, guid: df2a26b58c567b841ab8090e523ea0a9, type: 3}
       propertyPath: _departures.Array.data[0]

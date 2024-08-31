@@ -13,12 +13,14 @@ public class Inventory : MonoBehaviour
     [SerializeField] List<int> _startingCoins = new();
     [SerializeField] List<ItemScriptableObject> _coins = new();
     [SerializeField] List<ItemScriptableObject> _startingItems = new();
+    [SerializeField] List<ItemScriptableObject> _newItems = new();
     [SerializeField] Item _itemPrefab, _coinPrefab;
 
     DropBox _dropBox, _coinBox;
 
     public DropBox CoinBox => _coinBox;
     public DropBox StockBox => _dropBox;
+    public List<ItemScriptableObject> SellableItems => _startingItems;
 
     public void Start()
     {
@@ -109,7 +111,7 @@ public class Inventory : MonoBehaviour
 
             if(itemSO.ItemType != ItemType.Coin)
             {
-                _startingItems.Add(itemSO);
+                _newItems.Add(itemSO);
             }
         }
     }
@@ -127,6 +129,14 @@ public class Inventory : MonoBehaviour
                     _startingItems.Remove(itemSO);
                 }
             }
+        }
+    }
+
+    public void RemoveSellable(ItemScriptableObject sellableItem)
+    {
+        if(_startingItems.Contains(sellableItem))
+        {
+            _startingItems.Remove(sellableItem);
         }
     }
 

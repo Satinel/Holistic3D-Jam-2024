@@ -1644,6 +1644,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _greetings.Array.data[0]
       value: Another hard day's work.
       objectReference: {fileID: 0}
@@ -1668,6 +1672,18 @@ PrefabInstance:
       value: Heard you're interested in precious metals.
       objectReference: {fileID: 0}
     - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[1]
+      value: Fine for smiths.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[2]
+      value: Somebody could craft with this.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
+      propertyPath: _offerToSell.Array.data[3]
+      value: Heavy... and valuable.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081598080338740422, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _payAllMoney.Array.data[0]
       value: Had to dig deep for this much.
       objectReference: {fileID: 0}
@@ -1689,7 +1705,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingItems.Array.size
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingCoins.Array.data[0]
@@ -1714,15 +1730,15 @@ PrefabInstance:
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingItems.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 5d9bfde87608b164fbe4e9bea866a325, type: 2}
+      objectReference: {fileID: 11400000, guid: 5dd627c01cae9974abb6cc8441ba53bd, type: 2}
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingItems.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 5dd627c01cae9974abb6cc8441ba53bd, type: 2}
+      objectReference: {fileID: 11400000, guid: 94c22afd6fca54847ae06495ab606e91, type: 2}
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingItems.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 94c22afd6fca54847ae06495ab606e91, type: 2}
+      objectReference: {fileID: 11400000, guid: 5d9bfde87608b164fbe4e9bea866a325, type: 2}
     - target: {fileID: 8993424361089540666, guid: 52a21e7e38016da4e9fea173712318e6, type: 3}
       propertyPath: _startingItems.Array.data[4]
       value: 
