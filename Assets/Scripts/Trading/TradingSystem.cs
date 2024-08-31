@@ -90,7 +90,6 @@ public class TradingSystem : MonoBehaviour
     void Town_OnNoCustomers()
     {
         NoCustomer();
-        // TODO Handle no more customers
     }
 
     void NewCustomer(Customer customer)
@@ -106,7 +105,7 @@ public class TradingSystem : MonoBehaviour
 
         if(_currentCustomer.CustomerType == Customer.Type.Bank) { return; }
 
-        _greetingButton.SetActive(true); // TODO? One day have many buttons for different dialogue responses
+        _greetingButton.SetActive(true);
     }
 
     void Customer_OnMaxTradesReached()
@@ -135,13 +134,11 @@ public class TradingSystem : MonoBehaviour
     void BuyingCustomer()
     {
         OnBuyCustomer?.Invoke(_isBuyTutorial);
-        // TODO Prompt for player to set a price (Set Haggle button active and deactivate offer button?) <- already done! Make Haggle Button more obvious
     }
 
     void SellingCustomer()
     {
         OnSellCustomer?.Invoke(_currentCustomer);
-        // TODO Prompt for player to set a price (Set Haggle button active and deactivate offer button?) <- already done! Make Haggle Button more obvious
     }
 
     void BarterCustomer()
@@ -173,7 +170,7 @@ public class TradingSystem : MonoBehaviour
 
         if(_currentCustomer.CustomerType == Customer.Type.Sell)
         {
-            if(_offerValue <= 0) { return false; } // TODO(?) Invoke a snide message from customer that player should offer something
+            if(_offerValue <= 0) { return false; }
 
             _offer = _basePrice - _offerValue;
 
@@ -219,8 +216,6 @@ public class TradingSystem : MonoBehaviour
         }
         _isBuyTutorial = false;
         _completeTradeButton.SetActive(false);
-
-        // TODO UI/VFX/SFX (include profit/loss and if correct change)
         
         OnTradeCompleted?.Invoke(_currentCustomer);
 

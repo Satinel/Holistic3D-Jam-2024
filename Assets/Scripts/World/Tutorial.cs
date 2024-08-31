@@ -710,7 +710,7 @@ public class Tutorial : MonoBehaviour
         // debt += debtInterest;
         _mentors[1].CustomerInventory.CreateDebt();
         // _player.SetDebt(debt);
-        _player.SetDebt(8000); // TODO Hello magic number! This seems like a good goal for a player to reach (maybe too hard? unclear! no time to test!)
+        _player.SetDebt(8000); // TODO Hello magic number!
         // TODO Play cash sound!?
     }
 

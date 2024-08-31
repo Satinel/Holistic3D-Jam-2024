@@ -168,15 +168,11 @@ public class Customer : MonoBehaviour
     void TradingSystem_OnStrikeOut(Customer customer)
     {
         if(!_isActiveCustomer) { return; }
-
-        // TODO display angry customer message (plus SFX maybe)
     }
 
     void TradingSystem_OnTradeCompleted(Customer customer)
     {
         if(!_isActiveCustomer) { return; }
-
-        // TODO display some customer message
 
         if(CustomerType != Type.Bank)
         {
@@ -216,8 +212,6 @@ public class Customer : MonoBehaviour
         if(_ignoreStrikes) { return; }
 
         Strikes++;
-        
-        // TODO SFX
 
         if(Strikes <= _angerMarks.Count)
         {
