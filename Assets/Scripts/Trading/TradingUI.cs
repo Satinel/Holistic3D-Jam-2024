@@ -44,7 +44,7 @@ public class TradingUI : MonoBehaviour
         DropBox.OnNoItems -= DropBox_OnNoItems;
         // TradingSystem.OnIncorrectChange -= TradingSystem_OnIncorrectChange;
         TradingSystem.OnOfferAccepted -= TradingSystem_OnOfferAccepted;
-        TradingSystem.OnResetBarter += TradingSystem_OnResetBarter;
+        TradingSystem.OnResetBarter -= TradingSystem_OnResetBarter;
         TradingSystem.OnNewCustomer -= TradingSystem_OnNewCustomer;
         TradingSystem.OnOfferValueChanged -= TradingSystem_OnOfferValueChanged;
         TradingSystem.OnStrikeOut -= TradingSystem_OnStrikeOut;
